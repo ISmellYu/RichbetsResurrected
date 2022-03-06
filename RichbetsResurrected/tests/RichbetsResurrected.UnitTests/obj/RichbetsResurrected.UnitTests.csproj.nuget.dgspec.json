@@ -1,0 +1,448 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\tests\\RichbetsResurrected.UnitTests\\RichbetsResurrected.UnitTests.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.Core\\RichbetsResurrected.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.Core\\RichbetsResurrected.Core.csproj",
+        "projectName": "RichbetsResurrected.Core",
+        "projectPath": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.Core\\RichbetsResurrected.Core.csproj",
+        "packagesPath": "C:\\Users\\lukasz\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\lukasz\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.SharedKernel\\RichbetsResurrected.SharedKernel.csproj": {
+                "projectPath": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.SharedKernel\\RichbetsResurrected.SharedKernel.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Ardalis.GuardClauses": {
+              "target": "Package",
+              "version": "[3.3.0, )"
+            },
+            "Ardalis.Result": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
+            "Ardalis.Specification": {
+              "target": "Package",
+              "version": "[5.2.0, )"
+            },
+            "Autofac": {
+              "target": "Package",
+              "version": "[6.3.0, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.Infrastructure\\RichbetsResurrected.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.Infrastructure\\RichbetsResurrected.Infrastructure.csproj",
+        "projectName": "RichbetsResurrected.Infrastructure",
+        "projectPath": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.Infrastructure\\RichbetsResurrected.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\lukasz\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\lukasz\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.Core\\RichbetsResurrected.Core.csproj": {
+                "projectPath": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.Core\\RichbetsResurrected.Core.csproj"
+              },
+              "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.SharedKernel\\RichbetsResurrected.SharedKernel.csproj": {
+                "projectPath": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.SharedKernel\\RichbetsResurrected.SharedKernel.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Ardalis.EFCore.Extensions": {
+              "target": "Package",
+              "version": "[1.1.0, )"
+            },
+            "Ardalis.Specification.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.2.0, )"
+            },
+            "Autofac": {
+              "target": "Package",
+              "version": "[6.3.0, )"
+            },
+            "Autofac.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[7.2.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )"
+            },
+            "SQLite": {
+              "target": "Package",
+              "version": "[3.13.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.SharedKernel\\RichbetsResurrected.SharedKernel.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.SharedKernel\\RichbetsResurrected.SharedKernel.csproj",
+        "projectName": "RichbetsResurrected.SharedKernel",
+        "projectPath": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.SharedKernel\\RichbetsResurrected.SharedKernel.csproj",
+        "packagesPath": "C:\\Users\\lukasz\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.SharedKernel\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\lukasz\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Ardalis.Specification": {
+              "target": "Package",
+              "version": "[5.2.0, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.Web\\RichbetsResurrected.Web.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.Web\\RichbetsResurrected.Web.csproj",
+        "projectName": "RichbetsResurrected.Web",
+        "projectPath": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.Web\\RichbetsResurrected.Web.csproj",
+        "packagesPath": "C:\\Users\\lukasz\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.Web\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\lukasz\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.Infrastructure\\RichbetsResurrected.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.Infrastructure\\RichbetsResurrected.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Ardalis.ApiEndpoints": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Ardalis.ListStartupServices": {
+              "target": "Package",
+              "version": "[1.1.3, )"
+            },
+            "Ardalis.Result": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
+            "Ardalis.Result.AspNetCore": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.2.3, )"
+            },
+            "Swashbuckle.AspNetCore.Annotations": {
+              "target": "Package",
+              "version": "[6.2.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\tests\\RichbetsResurrected.UnitTests\\RichbetsResurrected.UnitTests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\tests\\RichbetsResurrected.UnitTests\\RichbetsResurrected.UnitTests.csproj",
+        "projectName": "RichbetsResurrected.UnitTests",
+        "projectPath": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\tests\\RichbetsResurrected.UnitTests\\RichbetsResurrected.UnitTests.csproj",
+        "packagesPath": "C:\\Users\\lukasz\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\tests\\RichbetsResurrected.UnitTests\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\lukasz\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.Web\\RichbetsResurrected.Web.csproj": {
+                "projectPath": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.Web\\RichbetsResurrected.Web.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.0.0, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.16.1, )"
+            },
+            "ReportGenerator": {
+              "target": "Package",
+              "version": "[4.8.13, )"
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
+            "xunit.runner.visualstudio": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.4.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

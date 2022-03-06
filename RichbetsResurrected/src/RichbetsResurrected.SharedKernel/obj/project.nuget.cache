@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "FK/3fMR/TIe63eESp7A0NVhBghaXs05mK9Bd8dLelX+jGajEv9+EX6Cs3tlAokCm7xosGt1FCih1tCi+sLMbUw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\lukasz\\RiderProjects\\RichbetsResurrected\\RichbetsResurrected\\src\\RichbetsResurrected.SharedKernel\\RichbetsResurrected.SharedKernel.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\lukasz\\.nuget\\packages\\ardalis.specification\\5.2.0\\ardalis.specification.5.2.0.nupkg.sha512",
+    "C:\\Users\\lukasz\\.nuget\\packages\\mediatr\\9.0.0\\mediatr.9.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
