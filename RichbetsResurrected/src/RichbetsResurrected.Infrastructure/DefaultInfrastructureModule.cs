@@ -1,19 +1,19 @@
 ﻿using System.Reflection;
 using Autofac;
+using MediatR;
+using MediatR.Pipeline;
 using RichbetsResurrected.Core.Interfaces;
 using RichbetsResurrected.Core.ProjectAggregate;
 using RichbetsResurrected.Infrastructure.Data;
 using RichbetsResurrected.SharedKernel.Interfaces;
-using MediatR;
-using MediatR.Pipeline;
 using Module = Autofac.Module;
 
 namespace RichbetsResurrected.Infrastructure;
 
 public class DefaultInfrastructureModule : Module
 {
-    private readonly bool _isDevelopment = false;
-    private readonly List<Assembly> _assemblies = new List<Assembly>();
+    private readonly List<Assembly> _assemblies = new();
+    private readonly bool _isDevelopment;
 
     public DefaultInfrastructureModule(bool isDevelopment, Assembly? callingAssembly = null)
     {
@@ -21,32 +21,17 @@ public class DefaultInfrastructureModule : Module
         var coreAssembly =
             Assembly.GetAssembly(typeof(Project)); // TODO: Replace "Project" with any type from your Core project
         var infrastructureAssembly = Assembly.GetAssembly(typeof(StartupSetup));
-        if (coreAssembly != null)
-        {
-            _assemblies.Add(coreAssembly);
-        }
+        if (coreAssembly != null) _assemblies.Add(coreAssembly);
 
-        if (infrastructureAssembly != null)
-        {
-            _assemblies.Add(infrastructureAssembly);
-        }
+        if (infrastructureAssembly != null) _assemblies.Add(infrastructureAssembly);
 
-        if (callingAssembly != null)
-        {
-            _assemblies.Add(callingAssembly);
-        }
+        if (callingAssembly != null) _assemblies.Add(callingAssembly);
     }
 
     protected override void Load(ContainerBuilder builder)
     {
-        if (_isDevelopment)
-        {
-            RegisterDevelopmentOnlyDependencies(builder);
-        }
-        else
-        {
-            RegisterProductionOnlyDependencies(builder);
-        }
+        if (_isDevelopment) RegisterDevelopmentOnlyDependencies(builder);
+        else RegisterProductionOnlyDependencies(builder);
 
         RegisterCommonDependencies(builder);
     }
@@ -71,19 +56,14 @@ public class DefaultInfrastructureModule : Module
 
         var mediatrOpenTypes = new[]
         {
-            typeof(IRequestHandler<,>),
-            typeof(IRequestExceptionHandler<,,>),
-            typeof(IRequestExceptionAction<,>),
-            typeof(INotificationHandler<>),
+            typeof(IRequestHandler<,>), typeof(IRequestExceptionHandler<,,>), typeof(IRequestExceptionAction<,>), typeof(INotificationHandler<>)
         };
 
         foreach (var mediatrOpenType in mediatrOpenTypes)
-        {
             builder
                 .RegisterAssemblyTypes(_assemblies.ToArray())
                 .AsClosedTypesOf(mediatrOpenType)
                 .AsImplementedInterfaces();
-        }
 
         builder.RegisterType<EmailSender>().As<IEmailSender>()
             .InstancePerLifetimeScope();

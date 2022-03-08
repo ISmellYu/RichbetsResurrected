@@ -1,8 +1,8 @@
 ﻿using Ardalis.EFCore.Extensions;
-using RichbetsResurrected.Core.ProjectAggregate;
-using RichbetsResurrected.SharedKernel;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RichbetsResurrected.Core.ProjectAggregate;
+using RichbetsResurrected.SharedKernel;
 
 namespace RichbetsResurrected.Infrastructure.Data;
 
@@ -33,9 +33,9 @@ public class AppDbContext : DbContext
         //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
-    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
     {
-        int result = await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        var result = await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         // ignore events if no dispatcher provided
         if (_mediator == null) return result;
@@ -50,10 +50,7 @@ public class AppDbContext : DbContext
         {
             var events = entity.Events.ToArray();
             entity.Events.Clear();
-            foreach (var domainEvent in events)
-            {
-                await _mediator.Publish(domainEvent).ConfigureAwait(false);
-            }
+            foreach (var domainEvent in events) await _mediator.Publish(domainEvent).ConfigureAwait(false);
         }
 
         return result;

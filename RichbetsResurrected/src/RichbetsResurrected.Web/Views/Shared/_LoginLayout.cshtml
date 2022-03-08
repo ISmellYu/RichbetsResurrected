@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="~/css/login.css">
 </head>
 <body>
-    <header>
-        <h1>RICH<span>BETS</span></h1>
-    </header>
+<header>
+    <h1>RICH<span>BETS</span></h1>
+</header>
 
-    @RenderBody()
+@RenderBody()
 
-@await RenderSectionAsync("scripts", required: false).ConfigureAwait(false)
+@await RenderSectionAsync("scripts", false).ConfigureAwait(false)
 </body>
 </html>

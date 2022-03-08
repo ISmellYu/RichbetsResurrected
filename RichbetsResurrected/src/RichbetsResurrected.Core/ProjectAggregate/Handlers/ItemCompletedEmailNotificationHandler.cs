@@ -1,9 +1,7 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
+using MediatR;
 using RichbetsResurrected.Core.Interfaces;
 using RichbetsResurrected.Core.ProjectAggregate.Events;
-using MediatR;
 
 namespace RichbetsResurrected.Core.ProjectAggregate.Handlers;
 

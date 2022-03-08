@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Ardalis.GuardClauses;
-using Ardalis.Result;
+﻿using Ardalis.Result;
 using RichbetsResurrected.Core.Interfaces;
 using RichbetsResurrected.Core.ProjectAggregate;
 using RichbetsResurrected.Core.ProjectAggregate.Specifications;
@@ -25,10 +20,9 @@ public class ToDoItemSearchService : IToDoItemSearchService
         if (string.IsNullOrEmpty(searchString))
         {
             var errors = new List<ValidationError>();
-            errors.Add(new ValidationError()
+            errors.Add(new ValidationError
             {
-                Identifier = nameof(searchString),
-                ErrorMessage = $"{nameof(searchString)} is required."
+                Identifier = nameof(searchString), ErrorMessage = $"{nameof(searchString)} is required."
             });
             return Result<List<ToDoItem>>.Invalid(errors);
         }
@@ -50,7 +44,7 @@ public class ToDoItemSearchService : IToDoItemSearchService
         catch (Exception ex)
         {
             // TODO: Log details here
-            return Result<List<ToDoItem>>.Error(new[] { ex.Message });
+            return Result<List<ToDoItem>>.Error(ex.Message);
         }
     }
 
@@ -58,19 +52,13 @@ public class ToDoItemSearchService : IToDoItemSearchService
     {
         var projectSpec = new ProjectByIdWithItemsSpec(projectId);
         var project = await _repository.GetBySpecAsync(projectSpec);
-        if (project == null)
-        {
-            return Result<ToDoItem>.NotFound();
-        }
+        if (project == null) return Result<ToDoItem>.NotFound();
 
         var incompleteSpec = new IncompleteItemsSpec();
 
         var items = incompleteSpec.Evaluate(project.Items).ToList();
 
-        if (!items.Any())
-        {
-            return Result<ToDoItem>.NotFound();
-        }
+        if (!items.Any()) return Result<ToDoItem>.NotFound();
 
         return new Result<ToDoItem>(items.First());
     }

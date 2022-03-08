@@ -13,12 +13,9 @@ public class ToDoItemDTO
 
     public static ToDoItemDTO FromToDoItem(ToDoItem item)
     {
-        return new ToDoItemDTO()
+        return new ToDoItemDTO
         {
-            Id = item.Id,
-            Title = item.Title,
-            Description = item.Description,
-            IsDone = item.IsDone
+            Id = item.Id, Title = item.Title, Description = item.Description, IsDone = item.IsDone
         };
     }
 }

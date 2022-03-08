@@ -6,7 +6,7 @@ namespace RichbetsResurrected.UnitTests;
 // https://ardalis.com/improve-tests-with-the-builder-pattern-for-test-data
 public class ToDoItemBuilder
 {
-    private ToDoItem _todo = new ToDoItem();
+    private ToDoItem _todo = new();
 
     public ToDoItemBuilder Id(int id)
     {
@@ -28,10 +28,16 @@ public class ToDoItemBuilder
 
     public ToDoItemBuilder WithDefaultValues()
     {
-        _todo = new ToDoItem() { Id = 1, Title = "Test Item", Description = "Test Description" };
+        _todo = new ToDoItem
+        {
+            Id = 1, Title = "Test Item", Description = "Test Description"
+        };
 
         return this;
     }
 
-    public ToDoItem Build() => _todo;
+    public ToDoItem Build()
+    {
+        return _todo;
+    }
 }

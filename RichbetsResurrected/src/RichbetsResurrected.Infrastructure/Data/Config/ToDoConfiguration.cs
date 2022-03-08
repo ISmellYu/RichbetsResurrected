@@ -1,6 +1,6 @@
-﻿using RichbetsResurrected.Core.ProjectAggregate;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using RichbetsResurrected.Core.ProjectAggregate;
 
 namespace RichbetsResurrected.Infrastructure.Data.Config;
 

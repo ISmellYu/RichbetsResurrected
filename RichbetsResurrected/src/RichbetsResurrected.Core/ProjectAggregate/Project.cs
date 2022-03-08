@@ -7,16 +7,16 @@ namespace RichbetsResurrected.Core.ProjectAggregate;
 
 public class Project : BaseEntity, IAggregateRoot
 {
-    public string Name { get; private set; }
 
-    private List<ToDoItem> _items = new List<ToDoItem>();
-    public IEnumerable<ToDoItem> Items => _items.AsReadOnly();
-    public ProjectStatus Status => _items.All(i => i.IsDone) ? ProjectStatus.Complete : ProjectStatus.InProgress;
+    private readonly List<ToDoItem> _items = new();
 
     public Project(string name)
     {
         Name = Guard.Against.NullOrEmpty(name, nameof(name));
     }
+    public string Name { get; private set; }
+    public IEnumerable<ToDoItem> Items => _items.AsReadOnly();
+    public ProjectStatus Status => _items.All(i => i.IsDone) ? ProjectStatus.Complete : ProjectStatus.InProgress;
 
     public void AddItem(ToDoItem newItem)
     {

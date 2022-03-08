@@ -62,6 +62,6 @@
     <script src="~/js/site.min.js" asp-append-version="true"></script>
 </environment>
 
-@await RenderSectionAsync("scripts", required: false).ConfigureAwait(false)
+@await RenderSectionAsync("scripts", false).ConfigureAwait(false)
 </body>
 </html>

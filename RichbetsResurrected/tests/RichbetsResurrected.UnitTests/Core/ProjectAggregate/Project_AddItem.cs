@@ -5,15 +5,14 @@ namespace RichbetsResurrected.UnitTests.Core.ProjectAggregate;
 
 public class Project_AddItem
 {
-    private Project _testProject = new Project("some name");
+    private readonly Project _testProject = new("some name");
 
     [Fact]
     public void AddsItemToItems()
     {
         var _testItem = new ToDoItem
         {
-            Title = "title",
-            Description = "description"
+            Title = "title", Description = "description"
         };
 
         _testProject.AddItem(_testItem);
@@ -25,7 +24,7 @@ public class Project_AddItem
     public void ThrowsExceptionGivenNullItem()
     {
 #nullable disable
-        Action action = () => _testProject.AddItem(null);
+        var action = () => _testProject.AddItem(null);
 #nullable enable
 
         var ex = Assert.Throws<ArgumentNullException>(action);

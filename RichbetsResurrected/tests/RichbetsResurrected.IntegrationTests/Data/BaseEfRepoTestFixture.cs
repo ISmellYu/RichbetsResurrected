@@ -1,9 +1,9 @@
-﻿using RichbetsResurrected.Core.ProjectAggregate;
-using RichbetsResurrected.Infrastructure.Data;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using RichbetsResurrected.Core.ProjectAggregate;
+using RichbetsResurrected.Infrastructure.Data;
 
 namespace RichbetsResurrected.IntegrationTests.Data;
 

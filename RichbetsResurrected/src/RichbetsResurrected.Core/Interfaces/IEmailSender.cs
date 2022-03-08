@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace RichbetsResurrected.Core.Interfaces;
+﻿namespace RichbetsResurrected.Core.Interfaces;
 
 public interface IEmailSender
 {

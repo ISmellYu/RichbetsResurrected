@@ -1,5 +1,5 @@
-﻿using RichbetsResurrected.Core.ProjectAggregate;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using RichbetsResurrected.Core.ProjectAggregate;
 using Xunit;
 
 namespace RichbetsResurrected.IntegrationTests.Data;

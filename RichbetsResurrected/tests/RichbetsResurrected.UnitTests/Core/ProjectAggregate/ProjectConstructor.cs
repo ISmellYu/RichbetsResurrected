@@ -5,7 +5,7 @@ namespace RichbetsResurrected.UnitTests.Core.ProjectAggregate;
 
 public class ProjectConstructor
 {
-    private string _testName = "test name";
+    private readonly string _testName = "test name";
     private Project? _testProject;
 
     private Project CreateProject()

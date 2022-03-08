@@ -1,13 +1,12 @@
 ﻿using Ardalis.ListStartupServices;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using RichbetsResurrected.Core;
 using RichbetsResurrected.Infrastructure;
 using RichbetsResurrected.Infrastructure.Data;
 using RichbetsResurrected.Web;
-using Microsoft.OpenApi.Models;
 using Westwind.AspNetCore.LiveReload;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +18,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.MinimumSameSitePolicy = SameSiteMode.None;
 });
 
-string connectionString =
+var connectionString =
     builder.Configuration
         .GetConnectionString("SqliteConnection"); //Configuration.GetConnectionString("DefaultConnection");
 
@@ -31,7 +30,10 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "My API", Version = "v1"
+    });
     c.EnableAnnotations();
 });
 

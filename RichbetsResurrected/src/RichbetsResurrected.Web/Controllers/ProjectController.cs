@@ -1,8 +1,8 @@
-﻿using RichbetsResurrected.Core.ProjectAggregate;
+﻿using Microsoft.AspNetCore.Mvc;
+using RichbetsResurrected.Core.ProjectAggregate;
 using RichbetsResurrected.Core.ProjectAggregate.Specifications;
 using RichbetsResurrected.SharedKernel.Interfaces;
 using RichbetsResurrected.Web.ViewModels;
-using Microsoft.AspNetCore.Mvc;
 
 namespace RichbetsResurrected.Web.Controllers;
 
@@ -22,10 +22,7 @@ public class ProjectController : Controller
     {
         var spec = new ProjectByIdWithItemsSpec(projectId);
         var project = await _projectRepository.GetBySpecAsync(spec);
-        if (project == null)
-        {
-            return NotFound();
-        }
+        if (project == null) return NotFound();
 
         var dto = new ProjectViewModel
         {

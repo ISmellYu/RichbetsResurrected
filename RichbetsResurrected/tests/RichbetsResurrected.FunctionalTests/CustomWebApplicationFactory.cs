@@ -1,22 +1,21 @@
-﻿using RichbetsResurrected.Infrastructure.Data;
-using RichbetsResurrected.UnitTests;
-using RichbetsResurrected.Web;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using RichbetsResurrected.Infrastructure.Data;
+using RichbetsResurrected.UnitTests;
+using RichbetsResurrected.Web;
 
 namespace RichbetsResurrected.FunctionalTests;
 
 public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
 {
     /// <summary>
-    /// Overriding CreateHost to avoid creating a separate ServiceProvider per this thread:
-    /// https://github.com/dotnet-architecture/eShopOnWeb/issues/465
+    ///     Overriding CreateHost to avoid creating a separate ServiceProvider per this thread:
+    ///     https://github.com/dotnet-architecture/eShopOnWeb/issues/465
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
@@ -67,13 +66,10 @@ public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStar
                     d => d.ServiceType ==
                          typeof(DbContextOptions<AppDbContext>));
 
-                if (descriptor != null)
-                {
-                    services.Remove(descriptor);
-                }
+                if (descriptor != null) services.Remove(descriptor);
 
                 // This should be set for each individual test run
-                string inMemoryCollectionName = Guid.NewGuid().ToString();
+                var inMemoryCollectionName = Guid.NewGuid().ToString();
 
                 // Add ApplicationDbContext using an in-memory database for testing.
                 services.AddDbContext<AppDbContext>(options =>

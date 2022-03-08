@@ -1,6 +1,6 @@
 ﻿using System.Net.Mail;
-using RichbetsResurrected.Core.Interfaces;
 using Microsoft.Extensions.Logging;
+using RichbetsResurrected.Core.Interfaces;
 
 namespace RichbetsResurrected.Infrastructure;
 
@@ -18,9 +18,7 @@ public class EmailSender : IEmailSender
         var emailClient = new SmtpClient("localhost");
         var message = new MailMessage
         {
-            From = new MailAddress(from),
-            Subject = subject,
-            Body = body
+            From = new MailAddress(from), Subject = subject, Body = body
         };
         message.To.Add(new MailAddress(to));
         await emailClient.SendMailAsync(message);

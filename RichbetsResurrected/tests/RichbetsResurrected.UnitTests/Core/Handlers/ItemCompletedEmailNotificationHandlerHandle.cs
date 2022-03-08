@@ -1,16 +1,16 @@
-﻿using RichbetsResurrected.Core.Interfaces;
+﻿using Moq;
+using RichbetsResurrected.Core.Interfaces;
 using RichbetsResurrected.Core.ProjectAggregate;
 using RichbetsResurrected.Core.ProjectAggregate.Events;
 using RichbetsResurrected.Core.ProjectAggregate.Handlers;
-using Moq;
 using Xunit;
 
 namespace RichbetsResurrected.UnitTests.Core.Handlers;
 
 public class ItemCompletedEmailNotificationHandlerHandle
 {
-    private ItemCompletedEmailNotificationHandler _handler;
-    private Mock<IEmailSender> _emailSenderMock;
+    private readonly Mock<IEmailSender> _emailSenderMock;
+    private readonly ItemCompletedEmailNotificationHandler _handler;
 
     public ItemCompletedEmailNotificationHandlerHandle()
     {

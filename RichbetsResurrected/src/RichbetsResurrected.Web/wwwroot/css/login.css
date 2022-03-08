@@ -1,4 +1,4 @@
-.container{
+.container {
     display: flex;
     flex-direction: row;
     position: absolute;
@@ -8,7 +8,7 @@
     margin-top: -209.5px;
 }
 
-.white-wing{
+.white-wing {
     width: 241px;
     height: 419px;
     background-color: #FFFFFF;
@@ -20,11 +20,11 @@
     border-radius: 5px 0 0 5px;
 }
 
-.white-wing img{
+.white-wing img {
     width: 241px;
 }
 
-.gray-wing{
+.gray-wing {
     width: 528px;
     height: 419px;
     background-color: #2C2F33;
@@ -37,7 +37,7 @@
     border-radius: 0 5px 5px 0;
 }
 
-.login-auth{
+.login-auth {
     position: absolute;
     bottom: 0;
     font-weight: 600;
@@ -47,7 +47,7 @@
     margin: 0;
 }
 
-.login-button{
+.login-button {
     background-color: #7289DA;
     width: 388px;
     height: 87px;
@@ -61,22 +61,22 @@
     border-radius: 5px;
 }
 
-.login-button:hover{
+.login-button:hover {
     background-color: #6478be;
     cursor: pointer;
 }
 
-.login-icon{
+.login-icon {
     width: 30%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.login-icon img{
+.login-icon img {
     width: 52px;
 }
 
-.login-text{
+.login-text {
     width: 70%;
 }
