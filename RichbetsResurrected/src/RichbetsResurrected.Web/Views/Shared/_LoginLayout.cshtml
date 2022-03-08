@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - Richbets</title>
+    <link rel="stylesheet" href="~/css/login.layout.css">
+    <link rel="stylesheet" href="~/css/login.css">
+</head>
+<body>
+    <header>
+        <h1>RICH<span>BETS<span></h1>
+    </header>
+
+    @RenderBody()
+
+@await RenderSectionAsync("scripts", required: false).ConfigureAwait(false)
+</body>
+</html>

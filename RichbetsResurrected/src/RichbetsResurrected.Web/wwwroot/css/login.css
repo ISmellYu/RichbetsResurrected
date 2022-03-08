@@ -1,0 +1,82 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -384.5px;
+    margin-top: -209.5px;
+}
+
+.white-wing{
+    width: 241px;
+    height: 419px;
+    background-color: #FFFFFF;
+    opacity: 0.85;
+    backdrop-filter: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px 0 0 5px;
+}
+
+.white-wing img{
+    width: 241px;
+}
+
+.gray-wing{
+    width: 528px;
+    height: 419px;
+    background-color: #2C2F33;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    opacity: 0.85;
+    backdrop-filter: 30px;
+    border-radius: 0 5px 5px 0;
+}
+
+.login-auth{
+    position: absolute;
+    bottom: 0;
+    font-weight: 600;
+    color: #99AAB5;
+    opacity: 0.6;
+    padding: 3px;
+    margin: 0;
+}
+
+.login-button{
+    background-color: #7289DA;
+    width: 388px;
+    height: 87px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: relative;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 18;
+    border-radius: 5px;
+}
+
+.login-button:hover{
+    background-color: #6478be;
+    cursor: pointer;
+}
+
+.login-icon{
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-icon img{
+    width: 52px;
+}
+
+.login-text{
+    width: 70%;
+}
