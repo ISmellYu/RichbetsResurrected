@@ -6,6 +6,7 @@ using RichbetsResurrected.Infrastructure;
 using RichbetsResurrected.Infrastructure.Data;
 using RichbetsResurrected.Web;
 using Microsoft.OpenApi.Models;
+using Westwind.AspNetCore.LiveReload;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,7 @@ string connectionString =
         .GetConnectionString("SqliteConnection"); //Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext(connectionString);
+builder.Services.AddLiveReload();
 
 builder.Services.AddControllersWithViews().AddNewtonsoftJson();
 builder.Services.AddRazorPages();
@@ -61,6 +63,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseShowAllServicesMiddleware();
+    app.UseLiveReload();
 }
 else
 {
