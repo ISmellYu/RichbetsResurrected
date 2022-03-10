@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using RichbetsResurrected.Core.ProjectAggregate;
 using RichbetsResurrected.SharedKernel;
 
-namespace RichbetsResurrected.Infrastructure.Data;
+namespace RichbetsResurrected.Infrastructure.Data.Contexts;
 
-public class AppDbContext : DbContext
+public class AppDbContext : UserAppContext
 {
     private readonly IMediator? _mediator;
 

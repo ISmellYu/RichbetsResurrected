@@ -10,5 +10,6 @@ public class ToDoConfiguration : IEntityTypeConfiguration<ToDoItem>
     {
         builder.Property(t => t.Title)
             .IsRequired();
+        builder.ToTable("toDoItems");
     }
 }

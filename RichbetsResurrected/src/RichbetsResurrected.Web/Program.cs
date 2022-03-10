@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Models;
 using RichbetsResurrected.Core;
 using RichbetsResurrected.Infrastructure;
 using RichbetsResurrected.Infrastructure.Data;
+using RichbetsResurrected.Infrastructure.Data.Contexts;
 using RichbetsResurrected.Web;
 using Westwind.AspNetCore.LiveReload;
 
@@ -106,7 +107,7 @@ using (var scope = app.Services.CreateScope())
     catch (Exception ex)
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred seeding the DB.");
+        logger.LogError(ex, "An error occurred seeding the DB");
     }
 }
 

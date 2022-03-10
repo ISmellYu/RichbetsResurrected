@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using RichbetsResurrected.Infrastructure.Data;
+using RichbetsResurrected.Infrastructure.Data.Contexts;
 
 namespace RichbetsResurrected.Infrastructure;
 

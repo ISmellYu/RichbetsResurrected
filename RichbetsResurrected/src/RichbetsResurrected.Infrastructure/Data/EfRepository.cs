@@ -1,4 +1,5 @@
 ﻿using Ardalis.Specification.EntityFrameworkCore;
+using RichbetsResurrected.Infrastructure.Data.Contexts;
 using RichbetsResurrected.SharedKernel.Interfaces;
 
 namespace RichbetsResurrected.Infrastructure.Data;
