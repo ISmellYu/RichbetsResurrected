@@ -67,6 +67,7 @@ public class DefaultInfrastructureModule : Module
 
         builder.RegisterType<EmailSender>().As<IEmailSender>()
             .InstancePerLifetimeScope();
+        
     }
 
     private void RegisterDevelopmentOnlyDependencies(ContainerBuilder builder)

@@ -1,11 +1,14 @@
 ﻿using Ardalis.ListStartupServices;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using RichbetsResurrected.Core;
 using RichbetsResurrected.Infrastructure;
 using RichbetsResurrected.Infrastructure.Data;
 using RichbetsResurrected.Infrastructure.Data.Contexts;
+using RichbetsResurrected.Infrastructure.Data.Identity.Models;
 using RichbetsResurrected.Web;
 using Westwind.AspNetCore.LiveReload;
 
@@ -18,6 +21,22 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.CheckConsentNeeded = context => true;
     options.MinimumSameSitePolicy = SameSiteMode.None;
 });
+
+
+
+builder.Services.AddIdentity<AppUser, AppRole>(options =>
+{
+    options.User.RequireUniqueEmail = true;
+    options.Password.RequiredLength = 6;
+}).AddEntityFrameworkStores<UserAppContext>().AddDefaultTokenProviders();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SameSite = SameSiteMode.Lax;
+});
+
+
 
 var connectionString =
     builder.Configuration
@@ -79,6 +98,9 @@ app.UseRouting();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseCookiePolicy();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Enable middleware to serve generated Swagger as a JSON endpoint.
 app.UseSwagger();
