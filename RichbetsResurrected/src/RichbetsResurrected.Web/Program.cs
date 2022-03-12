@@ -45,8 +45,8 @@ var connectionString =
 builder.Services.AddDbContext(connectionString);
 builder.Services.AddLiveReload();
 
-builder.Services.AddControllersWithViews().AddNewtonsoftJson();
-builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews().AddNewtonsoftJson().AddRazorRuntimeCompilation();
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 builder.Services.AddSwaggerGen(c =>
 {
