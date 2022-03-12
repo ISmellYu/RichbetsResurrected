@@ -23,26 +23,8 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 });
 
 
+builder.Services.AddInfrastructure(builder.Configuration);
 
-builder.Services.AddIdentity<AppUser, AppRole>(options =>
-{
-    options.User.RequireUniqueEmail = true;
-    options.Password.RequiredLength = 6;
-}).AddEntityFrameworkStores<UserAppContext>().AddDefaultTokenProviders();
-
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
-{
-    options.Cookie.HttpOnly = true;
-    options.Cookie.SameSite = SameSiteMode.Lax;
-});
-
-
-
-var connectionString =
-    builder.Configuration
-        .GetConnectionString("SqliteConnection"); //Configuration.GetConnectionString("DefaultConnection");
-
-builder.Services.AddDbContext(connectionString);
 builder.Services.AddLiveReload();
 
 builder.Services.AddControllersWithViews().AddNewtonsoftJson().AddRazorRuntimeCompilation();
