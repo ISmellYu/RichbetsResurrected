@@ -12,7 +12,7 @@ body {
 
 header {
     background-color: #212121;
-    height: 65px;
+    height: 63px;
     width: 100%;
     top: 0;
     left: 0;
@@ -23,7 +23,7 @@ header {
 }
 
 header h1 {
-    font-size: 44px;
+    font-size: 43px;
     margin: 0;
     font-weight: 400;
 }

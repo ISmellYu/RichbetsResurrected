@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - Richbets</title>
     <link rel="stylesheet" href="~/css/main.layout.css">
+    <link rel="stylesheet" href="~/css/odometer-theme-default.css">
+    <script src="~/js/odometer.js"></script>
     @RenderSection("Head", required: false)
 </head>
 <body>
@@ -14,14 +16,19 @@
         <ul class="nav-list">
             <div class="point-box">
                 <img class="rbc-logo" src="~/img/rbcoin30x30.png" alt="rbcoin">
-                <p id="points-amount">13.900 RBC</p>
+                <p id="odometer" class="odometer">%points%</p><p class="points-currency">RBC</p>
             </div>
-            <li><a class="-link" href="~/about">Regulamin</a></li>
-            <li class="-link-active"><a class="-link" href="~/contact">Gry</a></li>
-            <li><a class="-link logout-link" href="~/login">Wyloguj</a></li>
+            <li><a class="-link" href="#">Regulamin</a></li>
+            <li class="-link-active"><a class="-link" href="~/dashboard">Gry</a></li>
+            <li><a class="-link logout-link" href="#">Wyloguj</a></li>
         </ul>
     </nav>
 </header>
+<script>
+    setTimeout(function(){
+        document.getElementById("odometer").innerHTML = 13900;
+    }, 1000);
+</script>
 
 @RenderBody()
 

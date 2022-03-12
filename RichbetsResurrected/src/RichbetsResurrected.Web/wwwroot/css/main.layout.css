@@ -3,6 +3,7 @@
 * {
     font-family: 'Poppins', sans-serif;
     color: white;
+    transition: ease-in-out .2s;
 }
 
 body {
@@ -12,7 +13,7 @@ body {
 
 header {
     background-color: #212121;
-    height: 65px;
+    height: 63px;
     width: 100%;
     top: 0;
     left: 0;
@@ -43,23 +44,27 @@ header {
 .point-box{
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(26, 26, 26, 0.85);
-    width: 147px;
+    background-color: rgba(25, 25, 25, 0.85);
     height: 46px;
     border-radius: 10px;
-    margin-right: 20px;
+    margin-right: 15px;
+    align-items: center;
 }
 
-#points-amount{
-    font-size: 16px;
+#odometer{
+    font-size: 15px;
+    margin: 2px 0 0 0;
+}
+
+.points-currency{
+    font-size: 15px;
+    margin: 0 15px 0 5px;
 }
 
 .rbc-logo{
     width: 30px;
     height: 30px;
-    margin: 5px;
+    margin: 10px 8px 10px 10px
 }
 
 .nav-list li{
@@ -70,18 +75,21 @@ header {
 }
 
 .nav-list li:last-child{
-    margin-right: 20px;
+    margin-right: 5px;
+}
+
+.nav-list li:hover{
+    background-color: rgba(25, 25, 25, 0.85);
 }
 
 .-link{
     text-decoration: none;
-    font-size: 17px;
+    font-size: 15px;
+    font-weight: 400;
 }
 
-.-link-activea{
-    border-style: none none solid none;
-    border-color: #EE5353;
-    border-width: 3px;
+.-link-active{
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 .-link-active::before{
@@ -90,6 +98,9 @@ header {
     height: 3px;
     width: 100%;
     position: absolute;
+    left: 0;
+    bottom: 0;
+    border-radius: 5px;
 }
 
 .logout-link{
