@@ -1,6 +1,8 @@
 ﻿using System.Globalization;
+using AspNet.Security.OAuth.Discord;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -19,9 +21,9 @@ public static class StartupSetup
     {
         var connectionString = configuration.GetConnectionString("SqliteConnection"); //Configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext(connectionString);
+        services.ConfigureCookies();
         services.AddIdentity();
-        services.ConfigureAuthentication();
-        services.AddDiscordOAuth("***REMOVED***", "***REMOVED***");
+        services.ConfigureAuthentication("***REMOVED***", "***REMOVED***");
     }
     
     public static void AddDbContext(this IServiceCollection services, string connectionString)
@@ -30,13 +32,35 @@ public static class StartupSetup
             options.UseSqlite(connectionString));
         // will be created in web project root
     }
-    
-    public static void AddDiscordOAuth(this IServiceCollection services, string clientId, string clientSecret)
+
+    public static void AddIdentity(this IServiceCollection services)
     {
-        services.AddAuthentication().AddDiscord(options =>
+        services.AddIdentity<AppUser, AppRole>()
+            .AddEntityFrameworkStores<AppDbContext>();
+    }
+
+    public static void ConfigureAuthentication(this IServiceCollection services, string discordClientId, string discordClientSecret)
+    {
+        services.AddAuthentication(options =>
         {
-            options.ClientId = clientId;
-            options.ClientSecret = clientSecret;
+            options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = DiscordAuthenticationDefaults.AuthenticationScheme;
+        }).AddCookie(options =>
+        {
+            options.LoginPath = "/Account/Login";
+            options.LogoutPath = "/Account/Logout";
+            options.AccessDeniedPath = "/Account/AccessDenied";
+            options.Cookie.Name = "RichbetsResurrected";
+            options.Cookie.HttpOnly = true;
+            options.Cookie.SameSite = SameSiteMode.None;
+            options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+            options.Cookie.IsEssential = true;
+            options.ExpireTimeSpan = TimeSpan.FromDays(30);
+            
+        }).AddDiscord(options =>
+        {
+            options.ClientId = discordClientId;
+            options.ClientSecret = discordClientSecret;
             options.Scope.Add("guilds");
             options.Scope.Add("identify");
             
@@ -55,22 +79,15 @@ public static class StartupSetup
                 context.Properties.StoreTokens(tokens);
                 return Task.CompletedTask;
             };
-        });
+        });;
     }
     
-    public static void AddIdentity(this IServiceCollection services)
+    public static void ConfigureCookies(this IServiceCollection services)
     {
-        services.AddIdentity<AppUser, AppRole>()
-            .AddEntityFrameworkStores<UserAppContext>()
-            .AddDefaultTokenProviders();
-    }
-
-    public static void ConfigureAuthentication(this IServiceCollection services)
-    {
-        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+        services.Configure<CookiePolicyOptions>(options =>
         {
-            options.Cookie.HttpOnly = true;
-            options.Cookie.SameSite = SameSiteMode.Lax;
+            options.CheckConsentNeeded = context => true;
+            options.MinimumSameSitePolicy = SameSiteMode.Lax;
         });
     }
 }
