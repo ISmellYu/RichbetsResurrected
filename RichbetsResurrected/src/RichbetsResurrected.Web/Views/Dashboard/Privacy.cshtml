@@ -1,0 +1,72 @@
+@{
+    ViewData["Title"] = "Privacy";
+    Layout = "_MainLayout";
+}
+@section Head{
+    <link rel="stylesheet" href="~/css/Dashboard/Privacy.css">
+}
+<script>
+    function scrollUp() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    }
+</script>
+<div class="content-scroller">
+    <ul>
+        <li><a href="#start" onclick="scrollUp()">Start</a></li>
+        <li><a href="#content-project">Projekt</a></li>
+        <li><a href="#content-rules">Regulamin</a></li>
+    </ul>
+</div>
+<div class="container">
+    <div id="content-project" class="content-form">
+        <h1 class="title">Projekt</h1>
+        <p class="content-text">
+            Wszystkie gry znajdujące się na stronie są tylko i wyłącznie <span class="content-text-bold">symulatorami.</span><br>
+            Punkty za które można grać na stronie są bezwartościowe, nie można ich wymienić na normalne pieniądze lub jakiekolwiek dobra materialne.
+            Dostaje się je tylko poprzez wchodzenie na kanały discordowe i rozmawianie z innymi członkami serwera,
+            nie ma możliwości kupna owych punktów za pieniądze lub dobra materialne.
+        </p>
+        <p class="content-text">
+            Projekt stworzony w celach tylko i wyłącznie edukacyjnych. 
+            Ma na celu pokazanie jakie rzeczy można stworzyć wykorzystując jako backend <span class="content-text-bold">C#</span> oraz <span class="content-text-bold">SignalR</span>.
+        </p>
+        <div class="authors">
+            <p class="content-text">
+                Twórcy projektu:
+            </p>
+            <ul class="authors-list">
+                <li class="authors-item">Frontend: <span class="authors-item-sub">Drairan9</span></li>
+                <li class="authors-item">Backend:  <span class="authors-item-sub">ISmellYu</span></li>
+            </ul>
+        </div>
+    </div>
+    <div id="content-rules" class="content-form">
+        <h1 class="title">Regulamin</h1>
+
+        <ul class="numeric-decimals">
+        <li>Lorem ipsum dolor.
+            <ul>
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
+                <li>Lorem ipsum dolor.</li>
+                <li>Lorem ipsum dolor.</li>
+            </ul>
+        </li>
+        <li>Lorem ipsum dolor.
+            <ul>
+                <li>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corporis tempora, qui totam hic consequuntur possimus, eveniet repellendus eius exercitationem numquam temporibus omnis a reiciendis quasi tempore impedit quo expedita voluptatum.</li>
+                <li>Lorem ipsum dolor.</li>
+            </ul>
+        </li>
+        <li>Lorem ipsum dolor.</li>
+        <li>Lorem ipsum dolor.
+            <ul>
+                <li>Lorem ipsum dolor.</li>
+                <li>Lorem ipsum dolor.</li>
+            </ul>
+        </li>
+        <li>Lorem ipsum dolor.</li>
+        </ul>
+    </div>
+</div>
+
