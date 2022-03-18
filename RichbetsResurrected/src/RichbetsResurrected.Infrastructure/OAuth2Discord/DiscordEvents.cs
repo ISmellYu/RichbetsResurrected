@@ -16,7 +16,6 @@ public static class DiscordEvents
         if (!IsGuildMember(guilds, GuildId))
         {
             context.Fail($"User is not a member of the guild with id {GuildId}.");
-            Console.WriteLine($"User is not a member of the guild with id {GuildId}.");
             return;
         }
 
@@ -24,7 +23,6 @@ public static class DiscordEvents
         if (!IsInRole(userRoles, RoleId))
         {
             context.Fail($"User is not in the role with id {RoleId}.");
-            Console.WriteLine($"User is not in the role with id {RoleId}.");
             return;
         }
         
