@@ -1,4 +1,7 @@
 ﻿using System.Globalization;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Text.Json;
 using AspNet.Security.OAuth.Discord;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -8,9 +11,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using RichbetsResurrected.Infrastructure.Data;
 using RichbetsResurrected.Infrastructure.Data.Contexts;
 using RichbetsResurrected.Infrastructure.Data.Identity.Models;
+using RichbetsResurrected.Infrastructure.OAuth2Discord;
 
 namespace RichbetsResurrected.Infrastructure;
 
@@ -62,23 +68,13 @@ public static class StartupSetup
             options.ClientId = discordClientId;
             options.ClientSecret = discordClientSecret;
             options.Scope.Add("guilds");
-            options.Scope.Add("identify");
+            options.Scope.Add("guilds.members.read");
             
             options.SaveTokens = true;
-            
-            options.Events.OnCreatingTicket = context =>
-            {
-                var tokens = context.Properties.GetTokens().ToList();
-                
-                tokens.Add(new AuthenticationToken
-                {
-                    Name = "Ticket",
-                    Value = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)
-                });
-                
-                context.Properties.StoreTokens(tokens);
-                return Task.CompletedTask;
-            };
+
+            options.Events.OnCreatingTicket = DiscordEvents.OnCreatingTicketAsync;
+
+            options.Events.OnTicketReceived = DiscordEvents.OnTicketReceivedAsync;
         });;
     }
     
