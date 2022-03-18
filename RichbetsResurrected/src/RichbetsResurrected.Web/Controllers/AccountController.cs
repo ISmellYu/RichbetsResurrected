@@ -25,10 +25,7 @@ public class AccountController : Controller
         ViewData["ReturnUrl"] = returnUrl;
         return View();
     }
-
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
+    
     public Task ExternalLogin()
     {
         var returnUrl = "";
