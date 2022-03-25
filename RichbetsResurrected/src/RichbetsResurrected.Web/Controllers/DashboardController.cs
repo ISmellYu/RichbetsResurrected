@@ -4,6 +4,7 @@ namespace RichbetsResurrected.Web.Controllers;
 
 public class DashboardController : Controller
 {
+    [Route("/Error")]
     public IActionResult Index()
     {
         // error
