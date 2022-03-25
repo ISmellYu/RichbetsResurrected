@@ -1,4 +1,5 @@
-﻿using AspNet.Security.OAuth.Discord;
+﻿using System.Net;
+using AspNet.Security.OAuth.Discord;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -26,17 +27,16 @@ public class AccountController : Controller
         return View();
     }
     
-    public Task ExternalLogin()
+    public async Task<IActionResult> ExternalLogin()
     {
         var returnUrl = "";
         if (ViewData["ReturnUrl"] == null)
         {
-            returnUrl = Url.Action("Index", "Home");
+            returnUrl = Url.Action("Login", "Account");
         }
         var properties = new AuthenticationProperties { RedirectUri = returnUrl };
-        return HttpContext.ChallengeAsync(DiscordAuthenticationDefaults.AuthenticationScheme, properties);
+        return new ChallengeResult(DiscordAuthenticationDefaults.AuthenticationScheme, properties);
     }
-    
     
     public async Task<IActionResult> Logout()
     {
