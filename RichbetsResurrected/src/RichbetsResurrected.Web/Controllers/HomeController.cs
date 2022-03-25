@@ -16,6 +16,7 @@ public class HomeController : Controller
         return View();
     }
 
+    [Route("/Error")]
     public IActionResult Error()
     {
         return View();
