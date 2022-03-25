@@ -32,7 +32,7 @@ public class AccountController : Controller
         var returnUrl = "";
         if (ViewData["ReturnUrl"] == null)
         {
-            returnUrl = Url.Action("Login", "Account");
+            returnUrl = Url.Action("Index", "Home");
         }
         var properties = new AuthenticationProperties { RedirectUri = returnUrl };
         return new ChallengeResult(DiscordAuthenticationDefaults.AuthenticationScheme, properties);
