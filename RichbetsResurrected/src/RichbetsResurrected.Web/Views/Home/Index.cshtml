@@ -1,24 +1,8 @@
 @{
-    ViewData["Title"] = "Login";
-    Layout = "_LoginLayout";
+    ViewData["Title"] = "Dashboard";
+    Layout = "_MainLayout";
 }
 @section Head{
-    <link rel="stylesheet" href="~/css/login.css">
-    <link rel="stylesheet" href="~/css/particles.css">
+    @* <link rel="stylesheet" href="~/css/login.layout.css"> *@
 }
-<div class="container">
-    <div class="white-wing">
-        <img src="~/img/discord-blue.png" alt="Discord logo blue">
-    </div>
-    <div class="gray-wing">
-        <a class="login-button" asp-action="ExternalLogin" asp-controller="Account">
-            <div class="login-icon">
-                <img src="~/img/discord-white.png" alt="Discord logo white">
-            </div>
-            <div class="login-text">
-                <p>Zaloguj się przez Discord</p>
-            </div>
-        </a>
-        <p class="login-auth">Discord OAuth 2</p>
-    </div>
-</div>
+<button>Guzik</button>
