@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    transition: ease-in-out .1s;
+}
+
+body {
+    background-color: #121212;
+    margin: 0;
+}
+
+.logo-text{
+    position: absolute;
+    font-size: 32px;
+    margin: 0;
+    font-weight: 400;
+    margin-left: 20px;
+}
+
+.logo-text-color{
+    color: #EE5353;
+}
+
+.container{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+
+.error-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rb-logo{
+    width: 380px;
+}
+
+.main-text{
+    font-size: 75px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.sub-text{
+    font-size: 55px;
+    font-weight: 600;
+    margin: 0;
+    color: #EE5353;
+}
+
+.return{
+    font-size: 20px;
+    font-weight: 400;
+    margin: 0;
+    text-decoration: underline;
+    color: #EE5353;
+    margin-top: 65px;
+}
+
+.return:hover{
+    cursor: pointer;
+    color: #ad3636;
+}
+
+
+@media (max-width: 600px) {
+    .rb-logo{
+        width: calc(380px / 1.5);
+    }
+    
+    .main-text{
+        font-size: calc(75px / 1.5);
+        font-weight: 400;
+        margin: 0;
+    }
+    
+    .sub-text{
+        font-size: calc(55px / 1.5);
+        font-weight: 600;
+        margin: 0;
+        color: #EE5353;
+    }
+    
+    .return{
+        font-size: calc(20px / 1.5);
+        font-weight: 400;
+        margin: 0;
+        text-decoration: underline;
+        color: #EE5353;
+        margin-top: 65px;
+    }
+    
+    .return:hover{
+        cursor: pointer;
+        color: #ad3636;
+    }
+}
+
+@media (max-width: 400px) {
+    .rb-logo{
+        width: calc(380px / 2);
+    }
+    
+    .main-text{
+        font-size: calc(75px / 2);
+        font-weight: 400;
+        margin: 0;
+    }
+    
+    .sub-text{
+        font-size: calc(55px / 2);
+        font-weight: 600;
+        margin: 0;
+        color: #EE5353;
+    }
+    
+    .return{
+        font-size: calc(20px / 2);
+        font-weight: 400;
+        margin: 0;
+        text-decoration: underline;
+        color: #EE5353;
+        margin-top: 65px;
+    }
+    
+    .return:hover{
+        cursor: pointer;
+        color: #ad3636;
+    }
+}
