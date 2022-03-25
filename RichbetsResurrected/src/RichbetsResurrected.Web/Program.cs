@@ -96,7 +96,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapRazorPages();
 });
 
-app.UseStatusCodePagesWithRedirects("/Error");
+app.UseStatusCodePagesWithRedirects("/errors/{0}");
 
 // Seed Database
 using (var scope = app.Services.CreateScope())
