@@ -12,6 +12,11 @@ public class ErrorController : Controller
         {
             return View("NotFound");
         }
+
+        if (statusCode == 403)
+        {
+            return View("AccessDenied");
+        }
         
         return View("Error");
     }
