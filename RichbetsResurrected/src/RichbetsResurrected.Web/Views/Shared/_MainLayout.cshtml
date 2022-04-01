@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using RichbetsResurrected.Infrastructure.Data.Identity.Models
+<!DOCTYPE html>
+@inject SignInManager<AppUser> _signInManager
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -18,9 +21,19 @@
                 <img class="rbc-logo" src="~/img/rbcoin30x30.png" alt="rbcoin">
                 <p id="odometer" class="odometer">%points%</p><p class="points-currency">RBC</p>
             </div>
-            <li><a class="-link" href="/dashboard/privacy">Regulamin</a></li>
+            <li><a class="-link" asp-action="Privacy" asp-controller="Dashboard">Regulamin</a></li>
             <li class="-link-active"><a class="-link" href="/home">Gry</a></li>
-            <li><a class="-link logout-link" href="/home">Wyloguj</a></li>
+            <li>
+                @if (_signInManager.IsSignedIn(User))
+                {
+                    <a class="-link logout-link btn" asp-action="Logout" asp-controller="Account">Wyloguj</a>
+                }
+                else
+                {
+                    <a class="-link logout-link" asp-action="Login" asp-controller="Account">Zaloguj</a>
+                }
+                
+            </li>
         </ul>
     </nav>
 </header>

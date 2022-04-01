@@ -16,9 +16,9 @@ public class HomeControllerIndex : IClassFixture<CustomWebApplicationFactory<Web
     [Fact]
     public async Task ReturnsViewWithCorrectMessage()
     {
-        var response = await _client.GetAsync("/");
+        var response = await _client.GetAsync("/").ConfigureAwait(false);
         response.EnsureSuccessStatusCode();
-        var stringResponse = await response.Content.ReadAsStringAsync();
+        var stringResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
         Assert.Contains("RichbetsResurrected.Web", stringResponse);
     }

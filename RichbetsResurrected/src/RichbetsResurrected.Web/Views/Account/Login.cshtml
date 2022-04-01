@@ -11,7 +11,7 @@
         <img src="~/img/discord-blue.png" alt="Discord logo blue">
     </div>
     <div class="gray-wing">
-        <a class="login-button" asp-action="ExternalLogin" asp-controller="Account">
+        <a class="login-button" asp-action="ExternalLogin" asp-controller="Account" asp-route-returnUrl="@ViewData["ReturnUrl"]">
             <div class="login-icon">
                 <img src="~/img/discord-white.png" alt="Discord logo white">
             </div>

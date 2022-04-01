@@ -28,7 +28,7 @@ public class ToDoItemSearchService : IToDoItemSearchService
         }
 
         var projectSpec = new ProjectByIdWithItemsSpec(projectId);
-        var project = await _repository.GetBySpecAsync(projectSpec);
+        var project = await _repository.GetBySpecAsync(projectSpec).ConfigureAwait(false);
 
         // TODO: Optionally use Ardalis.GuardClauses Guard.Against.NotFound and catch
         if (project == null) return Result<List<ToDoItem>>.NotFound();
@@ -51,7 +51,7 @@ public class ToDoItemSearchService : IToDoItemSearchService
     public async Task<Result<ToDoItem>> GetNextIncompleteItemAsync(int projectId)
     {
         var projectSpec = new ProjectByIdWithItemsSpec(projectId);
-        var project = await _repository.GetBySpecAsync(projectSpec);
+        var project = await _repository.GetBySpecAsync(projectSpec).ConfigureAwait(false);
         if (project == null) return Result<ToDoItem>.NotFound();
 
         var incompleteSpec = new IncompleteItemsSpec();

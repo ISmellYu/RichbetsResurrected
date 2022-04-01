@@ -9,7 +9,7 @@
 
     <ItemGroup>
         <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="5.2.0" />
-        <PackageReference Include="AspNet.Security.OAuth.Discord" Version="6.0.4" />
+        <PackageReference Include="AspNet.Security.OAuth.Discord" Version="6.0.5" />
         <PackageReference Include="Autofac" Version="6.3.0" />
         <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
         <PackageReference Include="Ardalis.EFCore.Extensions" Version="1.1.0" />

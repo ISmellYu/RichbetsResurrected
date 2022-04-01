@@ -14,13 +14,13 @@ public class EfRepositoryUpdate : BaseEfRepoTestFixture
         var initialName = Guid.NewGuid().ToString();
         var project = new Project(initialName);
 
-        await repository.AddAsync(project);
+        await repository.AddAsync(project).ConfigureAwait(false);
 
         // detach the item so we get a different instance
         _dbContext.Entry(project).State = EntityState.Detached;
 
         // fetch the item and update its title
-        var newProject = (await repository.ListAsync())
+        var newProject = (await repository.ListAsync().ConfigureAwait(false))
             .FirstOrDefault(project => project.Name == initialName);
         if (newProject == null)
         {
@@ -33,10 +33,10 @@ public class EfRepositoryUpdate : BaseEfRepoTestFixture
         newProject.UpdateName(newName);
 
         // Update the item
-        await repository.UpdateAsync(newProject);
+        await repository.UpdateAsync(newProject).ConfigureAwait(false);
 
         // Fetch the updated item
-        var updatedItem = (await repository.ListAsync())
+        var updatedItem = (await repository.ListAsync().ConfigureAwait(false))
             .FirstOrDefault(project => project.Name == newName);
 
         Assert.NotNull(updatedItem);

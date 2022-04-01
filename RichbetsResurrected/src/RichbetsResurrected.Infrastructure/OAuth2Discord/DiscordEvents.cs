@@ -34,6 +34,8 @@ public static class DiscordEvents
         });
 
         context.Properties.StoreTokens(tokens);
+        // context.Properties.Items.Add("LoginProvider", "Discord");
+        context.Success();
     }
 
     public static Task OnTicketReceivedAsync(TicketReceivedContext context)

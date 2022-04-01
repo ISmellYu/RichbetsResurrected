@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Security.Claims;
 using AspNet.Security.OAuth.Discord;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -27,25 +28,61 @@ public class AccountController : Controller
         return View();
     }
     
-    public async Task<IActionResult> ExternalLogin()
+    public IActionResult ExternalLogin(string returnUrl = null)
     {
-        var returnUrl = "";
-        if (ViewData["ReturnUrl"] == null)
+        // Creating a new Discord authentication properties instance (it prevents LoginProvider from being null)
+        var prop = _signInManager.ConfigureExternalAuthenticationProperties(
+            DiscordAuthenticationDefaults.AuthenticationScheme, Url.Action("signin_discord", "Account", new {
+                returnUrl}));
+        return new ChallengeResult(DiscordAuthenticationDefaults.AuthenticationScheme, prop);
+    }
+
+    [Route("/signin-discord")]
+    public async Task<IActionResult> signin_discord(string? returnUrl = null)
+    {
+        returnUrl ??= Url.Content("~/");
+        var info = await _signInManager.GetExternalLoginInfoAsync();
+        if (info == null)
         {
-            returnUrl = Url.Action("Index", "Home");
+            return RedirectToAction("Login");
         }
-        var properties = new AuthenticationProperties { RedirectUri = returnUrl };
-        return new ChallengeResult(DiscordAuthenticationDefaults.AuthenticationScheme, properties);
+        
+        var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false).ConfigureAwait(false);
+        if (result.Succeeded)
+        {
+            return LocalRedirect(returnUrl);
+        }
+        else
+        {
+            var user = new AppUser
+            {
+                UserName = info.Principal.FindFirstValue(ClaimTypes.Name),
+                Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+            };
+
+            var createResult = await _userManager.CreateAsync(user);
+            if (createResult.Succeeded)
+            {
+                createResult = await _userManager.AddLoginAsync(user, info);
+                if (createResult.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, false);
+                    return LocalRedirect(returnUrl);
+                }
+            }
+            return RedirectToAction("Login");
+        }
+        return RedirectToAction("Index", "Home");
     }
     
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync().ConfigureAwait(false);
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Login", "Account");
     }
     
     public async Task<IActionResult> AccessDenied()
     {
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "Error", new { statusCode = (int)HttpStatusCode.Unauthorized });
     }
 }

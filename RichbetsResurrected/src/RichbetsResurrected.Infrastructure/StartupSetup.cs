@@ -41,35 +41,23 @@ public static class StartupSetup
 
     public static void AddIdentity(this IServiceCollection services)
     {
-        services.AddIdentity<AppUser, AppRole>()
+        services.AddIdentity<AppUser, AppRole>(options => {})
             .AddEntityFrameworkStores<AppDbContext>();
     }
 
     public static void ConfigureAuthentication(this IServiceCollection services, string discordClientId, string discordClientSecret)
     {
-        services.AddAuthentication(options =>
+        services.AddAuthentication().AddDiscord(options =>
         {
-            options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = DiscordAuthenticationDefaults.AuthenticationScheme;
-        }).AddCookie(options =>
-        {
-            options.LoginPath = "/Account/Login";
-            options.LogoutPath = "/Account/Logout";
-            options.AccessDeniedPath = "/Account/AccessDenied";
-            options.Cookie.Name = "RichbetsResurrected";
-            options.Cookie.HttpOnly = true;
-            options.Cookie.SameSite = SameSiteMode.None;
-            options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
-            options.Cookie.IsEssential = true;
-            options.ExpireTimeSpan = TimeSpan.FromDays(30);
-            
-        }).AddDiscord(options =>
-        {
+            // options.ForwardSignIn = CookieAuthenticationDefaults.AuthenticationScheme;
+            // options.ForwardSignOut = CookieAuthenticationDefaults.AuthenticationScheme;
             options.ClientId = discordClientId;
             options.ClientSecret = discordClientSecret;
             options.Scope.Add("guilds");
             options.Scope.Add("guilds.members.read");
-            
+            options.CallbackPath = new PathString("/Account/signin-discord");
+
+
             options.SaveTokens = true;
 
             options.Events.OnCreatingTicket = DiscordEvents.OnCreatingTicketAsync;
