@@ -16,9 +16,9 @@ public class MetaControllerInfo : IClassFixture<CustomWebApplicationFactory<WebM
     [Fact]
     public async Task ReturnsVersionAndLastUpdateDate()
     {
-        var response = await _client.GetAsync("/info");
+        var response = await _client.GetAsync("/info").ConfigureAwait(false);
         response.EnsureSuccessStatusCode();
-        var stringResponse = await response.Content.ReadAsStringAsync();
+        var stringResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
         Assert.Contains("Version", stringResponse);
         Assert.Contains("Last Updated", stringResponse);

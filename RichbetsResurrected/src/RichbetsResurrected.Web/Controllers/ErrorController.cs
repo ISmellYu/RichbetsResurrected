@@ -13,7 +13,7 @@ public class ErrorController : Controller
             return View("NotFound");
         }
 
-        if (statusCode == 403)
+        if (statusCode is 403 or 401)
         {
             return View("AccessDenied");
         }

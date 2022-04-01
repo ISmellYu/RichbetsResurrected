@@ -23,14 +23,14 @@ public class ItemCompletedEmailNotificationHandlerHandle
     {
 #nullable disable
         Exception ex =
-            await Assert.ThrowsAsync<ArgumentNullException>(() => _handler.Handle(null, CancellationToken.None));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => _handler.Handle(null, CancellationToken.None)).ConfigureAwait(false);
 #nullable enable
     }
 
     [Fact]
     public async Task SendsEmailGivenEventInstance()
     {
-        await _handler.Handle(new ToDoItemCompletedEvent(new ToDoItem()), CancellationToken.None);
+        await _handler.Handle(new ToDoItemCompletedEvent(new ToDoItem()), CancellationToken.None).ConfigureAwait(false);
 
         _emailSenderMock.Verify(
             sender => sender.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),

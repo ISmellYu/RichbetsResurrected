@@ -12,9 +12,9 @@ public class EfRepositoryAdd : BaseEfRepoTestFixture
         var repository = GetRepository();
         var project = new Project(testProjectName);
 
-        await repository.AddAsync(project);
+        await repository.AddAsync(project).ConfigureAwait(false);
 
-        var newProject = (await repository.ListAsync())
+        var newProject = (await repository.ListAsync().ConfigureAwait(false))
             .FirstOrDefault();
 
         Assert.Equal(testProjectName, newProject?.Name);

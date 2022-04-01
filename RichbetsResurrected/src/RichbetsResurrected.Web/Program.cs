@@ -13,9 +13,12 @@ using RichbetsResurrected.Web;
 using Westwind.AspNetCore.LiveReload;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseSetting("https_port", "57680");
+builder.WebHost.UseUrls("https://*:57680");
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
+builder.Services.AddHttpsRedirection(options => options.HttpsPort = 57680);
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
     options.CheckConsentNeeded = context => true;
@@ -83,6 +86,7 @@ app.UseCookiePolicy();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 // Enable middleware to serve generated Swagger as a JSON endpoint.
 app.UseSwagger();
