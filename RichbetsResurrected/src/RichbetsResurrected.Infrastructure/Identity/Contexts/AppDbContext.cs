@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RichbetsResurrected.Core.ProjectAggregate;
 using RichbetsResurrected.SharedKernel;
 
-namespace RichbetsResurrected.Infrastructure.Data.Contexts;
+namespace RichbetsResurrected.Infrastructure.Identity.Contexts;
 
 public class AppDbContext : UserAppContext
 {

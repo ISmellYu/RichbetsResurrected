@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using RichbetsResurrected.Core.ProjectAggregate;
 using RichbetsResurrected.Infrastructure.Data;
-using RichbetsResurrected.Infrastructure.Data.Contexts;
+using RichbetsResurrected.Infrastructure.Identity.Contexts;
 
 namespace RichbetsResurrected.IntegrationTests.Data;
 
