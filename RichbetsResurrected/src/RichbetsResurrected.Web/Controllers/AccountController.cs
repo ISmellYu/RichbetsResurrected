@@ -16,8 +16,7 @@ public class AccountController : Controller
     {
         _accountRepository = accountRepository;
     }
-
-    // GET
+    
     [HttpGet]
     public async Task<IActionResult> Login(string returnUrl = null)
     {
@@ -29,12 +28,12 @@ public class AccountController : Controller
     
     public Task<IActionResult> ExternalLogin(string returnUrl = null)
     {
-        // Creating a new Discord authentication properties instance (it prevents LoginProvider from being null)
-        return _accountRepository.ChallengeResultAsync(DiscordAuthenticationDefaults.AuthenticationScheme, Url.Action("signin_discord", "Account", new { returnUrl }));
+        return _accountRepository.ChallengeResultAsync(DiscordAuthenticationDefaults.AuthenticationScheme, 
+            Url.Action("Signin_discord", "Account", new { returnUrl }));
     }
 
     [Route("/signin-discord")]
-    public async Task<IActionResult> signin_discord(string? returnUrl = null)
+    public async Task<IActionResult> Signin_discord(string? returnUrl = null)
     {
         returnUrl ??= Url.Content("~/");
         var info = await _accountRepository.GetExternalLoginInfoAsync();
