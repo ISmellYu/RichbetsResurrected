@@ -7,8 +7,7 @@ using Microsoft.OpenApi.Models;
 using RichbetsResurrected.Core;
 using RichbetsResurrected.Infrastructure;
 using RichbetsResurrected.Infrastructure.Data;
-using RichbetsResurrected.Infrastructure.Data.Contexts;
-using RichbetsResurrected.Infrastructure.Data.Identity.Models;
+using RichbetsResurrected.Infrastructure.Identity.Contexts;
 using RichbetsResurrected.Web;
 using Westwind.AspNetCore.LiveReload;
 
@@ -79,6 +78,7 @@ else
 }
 
 app.UseRouting();
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

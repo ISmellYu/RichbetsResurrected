@@ -5,6 +5,7 @@ using MediatR.Pipeline;
 using RichbetsResurrected.Core.Interfaces;
 using RichbetsResurrected.Core.ProjectAggregate;
 using RichbetsResurrected.Infrastructure.Data;
+using RichbetsResurrected.Infrastructure.Identity;
 using RichbetsResurrected.SharedKernel.Interfaces;
 using Module = Autofac.Module;
 
@@ -67,7 +68,9 @@ public class DefaultInfrastructureModule : Module
 
         builder.RegisterType<EmailSender>().As<IEmailSender>()
             .InstancePerLifetimeScope();
-        
+
+        builder.RegisterType<AccountRepository>().AsSelf().InstancePerLifetimeScope();
+
     }
 
     private void RegisterDevelopmentOnlyDependencies(ContainerBuilder builder)

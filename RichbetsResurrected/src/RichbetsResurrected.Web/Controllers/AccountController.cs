@@ -4,18 +4,17 @@ using AspNet.Security.OAuth.Discord;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using RichbetsResurrected.Infrastructure.Data.Identity.Models;
+using RichbetsResurrected.Infrastructure.Identity;
+using RichbetsResurrected.Infrastructure.Identity.Models;
 
 namespace RichbetsResurrected.Web.Controllers;
 
 public class AccountController : Controller
 {
-    private readonly SignInManager<AppUser> _signInManager;
-    private readonly UserManager<AppUser> _userManager;
-    public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
+    private readonly AccountRepository  _accountRepository;
+    public AccountController(AccountRepository accountRepository)
     {
-        _signInManager = signInManager;
-        _userManager = userManager;
+        _accountRepository = accountRepository;
     }
 
     // GET
@@ -28,56 +27,47 @@ public class AccountController : Controller
         return View();
     }
     
-    public IActionResult ExternalLogin(string returnUrl = null)
+    public Task<IActionResult> ExternalLogin(string returnUrl = null)
     {
         // Creating a new Discord authentication properties instance (it prevents LoginProvider from being null)
-        var prop = _signInManager.ConfigureExternalAuthenticationProperties(
-            DiscordAuthenticationDefaults.AuthenticationScheme, Url.Action("signin_discord", "Account", new {
-                returnUrl}));
-        return new ChallengeResult(DiscordAuthenticationDefaults.AuthenticationScheme, prop);
+        return _accountRepository.ChallengeResultAsync(DiscordAuthenticationDefaults.AuthenticationScheme, Url.Action("signin_discord", "Account", new { returnUrl }));
     }
 
     [Route("/signin-discord")]
     public async Task<IActionResult> signin_discord(string? returnUrl = null)
     {
         returnUrl ??= Url.Content("~/");
-        var info = await _signInManager.GetExternalLoginInfoAsync();
+        var info = await _accountRepository.GetExternalLoginInfoAsync();
         if (info == null)
         {
             return RedirectToAction("Login");
         }
-        
-        var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false).ConfigureAwait(false);
+
+        var result = await _accountRepository.ExternalLoginSignInAsync(info);
         if (result.Succeeded)
         {
             return LocalRedirect(returnUrl);
         }
-        else
+        
+        var (createResult, user) = await _accountRepository.CreateUserFromExternalLoginAsync(info);
+        if (!createResult.Succeeded)
         {
-            var user = new AppUser
-            {
-                UserName = info.Principal.FindFirstValue(ClaimTypes.Name),
-                Email = info.Principal.FindFirstValue(ClaimTypes.Email)
-            };
-
-            var createResult = await _userManager.CreateAsync(user);
-            if (createResult.Succeeded)
-            {
-                createResult = await _userManager.AddLoginAsync(user, info);
-                if (createResult.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, false);
-                    return LocalRedirect(returnUrl);
-                }
-            }
             return RedirectToAction("Login");
         }
-        return RedirectToAction("Index", "Home");
+
+        createResult = await _accountRepository.AddExternalLoginToUserAsync(user, info);
+        if (!createResult.Succeeded)
+        {
+            return RedirectToAction("Login");
+        }
+
+        await _accountRepository.LoginAsync(user);
+        return LocalRedirect(returnUrl);
     }
     
     public async Task<IActionResult> Logout()
     {
-        await _signInManager.SignOutAsync().ConfigureAwait(false);
+        await _accountRepository.LogoutAsync();
         return RedirectToAction("Login", "Account");
     }
     

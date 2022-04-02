@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RichbetsResurrected.Core.ProjectAggregate;
 
-namespace RichbetsResurrected.Infrastructure.Data.Config;
+namespace RichbetsResurrected.Infrastructure.Identity.Config;
 
 public class ToDoConfiguration : IEntityTypeConfiguration<ToDoItem>
 {

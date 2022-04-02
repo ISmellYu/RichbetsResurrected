@@ -14,8 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RichbetsResurrected.Infrastructure.Data;
-using RichbetsResurrected.Infrastructure.Data.Contexts;
-using RichbetsResurrected.Infrastructure.Data.Identity.Models;
+using RichbetsResurrected.Infrastructure.Identity.Contexts;
+using RichbetsResurrected.Infrastructure.Identity.Models;
 using RichbetsResurrected.Infrastructure.OAuth2Discord;
 
 namespace RichbetsResurrected.Infrastructure;

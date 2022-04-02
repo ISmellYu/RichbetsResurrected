@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using RichbetsResurrected.Infrastructure.Data.Identity.Models;
+using RichbetsResurrected.Infrastructure.Identity.Models;
 
-namespace RichbetsResurrected.Infrastructure.Data.Contexts;
+namespace RichbetsResurrected.Infrastructure.Identity.Contexts;
 
 public class UserAppContext : IdentityDbContext<AppUser, AppRole, int, AppUserClaim, AppUserRole, AppUserLogin, AppRoleClaim, AppUserToken>
 {

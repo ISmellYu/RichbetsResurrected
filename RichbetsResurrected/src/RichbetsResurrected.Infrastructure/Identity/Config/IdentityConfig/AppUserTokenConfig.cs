@@ -1,9 +1,8 @@
-﻿using Autofac.Builder;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RichbetsResurrected.Infrastructure.Data.Identity.Models;
+using RichbetsResurrected.Infrastructure.Identity.Models;
 
-namespace RichbetsResurrected.Infrastructure.Data.Config.IdentityConfig;
+namespace RichbetsResurrected.Infrastructure.Identity.Config.IdentityConfig;
 
 public class AppUserTokenConfig : IEntityTypeConfiguration<AppUserToken>
 {
