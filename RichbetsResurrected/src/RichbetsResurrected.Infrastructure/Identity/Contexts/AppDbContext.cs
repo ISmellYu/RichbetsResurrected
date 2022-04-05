@@ -1,14 +1,20 @@
 ﻿using Ardalis.EFCore.Extensions;
 using MediatR;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using RichbetsResurrected.Core.DiscordAggregate;
 using RichbetsResurrected.Core.ProjectAggregate;
+using RichbetsResurrected.Infrastructure.Identity.Models;
 using RichbetsResurrected.SharedKernel;
 
 namespace RichbetsResurrected.Infrastructure.Identity.Contexts;
 
-public class AppDbContext : UserAppContext
+public class AppDbContext : IdentityDbContext<AppUser, AppRole, int, AppUserClaim, AppUserRole, AppUserLogin, AppRoleClaim, AppUserToken>
 {
     private readonly IMediator? _mediator;
+    
+    public DbSet<RichbetAppUser> RichbetAppUsers { get; set; }
+    public DbSet<RichbetUser> RichbetUsers { get; set; }
 
     //public AppDbContext(DbContextOptions options) : base(options)
     //{
@@ -19,9 +25,7 @@ public class AppDbContext : UserAppContext
     {
         _mediator = mediator;
     }
-
-    public DbSet<ToDoItem> ToDoItems => Set<ToDoItem>();
-    public DbSet<Project> Projects => Set<Project>();
+    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

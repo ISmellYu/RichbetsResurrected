@@ -11,6 +11,8 @@ public interface IAccountRepository
     Task<SignInResult> ExternalLoginSignInAsync(ExternalLoginInfo info);
     Task<(IdentityResult, AppUser)> CreateUserFromExternalLoginAsync(ExternalLoginInfo info);
     Task<IdentityResult> AddExternalLoginToUserAsync(AppUser user, ExternalLoginInfo info);
+    Task UpdateDiscordClaimsAsync(ExternalLoginInfo info);
+    Task UpdateRichbetUserAsync(AppUser user, ExternalLoginInfo info);
     Task<IActionResult> ChallengeResultAsync(string providerSchemaName, string? redirectUrl = null);
     Task LoginAsync(AppUser user);
     Task LogoutAsync();

@@ -45,6 +45,7 @@ public class AccountController : Controller
         var result = await _accountRepository.ExternalLoginSignInAsync(info);
         if (result.Succeeded)
         {
+            await _accountRepository.UpdateDiscordClaimsAsync(info);
             return LocalRedirect(returnUrl);
         }
         
@@ -59,7 +60,8 @@ public class AccountController : Controller
         {
             return RedirectToAction("Login");
         }
-
+        
+        await _accountRepository.UpdateDiscordClaimsAsync(info);
         await _accountRepository.LoginAsync(user);
         return LocalRedirect(returnUrl);
     }
