@@ -41,16 +41,16 @@ public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStar
             // Ensure the database is created.
             db.Database.EnsureCreated();
 
-            try
-            {
-                // Seed the database with test data.
-                SeedData.PopulateTestData(db);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "An error occurred seeding the " +
-                                    $"database with test messages. Error: {ex.Message}");
-            }
+            // try
+            // {
+            //     // Seed the database with test data.
+            //     SeedData.PopulateTestData(db);
+            // }
+            // catch (Exception ex)
+            // {
+            //     logger.LogError(ex, "An error occurred seeding the " +
+            //                         $"database with test messages. Error: {ex.Message}");
+            // }
         }
 
         host.Start();

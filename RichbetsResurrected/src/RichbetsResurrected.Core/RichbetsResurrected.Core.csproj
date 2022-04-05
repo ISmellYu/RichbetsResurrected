@@ -21,8 +21,8 @@
 
     <ItemGroup>
       <Folder Include="Interfaces\Games\Roulette" />
-      <Folder Include="RouletteAggregate\Events" />
-      <Folder Include="RouletteAggregate\Handlers" />
+      <Folder Include="Roulette\Events" />
+      <Folder Include="Roulette\Handlers" />
       <Folder Include="Services\Games" />
       <Folder Include="Services\Games\Roulette" />
     </ItemGroup>

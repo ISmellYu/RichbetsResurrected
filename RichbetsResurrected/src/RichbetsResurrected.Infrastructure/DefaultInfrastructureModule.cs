@@ -3,7 +3,10 @@ using Autofac;
 using MediatR;
 using MediatR.Pipeline;
 using RichbetsResurrected.Core.Interfaces;
+using RichbetsResurrected.Core.Interfaces.Stores;
 using RichbetsResurrected.Core.ProjectAggregate;
+using RichbetsResurrected.Infrastructure.BaseRichbet;
+using RichbetsResurrected.Infrastructure.BaseRichbet.Stores;
 using RichbetsResurrected.Infrastructure.Data;
 using RichbetsResurrected.Infrastructure.Identity;
 using RichbetsResurrected.SharedKernel.Interfaces;
@@ -70,6 +73,8 @@ public class DefaultInfrastructureModule : Module
             .InstancePerLifetimeScope();
 
         builder.RegisterType<AccountRepository>().AsSelf().InstancePerLifetimeScope();
+        builder.RegisterType<RichbetStore>().As<IRichbetStore>().InstancePerLifetimeScope();
+        builder.RegisterType<RichbetRepository>().As<IRichbetRepository>().InstancePerLifetimeScope();
 
     }
 

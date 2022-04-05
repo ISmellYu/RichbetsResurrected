@@ -1,4 +1,4 @@
-﻿namespace RichbetsResurrected.Core.RouletteAggregate.Entities;
+﻿namespace RichbetsResurrected.Core.Roulette.Entities;
 
 public class RouletteResult
 {
@@ -13,6 +13,7 @@ public class RouletteResult
     public int Number { get; set; }
     public int Segment { get; set; }
     public RouletteColor RouletteColor { get; set; }
+    public string Color => RouletteColor.ToString();
     public List<RoulettePlayer> Winners { get; set; }
     public List<RoulettePlayer> Losers { get; set; }
 

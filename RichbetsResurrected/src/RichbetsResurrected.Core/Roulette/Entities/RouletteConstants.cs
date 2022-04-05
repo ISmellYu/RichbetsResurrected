@@ -1,4 +1,4 @@
-﻿namespace RichbetsResurrected.Core.RouletteAggregate.Entities;
+﻿namespace RichbetsResurrected.Core.Roulette.Entities;
 
 public static class RouletteConstants
 {

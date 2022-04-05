@@ -10,5 +10,6 @@ public class DefaultCoreModule : Module
     {
         builder.RegisterType<ToDoItemSearchService>()
             .As<IToDoItemSearchService>().InstancePerLifetimeScope();
+        
     }
 }

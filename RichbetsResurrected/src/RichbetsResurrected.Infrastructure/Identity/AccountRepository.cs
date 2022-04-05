@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using RichbetsResurrected.Core.Interfaces;
 using RichbetsResurrected.Infrastructure.Identity.Interfaces;
 using RichbetsResurrected.Infrastructure.Identity.Models;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
@@ -11,11 +12,13 @@ public class AccountRepository : IAccountRepository
 {
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;
+    private readonly IRichbetRepository _richbetRepository;
     
-    public AccountRepository(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+    public AccountRepository(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IRichbetRepository richbetRepository)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _richbetRepository = richbetRepository;
     }
     
     public async Task<ExternalLoginInfo?> GetExternalLoginInfoAsync()
@@ -45,6 +48,49 @@ public class AccountRepository : IAccountRepository
     {
         var result = await _userManager.AddLoginAsync(user, info);
         return result;
+    }
+    
+    public async Task UpdateDiscordClaimsAsync(ExternalLoginInfo info)
+    {
+        var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+        var userClaims = await _userManager.GetClaimsAsync(user);
+        
+        var userClaim = userClaims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+
+        var refreshSignIn = false;
+
+        if (info.Principal.HasClaim(c => c.Type == ClaimTypes.NameIdentifier))
+        {
+            var externalClaim = info.Principal.FindFirst(c => c.Type == ClaimTypes.NameIdentifier);
+
+            if (userClaim == null)
+            {
+                await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.NameIdentifier, externalClaim.Value));
+                refreshSignIn = true;
+                
+            }
+            else if (userClaim.Value != externalClaim.Value)
+            {
+                await _userManager.RemoveClaimAsync(user, userClaim);
+                await _userManager.AddClaimAsync(user, new Claim(userClaim.Type, externalClaim.Value));
+                refreshSignIn = true;
+            }
+            
+        }
+        else if (userClaim == null)
+        {
+            await _userManager.AddClaimAsync(user, new Claim(userClaim.Type, "0"));
+            refreshSignIn = true;
+        }
+        if (refreshSignIn)
+        {
+            await _signInManager.RefreshSignInAsync(user);
+        }
+    }
+    
+    public async Task UpdateRichbetUserAsync(AppUser user, ExternalLoginInfo info)
+    {
+        return;
     }
 
     public async Task<IActionResult> ChallengeResultAsync(string providerSchemaName, string? redirectUrl = null)
