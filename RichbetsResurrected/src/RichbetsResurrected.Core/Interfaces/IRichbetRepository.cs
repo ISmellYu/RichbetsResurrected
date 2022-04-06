@@ -3,4 +3,5 @@
 public interface IRichbetRepository
 {
     Task CreateRichbetUserAsync(int identityUserId, string discordId);
+    Task DeleteRichbetUserByIdentityIdAsync(int identityUserId);
 }

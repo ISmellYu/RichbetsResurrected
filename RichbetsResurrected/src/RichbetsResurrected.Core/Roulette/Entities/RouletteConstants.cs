@@ -3,6 +3,7 @@
 public static class RouletteConstants
 {
     public const int TotalSegments = 37;
+    public const int SpinDuration = 3;
 
     private static readonly int[] NumberToSegment =
     {
@@ -24,5 +25,19 @@ public static class RouletteConstants
     public static int GetSegmentForNumber(int number)
     {
         return NumberToSegment[number];
+    }
+    
+    public static RouletteColor GetRouletteColorForNumber(int number)
+    {
+        switch (number)
+        {
+            case >= 1 and <= 10:
+            case >= 19 and <= 28:
+                return number % 2 == 0 ? RouletteColor.Black : RouletteColor.Red;
+            case 0:
+                return RouletteColor.Green;
+            default:
+                return number % 2 == 0 ? RouletteColor.Red : RouletteColor.Black;
+        }
     }
 }
