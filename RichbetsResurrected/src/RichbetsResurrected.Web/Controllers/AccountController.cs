@@ -4,6 +4,9 @@ using AspNet.Security.OAuth.Discord;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using RichbetsResurrected.Core.Interfaces;
+using RichbetsResurrected.Core.Interfaces.Stores;
+using RichbetsResurrected.Infrastructure.Games.Roulette;
 using RichbetsResurrected.Infrastructure.Identity;
 using RichbetsResurrected.Infrastructure.Identity.Models;
 
@@ -11,10 +14,12 @@ namespace RichbetsResurrected.Web.Controllers;
 
 public class AccountController : Controller
 {
-    private readonly AccountRepository  _accountRepository;
-    public AccountController(AccountRepository accountRepository)
+    private readonly AccountRepository _accountRepository;
+    private readonly IRichbetRepository _richbetRepository;
+    public AccountController(AccountRepository accountRepository, IRichbetRepository richbetRepository)
     {
         _accountRepository = accountRepository;
+        _richbetRepository = richbetRepository;
     }
     
     [HttpGet]
@@ -62,6 +67,7 @@ public class AccountController : Controller
         }
         
         await _accountRepository.UpdateDiscordClaimsAsync(info);
+        await _richbetRepository.CreateRichbetUserAsync(user.Id, info.Principal.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
         await _accountRepository.LoginAsync(user);
         return LocalRedirect(returnUrl);
     }

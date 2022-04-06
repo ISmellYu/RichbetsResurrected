@@ -34,6 +34,14 @@ public class RichbetRepository : IRichbetRepository
         var exists = await _store.CheckIfExistsRichbetUserByAppUserIdAsync(identityUserId);
         if (!exists)
             return;
+        
+        await _store.RemoveRichbetUserByAppUserIdAsync(identityUserId);
+
+        exists = await _store.CheckIfExistsRichbetAppUserByAppUserIdAsync(identityUserId);
+        if (!exists)
+            return;
+
+        await _store.RemoveRichbetAppUserByAppUserIdAsync(identityUserId);
     }
 
 }
