@@ -43,16 +43,16 @@ public class RichbetStore : IRichbetStore
         var user = await GetRichbetUserByDiscordIdAsync(discordId);
         _context.RichbetUsers.Remove(user);
     }
-    public async Task RemoveRichbetUserByAppUserIdAsync(int appUserId)
+    public async Task RemoveRichbetUserByAppUserIdAsync(int identityUserId)
     {
-        var user = await GetRichbetUserByIdentityIdAsync(appUserId);
+        var user = await GetRichbetUserByIdentityIdAsync(identityUserId);
         _context.RichbetUsers.Remove(user);
     }
-    public Task RemoveRichbetAppUserAsync(int appUserId, int richbetUserId, string discordId)
+    public Task RemoveRichbetAppUserAsync(int identityUserId, int richbetUserId, string discordId)
     {
         _context.RichbetAppUsers.Remove(new RichbetAppUser()
         {
-            AppUserId = appUserId,
+            AppUserId = identityUserId,
             DiscordUserId = discordId,
             RichbetUserId = richbetUserId
         });
@@ -64,9 +64,9 @@ public class RichbetStore : IRichbetStore
         _context.RichbetAppUsers.Remove(richbetAppUser);
         await _context.SaveChangesAsync();
     }
-    public async Task RemoveRichbetAppUserByAppUserIdAsync(int appUserId)
+    public async Task RemoveRichbetAppUserByAppUserIdAsync(int identityUserId)
     {
-        var richbetAppUser = await GetRichbetAppUserByIdentityIdAsync(appUserId);
+        var richbetAppUser = await GetRichbetAppUserByIdentityIdAsync(identityUserId);
         _context.RichbetAppUsers.Remove(richbetAppUser);
         await _context.SaveChangesAsync();
     }
@@ -90,9 +90,9 @@ public class RichbetStore : IRichbetStore
         return user;
     }
 
-    public async Task<RichbetUser> GetRichbetUserByIdentityIdAsync(int appUserId)
+    public async Task<RichbetUser> GetRichbetUserByIdentityIdAsync(int identityUserId)
     {
-        var richbetAppUsers = await GetRichbetAppUserByIdentityIdAsync(appUserId);
+        var richbetAppUsers = await GetRichbetAppUserByIdentityIdAsync(identityUserId);
         var user = await GetRichbetUserByIdAsync(richbetAppUsers.RichbetUserId);
         return user;
     }
@@ -103,9 +103,9 @@ public class RichbetStore : IRichbetStore
         return user;
     }
     
-    public async Task<RichbetAppUser> GetRichbetAppUserByIdentityIdAsync(int appUserId)
+    public async Task<RichbetAppUser> GetRichbetAppUserByIdentityIdAsync(int identityUserId)
     {
-        var user = await RichbetAppUsers.FirstOrDefaultAsync(u => u.AppUserId == appUserId);
+        var user = await RichbetAppUsers.FirstOrDefaultAsync(u => u.AppUserId == identityUserId);
         return user;
     }
     
@@ -139,6 +139,11 @@ public class RichbetStore : IRichbetStore
         await _context.SaveChangesAsync();
     }
 
+    public async Task<float> GetMultiplierFromRichbetUserAsync(int richbetUserId)
+    {
+        var richbetUser = await GetRichbetUserByIdAsync(richbetUserId);
+        return richbetUser.Multiplier;
+    }
     public async Task UpdateMultiplierToRichbetUserAsync(int richbetUserId, int multiplier)
     {
         var richbetUser = await GetRichbetUserByIdAsync(richbetUserId);
@@ -192,9 +197,9 @@ public class RichbetStore : IRichbetStore
         return RichbetAppUsers.AnyAsync(u => u.DiscordUserId == discordId);
     }
 
-    public Task<bool> CheckIfExistsRichbetAppUserByAppUserIdAsync(int appUserId)
+    public Task<bool> CheckIfExistsRichbetAppUserByAppUserIdAsync(int identityUserId)
     {
-        return RichbetAppUsers.AnyAsync(u => u.AppUserId == appUserId);
+        return RichbetAppUsers.AnyAsync(u => u.AppUserId == identityUserId);
     }
 
 }

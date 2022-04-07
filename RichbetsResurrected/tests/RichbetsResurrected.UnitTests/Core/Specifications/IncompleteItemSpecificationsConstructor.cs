@@ -21,7 +21,7 @@ public class IncompleteItemsSpecificationConstructor
 
         var spec = new IncompleteItemsSpec();
         var filteredList = items
-            .Where(spec.WhereExpressions.First().Compile())
+            .Where(spec.WhereExpressions.First().FilterFunc)
             .ToList();
 
         Assert.Contains(item1, filteredList);

@@ -5,6 +5,7 @@ using MediatR;
 using MediatR.Pipeline;
 using RichbetsResurrected.Core.Interfaces;
 using RichbetsResurrected.Core.Interfaces.Games;
+using RichbetsResurrected.Core.Interfaces.Games.Roulette;
 using RichbetsResurrected.Core.Interfaces.Stores;
 using RichbetsResurrected.Core.ProjectAggregate;
 using RichbetsResurrected.Infrastructure.BaseRichbet;
@@ -12,6 +13,7 @@ using RichbetsResurrected.Infrastructure.BaseRichbet.Stores;
 using RichbetsResurrected.Infrastructure.Data;
 using RichbetsResurrected.Infrastructure.Games.Roulette;
 using RichbetsResurrected.Infrastructure.Identity;
+using RichbetsResurrected.Infrastructure.Identity.Interfaces;
 using RichbetsResurrected.SharedKernel.Interfaces;
 using Module = Autofac.Module;
 
@@ -63,7 +65,8 @@ public class DefaultInfrastructureModule : Module
 
         var mediatrOpenTypes = new[]
         {
-            typeof(IRequestHandler<,>), typeof(IRequestExceptionHandler<,,>), typeof(IRequestExceptionAction<,>), typeof(INotificationHandler<>)
+            typeof(IRequestHandler<,>), typeof(IRequestExceptionHandler<,,>), typeof(IRequestExceptionAction<,>), typeof(INotificationHandler<>),
+            typeof(IStreamRequestHandler<,>)
         };
 
         foreach (var mediatrOpenType in mediatrOpenTypes)
@@ -94,7 +97,7 @@ public class DefaultInfrastructureModule : Module
 
     private void RegisterGames(ContainerBuilder builder)
     {
-        builder.RegisterType<RouletteService>().AsSelf()
+        builder.RegisterType<RouletteService>().As<IRouletteService>()
             .SingleInstance()   // Same instance for everything
             .AutoActivate() // Resolve the service before anything else once to create the instance
             .OnActivated(StartGame);  // Run a function at service creation
