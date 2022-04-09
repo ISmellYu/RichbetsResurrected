@@ -8,4 +8,5 @@ public interface IRichbetRepository
     Task RemovePointsFromUserAsync(int identityUserId, int points);
     Task SetDailyToUserAsync(int identityUserId, bool isRedeemed);
     Task<float?> GetMultiplierFromUserAsync(int identityUserId);
+    Task<int> GetPointsFromUserAsync(int identityUserId);
 }

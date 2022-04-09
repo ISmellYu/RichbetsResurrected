@@ -40,7 +40,37 @@ public class RouletteService : IRouletteService
     
     public async Task AddPlayerAsync(RoulettePlayer player)
     {
-        Players.Add(player);
+        var points = await _repository.GetPointsFromUserAsync(player.IdentityUserId);
+        
+        if (points - player.Amount < 0) return;
+        
+        await _repository.RemovePointsFromUserAsync(player.IdentityUserId, player.Amount);
+        AddToPlayerList(player);
+        await SendJoinConfirmationToPlayerAsync(player);
+        await SendJoinPlayerToClientsAsync(player);
+    }
+    
+    private bool IsInGameColor(RoulettePlayer player)
+    {
+        return Players.Any(p => p.IdentityUserId == player.IdentityUserId && p.Color == player.Color);
+    } 
+    
+    private void AddToPlayerList(RoulettePlayer player)
+    {
+        if (IsInGameColor(player))
+        {
+            foreach (var roulettePlayer in Players)
+            {
+                if (roulettePlayer.IdentityUserId == player.IdentityUserId && roulettePlayer.Color == player.Color)
+                {
+                    roulettePlayer.Amount += player.Amount;
+                }
+            }
+        }
+        else
+        {
+            Players.TryAdd(player);
+        }
     }
     
     public bool CheckIfCanBet()
@@ -73,7 +103,11 @@ public class RouletteService : IRouletteService
     private async Task WaitForPlayersAsync()
     {
         TurnOnBetting();
-        await Task.Delay(15000);
+        for (int i = 0; i <= 15; i++)
+        {
+            await SendUpdateTimerToClientsAsync(15000 - 1000 * i);
+            await Task.Delay(1000);
+        }
         TurnOffBetting();
         await Task.Delay(1000); // Just to make sure every bet is done adding
     }
@@ -97,14 +131,37 @@ public class RouletteService : IRouletteService
     {
         // TODO: Send join player event to clients
     }
+    
     private async Task SendWinNotificationToClientsAsync(RouletteResult result)
     {
         // TODO: Send win notification event to clients
     }
-
+    
     private async Task SendUpdateTimerToClientsAsync(int timeLeft)
     {
         // TODO: Send update timer event to clients
+    }
+
+    private async Task SendJoinConfirmationToPlayerAsync(RoulettePlayer? player)
+    {
+        // TODO: Send join confirmation event to player
+    }
+
+    private async Task SendEndRouletteToClientsAsync()
+    {
+        var history = History.TakeLast(10);
+        // TODO: Send end roulette event to clients
+    }
+
+    public async Task<RouletteInfo> GetRouletteInfoAsync()
+    {
+        var rouletteInfo = new RouletteInfo
+        {
+            Players = Players.ToList(),
+            Results = History.TakeLast(10).ToList(),
+            AllowBetting = AllowBetting
+        };
+        return rouletteInfo;
     }
 
     private int GetRandomWinNumber()
@@ -123,7 +180,6 @@ public class RouletteService : IRouletteService
         var losers = Players.Where(p => p.Color != winColor).ToList();
         
         var result = new RouletteResult(number, winColor, winners.ToList(), losers.ToList());
-        // TODO: Send result to winners
         await SendWinNotificationToClientsAsync(result);
         switch (winColor)
         {
@@ -145,12 +201,17 @@ public class RouletteService : IRouletteService
     
     public Task<List<RoulettePlayerToView>> GetPlayersToViewAsync()
     {
-        var player = Players.Select(p => p.ToView()).ToList();
-        return Task.FromResult(player);
+        var players = Players.Select(p => p.ToView()).ToList();
+        return Task.FromResult(players);
     }
 
+    private void ClearPlayers()
+    {
+        while (Players.TryTake(out _)){}
+    }
     private void ResetGame()
     {
+        ClearPlayers();
         AllowBetting = true;
         IsSpinning = false;
     }

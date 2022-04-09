@@ -84,4 +84,10 @@ public class RichbetRepository : IRichbetRepository
         var multiplier = richbetUser.Multiplier;
         return multiplier;
     }
+
+    public async Task<int> GetPointsFromUserAsync(int identityUserId)
+    {
+        var richbetUser = await _store.GetRichbetUserByIdentityIdAsync(identityUserId);
+        return richbetUser.Points;
+    }
 }
