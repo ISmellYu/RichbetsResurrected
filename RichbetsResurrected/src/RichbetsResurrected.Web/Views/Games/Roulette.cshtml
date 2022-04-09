@@ -1,0 +1,149 @@
+@{
+    ViewData["Title"] = "Privacy";
+    Layout = "_MainLayout";
+}
+@section Head{
+    <link rel="stylesheet" href="~/css/Games/roulette.css">
+}
+<button onclick="startSpin(2)" style="color:black;">Spin</button>
+<input type="number" id="progress" placeholder="progress" style="color:black;">
+<button style="color:black;" onclick="setProgress()">Set</button>
+<button onclick="resetTimer()">Reset</button>
+
+<div class="control-panel">
+    <div class="control-button-hol">
+        <button class="control-button"><img src="~/img/direction-row.png" alt="direction-row"></button>
+        <button class="control-button"><img src="~/img/direction-column.png" alt="direction-column"></button>
+    </div>
+    <div class="volume-control">
+        <div class="slideConatiner">
+            <input type="range" min="0" max="100" value="50" id="myRange" class="slider">
+        </div>
+        <div class="slideConatiner">
+            <input type="range" min="0" max="100" value="50" id="myRange" class="slider">
+        </div>
+    </div>
+    <div class="control-panel-icons">
+        <p>FX</p>
+        <p>♬</p>
+    </div>
+</div>
+
+<div class="mbody">
+    <div class="roulette-body">
+        <img src="~/img/roulette-arrow.png" alt="pointer" class="pointer">
+        <canvas id="canvas" height="550px" width="550px">
+            <p style="{color: white}" align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
+        </canvas>
+        <div class="lay-circle">
+            <div class="inner-circle">
+                <p class="timer-text">10.0s</p>
+                <div class="circle-colors">
+                    <div class="color" id="n1" style="background-color: #252525;"></div>
+                    <div class="color" id="n2" style="background-color: #EE5353;"></div>
+                    <div class="color" id="n3" style="background-color: #36AF31;"></div>
+                    <div class="color" id="n4" style="background-color: #252525;"></div>
+                    <div class="color" id="n5" style="background-color: #252525;"></div>
+                    <div class="color" id="n1" style="background-color: #252525;"></div>
+                    <div class="color" id="n2" style="background-color: #EE5353;"></div>
+                    <div class="color" id="n3" style="background-color: #36AF31;"></div>
+                    <div class="color" id="n4" style="background-color: #252525;"></div>
+                    <div class="color" id="n5" style="background-color: #252525;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="control-body">
+        <div class="control-bar">
+            <div class="control-input-field">
+                <img src="~/img/rbcoin30x30.png" alt="rbcoin">
+                <input type="number" id="coins" placeholder="Coins..">
+            </div>
+            <div class="control-bar-inner">
+                <button>CLEAR</button>
+                <button>+1</button>
+                <button>+10</button>
+                <button>+100</button>
+                <button>+1000</button>
+                <button>1/2</button>
+                <button>X2</button>
+                <button>MAX</button>
+            </div>
+        </div>
+        <div class="bets-bar">
+            <div class="bet-container">
+                <button class="bet-button" style="background-color: #252525;">BLACK</button>
+                <div class="live-bets-container">
+                    <div class="live-members live-text members-black">
+                        <ul>
+                            <li>Member 1</li>
+                            <li>Member 2</li>
+                            <li>Member 3</li>
+                            <li>Member 4</li>
+                        </ul>
+                    </div>
+                    <div class="live-coins live-text coins-black">
+                        <ul>
+                            <li>100</li>
+                            <li>400</li>
+                            <li>6500</li>
+                            <li>10000</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bet-container">
+                <button class="bet-button" style="background-color: #36AF31;">GREEN</button>
+                <div class="live-bets-container">
+                    <div class="live-members live-text members-green">
+                        <ul>
+                            <li>Member 1</li>
+                            <li>Member 2</li>
+                            <li>Member 3</li>
+                            <li>Member 4</li>
+                        </ul>
+                    </div>
+                    <div class="live-coins live-text coins-green">
+                        <ul>
+                            <li>100</li>
+                            <li>400</li>
+                            <li>6500</li>
+                            <li>10000</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bet-container">
+                <button class="bet-button" style="background-color: #ee5353;">RED</button>
+                <div class="live-bets-container">
+                    <div class="live-members live-text members-red">
+                        <ul>
+                            <li>Member 1</li>
+                            <li>Member 2</li>
+                            <li>Member 3</li>
+                            <li>Member 4</li>
+                        </ul>
+                    </div>
+                    <div class="live-coins live-text coins-red">
+                        <ul>
+                            <li>100</li>
+                            <li>400</li>
+                            <li>6500</li>
+                            <li>10000</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+<script type="text/javascript" src="~/js/Games/Roulette/Winwheel.js"></script>
+<script src="~/js/Games/Roulette/roulette-controller.rb.js"></script>
+<script src="~/js/Games/Roulette/timer.rb.js"></script>
