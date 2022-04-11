@@ -8,12 +8,15 @@ namespace RichbetsResurrected.Core.Roulette.Handlers;
 public class StartAnimationRouletteHandler : INotificationHandler<StartAnimationNotification>
 {
     private readonly IHubContext<RouletteBaseHub> _hubContext;
-    public StartAnimationRouletteHandler(IHubContext<RouletteBaseHub> hubContext)
+    private readonly IRouletteHub _rouletteHub;
+    public StartAnimationRouletteHandler(IHubContext<RouletteBaseHub> hubContext, IRouletteHub rouletteHub)
     {
         _hubContext = hubContext;
+        _rouletteHub = rouletteHub;
     }
     public Task Handle(StartAnimationNotification notification, CancellationToken cancellationToken)
     {
+        _rouletteHub.TestAsync();
         return _hubContext.Clients.All.SendAsync("StartAnimation", notification.StopAt, cancellationToken: cancellationToken);
     }
 }

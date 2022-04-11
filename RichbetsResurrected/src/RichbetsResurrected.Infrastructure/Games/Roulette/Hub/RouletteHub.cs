@@ -1,21 +1,25 @@
 ﻿using System.Security.Claims;
 using AspNet.Security.OAuth.Discord;
 using MediatR;
+using Microsoft.AspNet.SignalR;
 using Microsoft.AspNetCore.SignalR;
 using RichbetsResurrected.Core.Constants;
 using RichbetsResurrected.Core.Interfaces.Games.Roulette;
 using RichbetsResurrected.Core.Roulette.Entities;
 using RichbetsResurrected.Core.Roulette.Hub;
+using RichbetsResurrected.Infrastructure.Identity.Interfaces;
 
 namespace RichbetsResurrected.Infrastructure.Games.Roulette.Hub;
 
-[Microsoft.AspNet.SignalR.Authorize]
+[Authorize]
 public class RouletteHub : RouletteBaseHub
 {
     private readonly IRouletteService _rouletteService;
-    public RouletteHub(IRouletteService rouletteService)
+    private readonly IAccountRepository _accountRepository;
+    public RouletteHub(IRouletteService rouletteService, IAccountRepository accountRepository)
     {
         _rouletteService = rouletteService;
+        _accountRepository = accountRepository;
     }
 
     [HubMethodName("RouletteHello")]
@@ -30,8 +34,7 @@ public class RouletteHub : RouletteBaseHub
     {
         var appUserId = Context.UserIdentifier;
         var discordId = Context.User.Claims.FirstOrDefault(c => c.Type == Constants.DiscordId).Value;
-        var avatarHash = Context.User.FindFirst(c => c.Type == DiscordAuthenticationConstants.Claims.AvatarHash)?.Value;
-        var avatarUrl = $"https://cdn.discordapp.com/avatars/{discordId}/{avatarHash}.jpg";
+        var avatarUrl = _accountRepository.GetDiscordAvatarUrlAsync(Context.User);
         var roulettePlayer = new RoulettePlayer()
         {
             Amount = amount, Color = color, 
