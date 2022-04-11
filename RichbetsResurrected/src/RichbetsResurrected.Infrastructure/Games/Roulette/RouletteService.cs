@@ -145,12 +145,7 @@ public class RouletteService : IRouletteService
     {
         return _mediator.Publish(new NewPlayerJoinedNotification(player));
     }
-    
-    private async Task SendWinNotificationToWinnersAsync(RouletteResult result)
-    {
-        // TODO: Send win notification event to clients
-    }
-    
+
     private Task SendUpdateTimerToClientsAsync(int timeLeft)
     {
         return _mediator.Publish(new UpdateTimerNotification(timeLeft));
@@ -190,7 +185,6 @@ public class RouletteService : IRouletteService
         var losers = Players.Where(p => p.Color != winColor).ToList();
         
         var result = new RouletteResult(number, winColor, winners.ToList(), losers.ToList());
-        await SendWinNotificationToWinnersAsync(result);
         switch (winColor)
         {
             case RouletteColor.Black or RouletteColor.Red:
