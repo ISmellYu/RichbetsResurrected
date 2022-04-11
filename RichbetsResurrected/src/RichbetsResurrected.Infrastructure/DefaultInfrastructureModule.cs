@@ -115,7 +115,7 @@ public class DefaultInfrastructureModule : Module
     
     private void RegisterRepositories(ContainerBuilder builder)
     {
-        builder.RegisterType<AccountRepository>().AsSelf().InstancePerLifetimeScope();
+        builder.RegisterType<AccountRepository>().As<IAccountRepository>().InstancePerLifetimeScope();
         builder.RegisterType<RichbetRepository>().As<IRichbetRepository>().InstancePerLifetimeScope();
     }
 
