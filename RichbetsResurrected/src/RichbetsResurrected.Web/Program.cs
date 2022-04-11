@@ -1,12 +1,16 @@
-﻿using Ardalis.ListStartupServices;
+﻿using System.Reflection;
+using Ardalis.ListStartupServices;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Autofac.Integration.SignalR;
+using Microsoft.AspNet.SignalR;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using RichbetsResurrected.Core;
 using RichbetsResurrected.Infrastructure;
 using RichbetsResurrected.Infrastructure.Data;
+using RichbetsResurrected.Infrastructure.Games.Roulette.Hub;
 using RichbetsResurrected.Infrastructure.Identity.Contexts;
 using RichbetsResurrected.Web;
 using Westwind.AspNetCore.LiveReload;
@@ -28,6 +32,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddLiveReload();
+builder.Services.AddSignalR();
 
 builder.Services.AddControllersWithViews().AddNewtonsoftJson().AddRazorRuntimeCompilation();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
@@ -56,14 +61,16 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     containerBuilder.RegisterModule(new DefaultCoreModule());
     containerBuilder.RegisterModule(
         new DefaultInfrastructureModule(builder.Environment.EnvironmentName == "Development"));
+    // containerBuilder.RegisterHubs(Assembly.GetExecutingAssembly());
 });
-
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 //builder.Logging.AddAzureWebAppDiagnostics(); add this if deploying to Azure
 
 var app = builder.Build();
+
+GlobalHost.DependencyResolver = new AutofacDependencyResolver(app.Services.GetAutofacRoot());
 
 if (app.Environment.IsDevelopment())
 {
@@ -82,10 +89,11 @@ app.UseRouting();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseCookiePolicy();
+app.UseCookiePolicy(); 
 
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 
 // Enable middleware to serve generated Swagger as a JSON endpoint.
@@ -98,6 +106,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapDefaultControllerRoute();
     endpoints.MapRazorPages();
+    endpoints.MapHub<RouletteHub>("/rouletteHub");
 });
 
 app.UseStatusCodePagesWithRedirects("/errors/{0}");

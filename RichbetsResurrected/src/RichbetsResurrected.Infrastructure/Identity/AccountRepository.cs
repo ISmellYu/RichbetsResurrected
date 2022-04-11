@@ -1,6 +1,8 @@
 ﻿using System.Security.Claims;
+using AspNet.Security.OAuth.Discord;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using RichbetsResurrected.Core.Constants;
 using RichbetsResurrected.Core.Interfaces;
 using RichbetsResurrected.Infrastructure.Identity.Interfaces;
 using RichbetsResurrected.Infrastructure.Identity.Models;
@@ -12,13 +14,11 @@ public class AccountRepository : IAccountRepository
 {
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;
-    private readonly IRichbetRepository _richbetRepository;
-    
-    public AccountRepository(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IRichbetRepository richbetRepository)
+
+    public AccountRepository(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
     {
         _userManager = userManager;
         _signInManager = signInManager;
-        _richbetRepository = richbetRepository;
     }
     
     public async Task<ExternalLoginInfo?> GetExternalLoginInfoAsync()
@@ -55,7 +55,8 @@ public class AccountRepository : IAccountRepository
         var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
         var userClaims = await _userManager.GetClaimsAsync(user);
         
-        var userClaim = userClaims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+        var userClaim = userClaims.FirstOrDefault(c => c.Type == Constants.DiscordId);
+        var avatarClaim = userClaims.FirstOrDefault(c => c.Type == DiscordAuthenticationConstants.Claims.AvatarHash);
 
         var refreshSignIn = false;
 
@@ -65,23 +66,49 @@ public class AccountRepository : IAccountRepository
 
             if (userClaim == null)
             {
-                await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.NameIdentifier, externalClaim.Value));
+                await _userManager.AddClaimAsync(user, new Claim(Constants.DiscordId, externalClaim.Value));
                 refreshSignIn = true;
                 
             }
             else if (userClaim.Value != externalClaim.Value)
             {
                 await _userManager.RemoveClaimAsync(user, userClaim);
-                await _userManager.AddClaimAsync(user, new Claim(userClaim.Type, externalClaim.Value));
+                await _userManager.AddClaimAsync(user, new Claim(Constants.DiscordId, externalClaim.Value));
                 refreshSignIn = true;
             }
             
         }
         else if (userClaim == null)
         {
-            await _userManager.AddClaimAsync(user, new Claim(userClaim.Type, "0"));
+            await _userManager.AddClaimAsync(user, new Claim(Constants.DiscordId, "0"));
             refreshSignIn = true;
         }
+
+        
+        if (info.Principal.HasClaim(c => c.Type == DiscordAuthenticationConstants.Claims.AvatarHash))
+        {
+            var externalClaim = info.Principal.FindFirst(c => c.Type == DiscordAuthenticationConstants.Claims.AvatarHash);
+
+            if (avatarClaim == null)
+            {
+                await _userManager.AddClaimAsync(user, new Claim(DiscordAuthenticationConstants.Claims.AvatarHash, externalClaim.Value));
+                refreshSignIn = true;
+                
+            }
+            else if (avatarClaim.Value != externalClaim.Value)
+            {
+                await _userManager.RemoveClaimAsync(user, avatarClaim);
+                await _userManager.AddClaimAsync(user, new Claim(avatarClaim.Type, externalClaim.Value));
+                refreshSignIn = true;
+            }
+        }
+        else if (avatarClaim == null)
+        {
+            await _userManager.AddClaimAsync(user, new Claim(avatarClaim.Type, "0"));
+            refreshSignIn = true;
+        }
+
+
         if (refreshSignIn)
         {
             await _signInManager.RefreshSignInAsync(user);
@@ -99,7 +126,7 @@ public class AccountRepository : IAccountRepository
             providerSchemaName, redirectUrl);
         return new ChallengeResult(providerSchemaName, prop);
     }
-    
+
     public Task LoginAsync(AppUser user)
     {
         return _signInManager.SignInAsync(user, false);

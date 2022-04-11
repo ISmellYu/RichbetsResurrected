@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using RichbetsResurrected.Core.DiscordAggregate;
-using RichbetsResurrected.Core.ProjectAggregate;
 using RichbetsResurrected.Infrastructure.Identity.Models;
 using RichbetsResurrected.SharedKernel;
 
