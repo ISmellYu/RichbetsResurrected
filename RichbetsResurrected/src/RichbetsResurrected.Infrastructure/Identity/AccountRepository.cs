@@ -119,10 +119,6 @@ public class AccountRepository : IAccountRepository
     {
         return;
     }
-    public Task<string> GetDiscordAvatarUrlAsync(int identityUserId)
-    {
-        throw new NotImplementedException();
-    }
     public string GetDiscordAvatarUrlAsync(ClaimsPrincipal user)
     {
         var discordId = user.Claims.FirstOrDefault(c => c.Type == Constants.DiscordId).Value;
