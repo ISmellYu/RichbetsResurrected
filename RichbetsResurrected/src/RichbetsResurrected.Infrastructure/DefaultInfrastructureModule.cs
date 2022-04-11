@@ -1,13 +1,15 @@
 ﻿using System.Reflection;
 using Autofac;
 using Autofac.Core;
+using Autofac.Integration.SignalR;
 using MediatR;
 using MediatR.Pipeline;
+using Microsoft.AspNet.SignalR;
+using RichbetsResurrected.Core.DiscordAggregate;
 using RichbetsResurrected.Core.Interfaces;
 using RichbetsResurrected.Core.Interfaces.Games;
 using RichbetsResurrected.Core.Interfaces.Games.Roulette;
 using RichbetsResurrected.Core.Interfaces.Stores;
-using RichbetsResurrected.Core.ProjectAggregate;
 using RichbetsResurrected.Infrastructure.BaseRichbet;
 using RichbetsResurrected.Infrastructure.BaseRichbet.Stores;
 using RichbetsResurrected.Infrastructure.Data;
@@ -28,7 +30,7 @@ public class DefaultInfrastructureModule : Module
     {
         _isDevelopment = isDevelopment;
         var coreAssembly =
-            Assembly.GetAssembly(typeof(Project)); // TODO: Replace "Project" with any type from your Core project
+            Assembly.GetAssembly(typeof(RichbetUser));
         var infrastructureAssembly = Assembly.GetAssembly(typeof(StartupSetup));
         if (coreAssembly != null) _assemblies.Add(coreAssembly);
 
@@ -74,13 +76,12 @@ public class DefaultInfrastructureModule : Module
                 .RegisterAssemblyTypes(_assemblies.ToArray())
                 .AsClosedTypesOf(mediatrOpenType)
                 .AsImplementedInterfaces();
-
-        builder.RegisterType<EmailSender>().As<IEmailSender>()
-            .InstancePerLifetimeScope();
+        
 
         
         RegisterStores(builder);
         RegisterRepositories(builder);
+        RegisterHubs(builder);
         RegisterGames(builder);
         
     }
@@ -117,5 +118,12 @@ public class DefaultInfrastructureModule : Module
         builder.RegisterType<AccountRepository>().AsSelf().InstancePerLifetimeScope();
         builder.RegisterType<RichbetRepository>().As<IRichbetRepository>().InstancePerLifetimeScope();
     }
-    
+
+    private void RegisterHubs(ContainerBuilder builder)
+    {
+        foreach (var assembly in _assemblies)
+        {
+            builder.RegisterHubs(assembly);
+        }
+    }
 }

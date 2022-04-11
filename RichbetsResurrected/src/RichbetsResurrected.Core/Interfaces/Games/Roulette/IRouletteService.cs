@@ -7,7 +7,8 @@ public interface IRouletteService : IStartableGame
 {
     void TurnOnBetting();
     void TurnOffBetting();
-    Task AddPlayerAsync(RoulettePlayer player);
+    Task<RouletteJoinResult> AddPlayerAsync(RoulettePlayer player);
     bool CheckIfCanBet();
-    Task<List<RoulettePlayerToView>> GetPlayersToViewAsync();
+    List<RoulettePlayerToView> GetPlayersToViewAsync();
+    Task<RouletteInfo> GetRouletteInfoAsync();
 }
