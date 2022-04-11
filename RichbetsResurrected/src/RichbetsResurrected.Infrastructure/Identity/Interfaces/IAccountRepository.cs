@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RichbetsResurrected.Infrastructure.Identity.Models;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
@@ -13,6 +14,8 @@ public interface IAccountRepository
     Task<IdentityResult> AddExternalLoginToUserAsync(AppUser user, ExternalLoginInfo info);
     Task UpdateDiscordClaimsAsync(ExternalLoginInfo info);
     Task UpdateRichbetUserAsync(AppUser user, ExternalLoginInfo info);
+    Task<string> GetDiscordAvatarUrlAsync(int identityUserId);
+    string GetDiscordAvatarUrlAsync(ClaimsPrincipal user);
     Task<IActionResult> ChallengeResultAsync(string providerSchemaName, string? redirectUrl = null);
     Task LoginAsync(AppUser user);
     Task LogoutAsync();

@@ -119,6 +119,19 @@ public class AccountRepository : IAccountRepository
     {
         return;
     }
+    public Task<string> GetDiscordAvatarUrlAsync(int identityUserId)
+    {
+        throw new NotImplementedException();
+    }
+    public string GetDiscordAvatarUrlAsync(ClaimsPrincipal user)
+    {
+        var discordId = user.Claims.FirstOrDefault(c => c.Type == Constants.DiscordId).Value;
+        var avatarHash = user.FindFirst(c => c.Type == DiscordAuthenticationConstants.Claims.AvatarHash)?.Value;
+        var avatarFileName = avatarHash.StartsWith("a_") ? $"{avatarHash}.gif" : $"{avatarHash}.png";
+        
+        var avatarUrl = $"https://cdn.discordapp.com/avatars/{discordId}/{avatarFileName}";
+        return avatarUrl;
+    }
 
     public async Task<IActionResult> ChallengeResultAsync(string providerSchemaName, string? redirectUrl = null)
     {
