@@ -10,8 +10,4 @@ public class GamesController : Controller
         return View();
     }
 
-    public IActionResult Test()
-    {
-        return View();
-    }
 }
