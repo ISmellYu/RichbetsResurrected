@@ -143,7 +143,7 @@ public class RouletteService : IRouletteService
     private async Task WaitForPlayersAsync()
     {
         TurnOnBetting();
-        for (decimal i = 15; i >= 0; i -= 0.1m)
+        for (decimal i = 15; i >= 0; i -= 0.01m)
         {
             TimeLeft = i;
             // await SendUpdateTimerToClientsAsync(i);
