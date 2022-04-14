@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Threading.Tasks;
+using Autofac;
 using Autofac.Core;
 using RichbetsResurrected.Interfaces.Interfaces.Games;
 using RichbetsResurrected.Interfaces.Interfaces.Games.Roulette;

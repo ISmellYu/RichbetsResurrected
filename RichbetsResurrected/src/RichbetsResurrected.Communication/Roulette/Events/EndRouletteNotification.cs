@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using System.Collections.Generic;
+using MediatR;
 using RichbetsResurrected.Entities.Roulette;
 
 namespace RichbetsResurrected.Communication.Roulette.Events;

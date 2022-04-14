@@ -1,4 +1,6 @@
-﻿using System.Security.Claims;
+﻿using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using AspNet.Security.OAuth.Discord;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

@@ -1,4 +1,6 @@
-﻿namespace RichbetsResurrected.Entities.Roulette;
+﻿using System.Collections.Generic;
+
+namespace RichbetsResurrected.Entities.Roulette;
 
 public class RouletteResult
 {
