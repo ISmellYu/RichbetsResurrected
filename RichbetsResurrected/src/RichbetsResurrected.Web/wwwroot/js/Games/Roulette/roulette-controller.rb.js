@@ -25,7 +25,7 @@ conn.start().then(function () {
     });
 
     conn.on("StartAnimation", function (data) {
-        startSpin(data.stopAt);
+        startSpin(data);
     });
 });
 
