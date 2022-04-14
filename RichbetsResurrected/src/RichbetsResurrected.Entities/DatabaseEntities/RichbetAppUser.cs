@@ -1,4 +1,4 @@
-﻿namespace RichbetsResurrected.Entities.DiscordAggregate;
+﻿namespace RichbetsResurrected.Entities.DatabaseEntities;
 
 public class RichbetAppUser
 {

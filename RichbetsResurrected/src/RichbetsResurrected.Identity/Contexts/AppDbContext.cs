@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Ardalis.EFCore.Extensions;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using RichbetsResurrected.Entities.DiscordAggregate;
+using RichbetsResurrected.Entities.DatabaseEntities;
 using RichbetsResurrected.Entities.Identity.Models;
 
 namespace RichbetsResurrected.Identity.Contexts;

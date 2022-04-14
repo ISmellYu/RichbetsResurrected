@@ -25,7 +25,7 @@ public class RouletteHub : Hub<IRouletteHub>
         _accountRepository = accountRepository;
     }
     
-    [SignalRMethod(summary: "Invokable by clients to say hello to the server")]
+    [SignalRMethod(summary: "Invokable by clients to get roulette info")]
     public async Task<RouletteInfo> RouletteHello()
     {
         var rouletteInfo = _rouletteService.GetRouletteInfoAsync();

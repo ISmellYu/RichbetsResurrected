@@ -4,7 +4,7 @@ using AspNet.Security.OAuth.Discord;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using RichbetsResurrected.Identity;
+using RichbetsResurrected.Interfaces.Identity;
 using RichbetsResurrected.Interfaces.Interfaces;
 
 namespace RichbetsResurrected.Web.Controllers;
@@ -12,9 +12,9 @@ namespace RichbetsResurrected.Web.Controllers;
 [ApiExplorerSettings(IgnoreApi = true)]
 public class AccountController : Controller
 {
-    private readonly AccountRepository _accountRepository;
+    private readonly IAccountRepository _accountRepository;
     private readonly IRichbetRepository _richbetRepository;
-    public AccountController(AccountRepository accountRepository, IRichbetRepository richbetRepository)
+    public AccountController(IAccountRepository accountRepository, IRichbetRepository richbetRepository)
     {
         _accountRepository = accountRepository;
         _richbetRepository = richbetRepository;

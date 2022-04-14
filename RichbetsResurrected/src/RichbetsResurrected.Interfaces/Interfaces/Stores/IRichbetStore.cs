@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using RichbetsResurrected.Entities.DiscordAggregate;
+using RichbetsResurrected.Entities.DatabaseEntities;
 
 namespace RichbetsResurrected.Interfaces.Interfaces.Stores;
 
