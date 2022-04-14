@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RichbetsResurrected.Entities.DiscordAggregate;
+using RichbetsResurrected.Entities.DatabaseEntities;
 
 namespace RichbetsResurrected.Identity.BaseRichbet.Config;
 

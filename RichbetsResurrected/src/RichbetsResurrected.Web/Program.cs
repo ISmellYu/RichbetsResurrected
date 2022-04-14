@@ -1,6 +1,7 @@
 ﻿using Ardalis.ListStartupServices;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using RichbetsResurrected.Communication;
 using RichbetsResurrected.Communication.Roulette.Hub;

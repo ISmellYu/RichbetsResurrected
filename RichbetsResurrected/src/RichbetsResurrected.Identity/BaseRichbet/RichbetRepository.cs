@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using RichbetsResurrected.Entities.DiscordAggregate;
+using RichbetsResurrected.Entities.DatabaseEntities;
 using RichbetsResurrected.Interfaces.Interfaces;
 using RichbetsResurrected.Interfaces.Interfaces.Stores;
 
@@ -74,11 +74,11 @@ public class RichbetRepository : IRichbetRepository
         await _store.SetDailyToRichbetUserAsync(richbetUser.Id, isRedeemed);
     }
 
-    public async Task<float?> GetMultiplierFromUserAsync(int identityUserId)
+    public async Task<float> GetMultiplierFromUserAsync(int identityUserId)
     {
         var exists = await _store.CheckIfExistsRichbetUserByAppUserIdAsync(identityUserId);
         if (!exists)
-            return null;
+            return -1;
         var richbetUser = await _store.GetRichbetUserByIdentityIdAsync(identityUserId);
         var multiplier = richbetUser.Multiplier;
         return multiplier;

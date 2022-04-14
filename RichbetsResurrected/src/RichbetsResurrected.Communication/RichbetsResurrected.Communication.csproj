@@ -18,4 +18,10 @@
         <ProjectReference Include="..\RichbetsResurrected.Interfaces\RichbetsResurrected.Interfaces.csproj" />
         <ProjectReference Include="..\RichbetsResurrected.Utilities\RichbetsResurrected.Utilities.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Crash\Events" />
+      <Folder Include="Crash\Handlers" />
+      <Folder Include="Crash\Hub" />
+    </ItemGroup>
 </Project>
