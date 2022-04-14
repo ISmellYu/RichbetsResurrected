@@ -59,7 +59,6 @@ public class RouletteService : IRouletteService
 
         await _repository.RemovePointsFromUserAsync(player.IdentityUserId, player.Amount);
         AddToPlayerList(player);
-        // await SendJoinConfirmationToPlayerAsync(player);
         await SendJoinPlayerToClientsAsync(player);
         return new RouletteJoinResult
         {
@@ -128,7 +127,7 @@ public class RouletteService : IRouletteService
         TurnOnBetting();
         for (var i = 0; i <= 15; i++)
         {
-            await SendUpdateTimerToClientsAsync(15000 - 1000 * i);
+            await SendUpdateTimerToClientsAsync(15 - 1 * i);
             await Task.Delay(1000);
         }
         TurnOffBetting();
