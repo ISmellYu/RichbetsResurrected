@@ -5,12 +5,14 @@
 
 @section Head{
     <link rel="stylesheet" href="~/css/Games/roulette.css">
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
 }
 
 <button onclick="startSpin(2)" style="color:black;">Spin</button>
 <input type="number" id="progress" placeholder="progress" style="color:black;">
 <button style="color:black;" onclick="setProgress()">Set</button>
 <button onclick="resetTimer()">Reset</button>
+<button onclick="test()">TEST</button>
 
 <div class="control-panel">
     <div class="control-button-hol">
