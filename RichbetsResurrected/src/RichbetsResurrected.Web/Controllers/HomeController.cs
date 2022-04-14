@@ -9,6 +9,8 @@ namespace RichbetsResurrected.Web.Controllers;
 ///     rather than spread between 3 different folders in your Web project. Look in /Pages to see examples.
 ///     See: https://ardalis.com/aspnet-core-razor-pages-%E2%80%93-worth-checking-out/
 /// </summary>
+///
+[ApiExplorerSettings(IgnoreApi = true)]
 public class HomeController : Controller
 {
     public IActionResult Index()

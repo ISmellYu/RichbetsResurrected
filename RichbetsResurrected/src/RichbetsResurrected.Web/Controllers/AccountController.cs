@@ -9,6 +9,7 @@ using RichbetsResurrected.Interfaces.Interfaces;
 
 namespace RichbetsResurrected.Web.Controllers;
 
+[ApiExplorerSettings(IgnoreApi = true)]
 public class AccountController : Controller
 {
     private readonly AccountRepository _accountRepository;

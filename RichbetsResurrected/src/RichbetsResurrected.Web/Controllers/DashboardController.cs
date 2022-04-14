@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace RichbetsResurrected.Web.Controllers;
 
+[ApiExplorerSettings(IgnoreApi = true)]
 public class DashboardController : Controller
 {
 
