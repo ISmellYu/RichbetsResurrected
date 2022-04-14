@@ -55,7 +55,7 @@ public class AccountRepository : IAccountRepository
         var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
         var userClaims = await _userManager.GetClaimsAsync(user);
 
-        var userClaim = userClaims.FirstOrDefault(c => c.Type == Constants.DiscordId);
+        var userClaim = userClaims.FirstOrDefault(c => c.Type == OAuthConstants.DiscordId);
         var avatarClaim = userClaims.FirstOrDefault(c => c.Type == DiscordAuthenticationConstants.Claims.AvatarHash);
 
         var refreshSignIn = false;
@@ -66,21 +66,21 @@ public class AccountRepository : IAccountRepository
 
             if (userClaim == null)
             {
-                await _userManager.AddClaimAsync(user, new Claim(Constants.DiscordId, externalClaim.Value));
+                await _userManager.AddClaimAsync(user, new Claim(OAuthConstants.DiscordId, externalClaim.Value));
                 refreshSignIn = true;
 
             }
             else if (userClaim.Value != externalClaim.Value)
             {
                 await _userManager.RemoveClaimAsync(user, userClaim);
-                await _userManager.AddClaimAsync(user, new Claim(Constants.DiscordId, externalClaim.Value));
+                await _userManager.AddClaimAsync(user, new Claim(OAuthConstants.DiscordId, externalClaim.Value));
                 refreshSignIn = true;
             }
 
         }
         else if (userClaim == null)
         {
-            await _userManager.AddClaimAsync(user, new Claim(Constants.DiscordId, "0"));
+            await _userManager.AddClaimAsync(user, new Claim(OAuthConstants.DiscordId, "0"));
             refreshSignIn = true;
         }
 
@@ -117,7 +117,7 @@ public class AccountRepository : IAccountRepository
     }
     public string GetDiscordAvatarUrlAsync(ClaimsPrincipal user)
     {
-        var discordId = user.Claims.FirstOrDefault(c => c.Type == Constants.DiscordId).Value;
+        var discordId = user.Claims.FirstOrDefault(c => c.Type == OAuthConstants.DiscordId).Value;
         var avatarHash = user.FindFirst(c => c.Type == DiscordAuthenticationConstants.Claims.AvatarHash)?.Value;
         var avatarFileName = avatarHash.StartsWith("a_") ? $"{avatarHash}.gif" : $"{avatarHash}.png";
 

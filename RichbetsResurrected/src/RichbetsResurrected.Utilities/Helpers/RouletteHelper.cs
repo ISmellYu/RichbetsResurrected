@@ -1,12 +1,9 @@
-﻿using System;
+﻿using RichbetsResurrected.Entities.Roulette;
 
-namespace RichbetsResurrected.Entities.Roulette;
+namespace RichbetsResurrected.Utilities.Helpers;
 
-public static class RouletteConstants
+public static class RouletteHelper
 {
-    public const int TotalSegments = 37;
-    public const int SpinDuration = 3;
-
     private static readonly int[] NumberToSegment =
     {
         37, 23, 6, 35, 4, 19, 10, 31, 16, 27, 18, 14, 33, 12, 25, 2, 21, 8, 29, 3, 24, 5, 28, 17, 20, 7, 36, 11, 32, 30, 15, 26, 1, 22, 9, 34, 13

@@ -22,6 +22,5 @@
     <ItemGroup>
       <Folder Include="Crash\Events" />
       <Folder Include="Crash\Handlers" />
-      <Folder Include="Crash\Hub" />
     </ItemGroup>
 </Project>

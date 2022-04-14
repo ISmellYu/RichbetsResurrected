@@ -8,6 +8,8 @@ using RichbetsResurrected.Communication.Roulette.Events;
 using RichbetsResurrected.Entities.Roulette;
 using RichbetsResurrected.Interfaces.Interfaces;
 using RichbetsResurrected.Interfaces.Interfaces.Games.Roulette;
+using RichbetsResurrected.Utilities.Constants;
+using RichbetsResurrected.Utilities.Helpers;
 
 namespace RichbetsResurrected.Services.Games.Roulette;
 
@@ -80,8 +82,8 @@ public class RouletteService : IRouletteService
                 await WaitForPlayersAsync();
                 var winNumber = GetRandomWinNumber();
                 await SpinAsync(winNumber);
-                await WaitForAnimationEndAsync(RouletteConstants.SpinDuration * 1000);
-                var winColor = RouletteConstants.GetRouletteColorForNumber(winNumber);
+                await WaitForAnimationEndAsync(RouletteConfigs.SpinDuration * 1000);
+                var winColor = RouletteHelper.GetRouletteColorForNumber(winNumber);
                 var result = await AwardWinnersAsync(winNumber, winColor);
                 AddToHistory(result);
                 await SendEndRouletteToClientsAsync(result);
@@ -136,8 +138,8 @@ public class RouletteService : IRouletteService
     private Task SpinAsync(int winNumber)
     {
         IsSpinning = true;
-        var segment = RouletteConstants.GetSegmentForNumber(winNumber);
-        var stopAt = RouletteConstants.GetRandomAngleForSegment(segment, RouletteConstants.TotalSegments);
+        var segment = RouletteHelper.GetSegmentForNumber(winNumber);
+        var stopAt = RouletteHelper.GetRandomAngleForSegment(segment, RouletteConfigs.TotalSegments);
         return StartAnimationForClientsAsync(stopAt);
     }
 
@@ -169,7 +171,7 @@ public class RouletteService : IRouletteService
 
     private int GetRandomWinNumber()
     {
-        return Random.Shared.Next(0, RouletteConstants.TotalSegments - 1);
+        return Random.Shared.Next(0, RouletteConfigs.TotalSegments - 1);
     }
 
     private void AddToHistory(RouletteResult result)

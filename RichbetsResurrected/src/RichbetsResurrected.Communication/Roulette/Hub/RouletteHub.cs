@@ -36,7 +36,7 @@ public class RouletteHub : Hub<IRouletteHub>
     public async Task<RouletteJoinResult> JoinRoulette(int amount, RouletteColor color)
     {
         var appUserId = Context.UserIdentifier;
-        var discordId = Context.User.Claims.FirstOrDefault(c => c.Type == Constants.DiscordId).Value;
+        var discordId = Context.User.Claims.FirstOrDefault(c => c.Type == OAuthConstants.DiscordId).Value;
         var avatarUrl = _accountRepository.GetDiscordAvatarUrlAsync(Context.User);
         var roulettePlayer = new RoulettePlayer
         {
