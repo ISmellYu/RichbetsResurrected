@@ -4,8 +4,8 @@ using AspNet.Security.OAuth.Discord;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using RichbetsResurrected.Interfaces.DAL;
 using RichbetsResurrected.Interfaces.Identity;
-using RichbetsResurrected.Interfaces.Interfaces;
 
 namespace RichbetsResurrected.Web.Controllers;
 

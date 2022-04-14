@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using MediatR;
 using RichbetsResurrected.Communication.Roulette.Events;
 using RichbetsResurrected.Entities.Roulette;
-using RichbetsResurrected.Interfaces.Interfaces;
-using RichbetsResurrected.Interfaces.Interfaces.Games.Roulette;
+using RichbetsResurrected.Interfaces.DAL;
+using RichbetsResurrected.Interfaces.Games.Roulette;
 using RichbetsResurrected.Utilities.Constants;
 using RichbetsResurrected.Utilities.Helpers;
 
@@ -203,6 +203,7 @@ public class RouletteService : IRouletteService
         {
         }
     }
+    
     private void ResetGame()
     {
         ClearPlayers();

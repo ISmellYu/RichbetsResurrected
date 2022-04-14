@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using RichbetsResurrected.Entities.DatabaseEntities;
+﻿using RichbetsResurrected.Entities.DatabaseEntities;
 
-namespace RichbetsResurrected.Interfaces.Interfaces.Stores;
+namespace RichbetsResurrected.Interfaces.DAL.Stores;
 
 public interface IRichbetStore
 {

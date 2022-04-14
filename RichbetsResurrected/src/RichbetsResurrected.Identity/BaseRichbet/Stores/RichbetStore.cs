@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RichbetsResurrected.Entities.DatabaseEntities;
 using RichbetsResurrected.Identity.Contexts;
-using RichbetsResurrected.Interfaces.Interfaces.Stores;
+using RichbetsResurrected.Interfaces.DAL.Stores;
 
 namespace RichbetsResurrected.Identity.BaseRichbet.Stores;
 

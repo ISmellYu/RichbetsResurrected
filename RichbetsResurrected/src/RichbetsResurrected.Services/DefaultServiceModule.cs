@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Autofac;
 using Autofac.Core;
-using RichbetsResurrected.Interfaces.Interfaces.Games;
-using RichbetsResurrected.Interfaces.Interfaces.Games.Roulette;
+using RichbetsResurrected.Interfaces.Games;
+using RichbetsResurrected.Interfaces.Games.Roulette;
 using RichbetsResurrected.Services.Games.Roulette;
 
 namespace RichbetsResurrected.Services;

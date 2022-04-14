@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using RichbetsResurrected.Entities.Roulette;
+using RichbetsResurrected.Interfaces.Games.Roulette;
 using RichbetsResurrected.Interfaces.Identity;
-using RichbetsResurrected.Interfaces.Interfaces.Games.Roulette;
 using RichbetsResurrected.Utilities.Constants;
 using SignalRSwaggerGen.Attributes;
 
