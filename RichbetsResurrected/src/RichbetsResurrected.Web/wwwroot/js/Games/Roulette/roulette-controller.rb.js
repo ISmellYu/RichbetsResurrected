@@ -1,7 +1,7 @@
 let firstImg = new Image();
 
 // Create callback to execute once the image has finished loading.
-firstImg.onload = function() {
+firstImg.onload = function () {
     firstWheel.wheelImage = firstImg; // Make wheelImage equal the loaded image object.
     firstWheel.draw(); // Also call draw function to render the wheel.
 }
@@ -32,8 +32,8 @@ let firstWheel = new Winwheel({
         'callbackFinished': restoreWheel,
     },
     'segments': [{
-            'text': '32'
-        },
+        'text': '32'
+    },
         {
             'text': '15'
         },
@@ -167,6 +167,6 @@ async function restoreWheel(indicatedSegment) {
     // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
     //alert("You have won " + indicatedSegment.text);
     firstWheel.stopAnimation(false); // Stop the animation, false as param so does not call callback function.
-    
+
     firstWheel.rotationAngle = firstWheel.rotationAngle % 360;
 }

@@ -11,7 +11,7 @@ body {
     margin: 0;
 }
 
-.logo-text{
+.logo-text {
     position: absolute;
     font-size: 32px;
     margin: 0;
@@ -19,11 +19,11 @@ body {
     margin-left: 20px;
 }
 
-.logo-text-color{
+.logo-text-color {
     color: #EE5353;
 }
 
-.container{
+.container {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -32,30 +32,30 @@ body {
     align-content: center;
 }
 
-.error-section{
+.error-section {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.rb-logo{
+.rb-logo {
     width: 380px;
 }
 
-.main-text{
+.main-text {
     font-size: 75px;
     font-weight: 400;
     margin: 0;
 }
 
-.sub-text{
+.sub-text {
     font-size: 55px;
     font-weight: 600;
     margin: 0;
     color: #EE5353;
 }
 
-.return{
+.return {
     font-size: 20px;
     font-weight: 400;
     margin: 0;
@@ -64,31 +64,31 @@ body {
     margin-top: 65px;
 }
 
-.return:hover{
+.return:hover {
     cursor: pointer;
     color: #ad3636;
 }
 
 
 @media (max-width: 600px) {
-    .rb-logo{
+    .rb-logo {
         width: calc(380px / 1.5);
     }
-    
-    .main-text{
+
+    .main-text {
         font-size: calc(75px / 1.5);
         font-weight: 400;
         margin: 0;
     }
-    
-    .sub-text{
+
+    .sub-text {
         font-size: calc(55px / 1.5);
         font-weight: 600;
         margin: 0;
         color: #EE5353;
     }
-    
-    .return{
+
+    .return {
         font-size: calc(20px / 1.5);
         font-weight: 400;
         margin: 0;
@@ -96,32 +96,32 @@ body {
         color: #EE5353;
         margin-top: 65px;
     }
-    
-    .return:hover{
+
+    .return:hover {
         cursor: pointer;
         color: #ad3636;
     }
 }
 
 @media (max-width: 400px) {
-    .rb-logo{
+    .rb-logo {
         width: calc(380px / 2);
     }
-    
-    .main-text{
+
+    .main-text {
         font-size: calc(75px / 2);
         font-weight: 400;
         margin: 0;
     }
-    
-    .sub-text{
+
+    .sub-text {
         font-size: calc(55px / 2);
         font-weight: 600;
         margin: 0;
         color: #EE5353;
     }
-    
-    .return{
+
+    .return {
         font-size: calc(20px / 2);
         font-weight: 400;
         margin: 0;
@@ -129,8 +129,8 @@ body {
         color: #EE5353;
         margin-top: 65px;
     }
-    
-    .return:hover{
+
+    .return:hover {
         cursor: pointer;
         color: #ad3636;
     }

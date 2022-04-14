@@ -1,4 +1,4 @@
-.mbody{
+.mbody {
     width: 90%;
     height: 100%;
     margin: 0 auto;
@@ -6,7 +6,7 @@
     flex-direction: row;
 }
 
-.roulette-body{
+.roulette-body {
     position: relative;
     display: flex;
     justify-content: center;
@@ -15,7 +15,7 @@
     height: 550px;
 }
 
-.control-body{
+.control-body {
     width: 55%;
     height: 550px;
     display: flex;
@@ -23,18 +23,18 @@
     flex-direction: column;
 }
 
-.pointer{
+.pointer {
     position: absolute;
     width: 500px;
     height: 500px;
     z-index: 1;
 }
 
-#canvas{
+#canvas {
     position: absolute;
 }
 
-.lay-circle{
+.lay-circle {
     background-color: #EE5353;
     width: 470px;
     height: 470px;
@@ -45,7 +45,7 @@
     position: absolute;
 }
 
-.inner-circle{
+.inner-circle {
     background-color: #121212;
     width: 440px;
     height: 440px;
@@ -57,13 +57,13 @@
     position: relative;
 }
 
-.timer-text{
+.timer-text {
     font-size: 70px;
     color: rgba(255, 255, 255, 0.6);
     font-weight: 200;
 }
 
-.control-bar{
+.control-bar {
     width: 92%;
     height: 45px;
     background-color: #252525;
@@ -73,7 +73,7 @@
     align-items: center;
 }
 
-.bets-bar{
+.bets-bar {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -81,7 +81,7 @@
     margin-top: 20px;
 }
 
-.bet-container{
+.bet-container {
     width: calc(90% / 3);
     height: 100%;
     display: flex;
@@ -89,7 +89,7 @@
     align-items: center;
 }
 
-.bet-button{
+.bet-button {
     width: 90%;
     height: 60px;
     border-radius: 8px;
@@ -101,17 +101,17 @@
 }
 
 .bet-button:hover:after {
-    content: ''; 
+    content: '';
     display: block;
-    background-color: rgba(0, 0, 0, 0.1);   
-    position: absolute;  
+    background-color: rgba(0, 0, 0, 0.1);
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
 }
 
-.live-bets-container{
+.live-bets-container {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -119,34 +119,35 @@
     margin-top: 10px;
 }
 
-.live-members li{
+.live-members li {
     margin: 15px 0 0 -25px;
-	padding: 1px 0 0 26px;
-	list-style: none;
-	background-image: url(/img/dc-default.png);
-	background-repeat: no-repeat;
-	background-position: left center;
-	background-size: 20px;
-}
-.live-coins li{
-    margin: 15px 0 0 -25px;
-	padding: 1px 0 0 25px;
-	list-style: none;
-	background-image: url(/img/rbcoin30x30.png);
-	background-repeat: no-repeat;
-	background-position: left center;
-	background-size: 20px;
+    padding: 1px 0 0 26px;
+    list-style: none;
+    background-image: url(/img/dc-default.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 20px;
 }
 
-.live-text{
+.live-coins li {
+    margin: 15px 0 0 -25px;
+    padding: 1px 0 0 25px;
+    list-style: none;
+    background-image: url(/img/rbcoin30x30.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 20px;
+}
+
+.live-text {
     font-size: 14px;
 }
 
-.live-text ul{
+.live-text ul {
     margin: 0;
 }
 
-#coins{
+#coins {
     height: 100%;
     border-radius: 8px;
     outline: 0;
@@ -161,24 +162,24 @@
     -webkit-appearance: none;
 }
 
-.control-input-field{
+.control-input-field {
     display: flex;
     align-items: center;
     height: 100%;
     width: 30%;
 }
 
-.control-input-field img{
+.control-input-field img {
     height: 30px;
     margin-left: 7px;
 }
 
-.control-bar-inner{
+.control-bar-inner {
     margin-right: 5px;
     height: 80%;
 }
 
-.control-bar-inner button{
+.control-bar-inner button {
     height: 100%;
     border: none;
     background-color: #191919;
@@ -189,12 +190,12 @@
     border-color: #ee535383;
 }
 
-.control-bar-inner button:hover{
+.control-bar-inner button:hover {
     background-color: #151515;
     border: 1px solid #ee535383;
 }
 
-.control-panel{
+.control-panel {
     position: fixed;
     width: 60px;
     height: 220px;
@@ -206,27 +207,28 @@
     align-items: center;
     justify-content: space-around;
 }
-.control-button-hol{
+
+.control-button-hol {
     width: 100%;
 }
 
-.control-button{
+.control-button {
     width: 100%;
     background-color: transparent;
     border: none;
 }
 
-.control-button img{
+.control-button img {
     width: 25px;
     cursor: pointer;
 }
 
-.volume-control{
+.volume-control {
     transform: rotate(-90deg);
     width: 120px;
 }
 
-.slider{
+.slider {
     -webkit-appearance: none;
     width: 110px;
     margin: 0;
@@ -236,7 +238,7 @@
     z-index: 10;
 }
 
-.slider::-webkit-slider-thumb{
+.slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 12px;
@@ -246,7 +248,7 @@
     cursor: pointer;
 }
 
-.control-panel-icons{
+.control-panel-icons {
     width: 100%;
     height: 20px;
     display: flex;
@@ -255,7 +257,7 @@
     font-size: 12px;
 }
 
-.circle-colors{
+.circle-colors {
     width: 60%;
     display: flex;
     flex-direction: row;
@@ -265,23 +267,23 @@
     opacity: 0.9;
 }
 
-.color{
+.color {
     width: 14px;
     height: 35px;
     border-radius: 2px;
 }
 
 @media screen and (max-width: 1300px) {
-    .mbody{
+    .mbody {
         flex-direction: column;
         align-items: center;
     }
 
-    .roulette-body{
+    .roulette-body {
         width: 100%;
     }
 
-    .control-body{
+    .control-body {
         width: 100%;
     }
 }

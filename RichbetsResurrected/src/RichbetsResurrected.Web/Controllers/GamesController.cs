@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace RichbetsResurrected.Web.Controllers;
 
-
 public class GamesController : Controller
 {
     public IActionResult Roulette()
@@ -10,4 +9,8 @@ public class GamesController : Controller
         return View();
     }
 
+    public IActionResult Test()
+    {
+        return View();
+    }
 }
