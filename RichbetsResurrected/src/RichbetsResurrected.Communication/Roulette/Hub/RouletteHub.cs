@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -7,10 +8,13 @@ using RichbetsResurrected.Entities.Roulette;
 using RichbetsResurrected.Interfaces.Identity;
 using RichbetsResurrected.Interfaces.Interfaces.Games.Roulette;
 using RichbetsResurrected.Utilities.Constants;
+using SignalRSwaggerGen.Attributes;
 
 namespace RichbetsResurrected.Communication.Roulette.Hub;
 
+[SignalRHub("/rouletteHub")]
 [Authorize]
+[SuppressMessage("ReSharper", "AsyncApostle.AsyncMethodNamingHighlighting")]
 public class RouletteHub : Hub<IRouletteHub>
 {
     private readonly IAccountRepository _accountRepository;
@@ -20,16 +24,16 @@ public class RouletteHub : Hub<IRouletteHub>
         _rouletteService = rouletteService;
         _accountRepository = accountRepository;
     }
-
-    [HubMethodName("RouletteHello")]
-    public async Task<RouletteInfo> RouletteHelloAsync()
+    
+    [SignalRMethod(summary: "Invokable by clients to say hello to the server")]
+    public async Task<RouletteInfo> RouletteHello()
     {
-        var rouletteInfo = await _rouletteService.GetRouletteInfoAsync();
+        var rouletteInfo = _rouletteService.GetRouletteInfoAsync();
         return rouletteInfo;
     }
-
-    [HubMethodName("JoinRoulette")]
-    public async Task<RouletteJoinResult> JoinRouletteAsync(int amount, RouletteColor color)
+    
+    [SignalRMethod(summary: "Invokable by clients to join the roulette")]
+    public async Task<RouletteJoinResult> JoinRoulette(int amount, RouletteColor color)
     {
         var appUserId = Context.UserIdentifier;
         var discordId = Context.User.Claims.FirstOrDefault(c => c.Type == Constants.DiscordId).Value;

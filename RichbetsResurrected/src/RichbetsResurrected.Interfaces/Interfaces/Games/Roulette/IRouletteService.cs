@@ -9,5 +9,5 @@ public interface IRouletteService : IStartableGame
     void TurnOffBetting();
     Task<RouletteJoinResult> AddPlayerAsync(RoulettePlayer player);
     bool CheckIfCanBet();
-    Task<RouletteInfo> GetRouletteInfoAsync();
+    RouletteInfo GetRouletteInfoAsync();
 }

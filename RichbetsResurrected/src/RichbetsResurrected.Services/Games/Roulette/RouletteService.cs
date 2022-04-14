@@ -80,6 +80,7 @@ public class RouletteService : IRouletteService
                 await WaitForPlayersAsync();
                 var winNumber = GetRandomWinNumber();
                 await SpinAsync(winNumber);
+                await WaitForAnimationEndAsync(RouletteConstants.SpinDuration * 1000);
                 var winColor = RouletteConstants.GetRouletteColorForNumber(winNumber);
                 var result = await AwardWinnersAsync(winNumber, winColor);
                 AddToHistory(result);
@@ -92,7 +93,7 @@ public class RouletteService : IRouletteService
         }
     }
 
-    public async Task<RouletteInfo> GetRouletteInfoAsync()
+    public RouletteInfo GetRouletteInfoAsync()
     {
         var rouletteInfo = new RouletteInfo
         {
@@ -132,14 +133,17 @@ public class RouletteService : IRouletteService
         await Task.Delay(1000); // Just to make sure every bet is done adding
     }
 
-    private async Task SpinAsync(int winNumber)
+    private Task SpinAsync(int winNumber)
     {
         IsSpinning = true;
         var segment = RouletteConstants.GetSegmentForNumber(winNumber);
         var stopAt = RouletteConstants.GetRandomAngleForSegment(segment, RouletteConstants.TotalSegments);
-        await StartAnimationForClientsAsync(stopAt);
-        await Task.Delay(RouletteConstants.SpinDuration);
-        IsSpinning = false;
+        return StartAnimationForClientsAsync(stopAt);
+    }
+
+    private Task WaitForAnimationEndAsync(int timeInMilliseconds)
+    {
+        return Task.Delay(timeInMilliseconds);
     }
 
     private Task StartAnimationForClientsAsync(double stopAt)

@@ -37,6 +37,7 @@ builder.Services.AddSwaggerGen(c =>
         Title = "My API", Version = "v1"
     });
     c.EnableAnnotations();
+    c.AddSignalRSwaggerGen(o => o.ScanAssembly(typeof(RouletteHub).Assembly));
 });
 
 // add list services for diagnostic purposes - see https://github.com/ardalis/AspNetCoreStartupServices

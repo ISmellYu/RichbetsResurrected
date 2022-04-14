@@ -2,6 +2,7 @@
 
 namespace RichbetsResurrected.Web.Controllers;
 
+[ApiExplorerSettings(IgnoreApi = true)]
 [Route("errors")]
 public class ErrorController : Controller
 {
