@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.SignalR;
 using RichbetsResurrected.Communication.Roulette.Events;
+using RichbetsResurrected.Communication.Roulette.Hub;
 using RichbetsResurrected.Entities.Roulette;
 using RichbetsResurrected.Interfaces.DAL;
 using RichbetsResurrected.Interfaces.Games.Roulette;
@@ -16,20 +18,22 @@ namespace RichbetsResurrected.Services.Games.Roulette;
 public class RouletteService : IRouletteService
 {
     private readonly IMediator _mediator;
-
-
+    private readonly IHubContext<RouletteHub> _hubContext;
+    private readonly IHubClients<RouletteHub> _hubClients;
     private readonly IRichbetRepository _repository;
 
-    public RouletteService(IRichbetRepository repository, IMediator mediator)
+    public RouletteService(IRichbetRepository repository, IMediator mediator, IHubContext<RouletteHub> hubContext)
     {
         _repository = repository;
         _mediator = mediator;
+        _hubContext = hubContext;
     }
     private BlockingCollection<RoulettePlayer> Players { get; } = new();
     private List<RouletteResult> History { get; } = new();
     private bool IsRunning { get; set; }
     private bool AllowBetting { get; set; }
     private bool IsSpinning { get; set; }
+    private decimal TimeLeft { get; set; }
 
     public void TurnOnBetting()
     {
@@ -43,6 +47,19 @@ public class RouletteService : IRouletteService
 
     public async Task<RouletteJoinResult> AddPlayerAsync(RoulettePlayer player)
     {
+        if (!CheckIfCanBet())
+        {
+            return new RouletteJoinResult()
+            {
+                IsSuccess = false,
+                Error = new RouletteError()
+                {
+                    Message = "You cannot bet at this time"
+                },
+                Player = player
+            };
+        }
+        
         var points = await _repository.GetPointsFromUserAsync(player.IdentityUserId);
 
         if (points - player.Amount < 0)
@@ -98,7 +115,8 @@ public class RouletteService : IRouletteService
     {
         var rouletteInfo = new RouletteInfo
         {
-            Players = Players.ToList(), Results = History.TakeLast(10).ToList(), AllowBetting = AllowBetting, IsRolling = IsSpinning
+            Players = Players.ToList(), Results = History.TakeLast(10).ToList(), AllowBetting = AllowBetting, IsRolling = IsSpinning,
+            TimeLeft = TimeLeft
         };
         return rouletteInfo;
     }
@@ -125,10 +143,11 @@ public class RouletteService : IRouletteService
     private async Task WaitForPlayersAsync()
     {
         TurnOnBetting();
-        for (var i = 0; i <= 15; i++)
+        for (decimal i = 15; i >= 0; i -= 0.1m)
         {
-            await SendUpdateTimerToClientsAsync(15 - 1 * i);
-            await Task.Delay(1000);
+            TimeLeft = i;
+            // await SendUpdateTimerToClientsAsync(i);
+            await Task.Delay(100);
         }
         TurnOffBetting();
         await Task.Delay(1000); // Just to make sure every bet is done adding

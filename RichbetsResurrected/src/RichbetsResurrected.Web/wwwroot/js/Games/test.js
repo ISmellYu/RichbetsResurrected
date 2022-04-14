@@ -19,6 +19,13 @@ conn.start().then(function () {
     conn.on("StartAnimation", function (data) {
         console.log(data);
     });
+    
+    conn.stream("StreamRouletteInfo").subscribe({
+        next: function (data) {
+            console.log(data);
+        }
+    });
+    
      
 }).catch(function (err) {
     return console.error(err.toString());

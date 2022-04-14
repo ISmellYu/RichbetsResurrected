@@ -50,4 +50,15 @@ public class RouletteHub : Hub<IRouletteHub>
         var joinResult = await _rouletteService.AddPlayerAsync(roulettePlayer);
         return joinResult;
     }
+
+    [SignalRMethod(summary: "Stream for clients to receive the actual roulette result")]
+    public async IAsyncEnumerable<RouletteInfo> StreamRouletteInfo()
+    {
+        while (true)
+        {
+            var rouletteInfo = _rouletteService.GetRouletteInfoAsync();
+            await Task.Delay(100);
+            yield return rouletteInfo;
+        }
+    }
 }
