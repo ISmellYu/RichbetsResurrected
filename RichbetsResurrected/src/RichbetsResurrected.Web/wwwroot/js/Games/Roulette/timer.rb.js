@@ -11,7 +11,7 @@ function setProgress() {
     )`;
 }
 
-function resetTimer(){
+function resetTimer() {
     let progressValue = 0;
     let progress = setInterval(() => {
         progressValue += 1;

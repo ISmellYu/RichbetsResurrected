@@ -23,25 +23,25 @@ header {
     align-items: center;
 }
 
-.logo-text{
+.logo-text {
     font-size: 32px;
     margin: 0;
     font-weight: 400;
     margin-left: 20px;
 }
 
-.logo-text-color{
+.logo-text-color {
     color: #EE5353;
 }
 
-.nav-list{
+.nav-list {
     list-style: none;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.point-box{
+.point-box {
     display: flex;
     flex-direction: row;
     background-color: rgba(25, 25, 25, 0.85);
@@ -51,48 +51,48 @@ header {
     align-items: center;
 }
 
-#odometer{
+#odometer {
     font-size: 15px;
     margin: 2px 0 0 0;
 }
 
-.points-currency{
+.points-currency {
     font-size: 15px;
     margin: 0 15px 0 5px;
 }
 
-.rbc-logo{
+.rbc-logo {
     width: 30px;
     height: 30px;
     margin: 10px 8px 10px 10px
 }
 
-.nav-list li{
+.nav-list li {
     display: flex;
     align-items: center;
     padding: 20px;
     position: relative;
 }
 
-.nav-list li:last-child{
+.nav-list li:last-child {
     margin-right: 5px;
 }
 
-.nav-list li:hover{
+.nav-list li:hover {
     background-color: rgba(25, 25, 25, 0.85);
 }
 
-.-link{
+.-link {
     text-decoration: none;
     font-size: 15px;
     font-weight: 400;
 }
 
-.-link-active{
+.-link-active {
     background-color: rgba(0, 0, 0, 0.05);
 }
 
-.-link-active::before{
+.-link-active::before {
     background-color: #EE5353;
     content: " ";
     height: 3px;
@@ -103,6 +103,6 @@ header {
     border-radius: 5px;
 }
 
-.logout-link{
+.logout-link {
     color: #EE2D2D;
 }

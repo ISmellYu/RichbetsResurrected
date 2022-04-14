@@ -2,9 +2,11 @@
     ViewData["Title"] = "Privacy";
     Layout = "_MainLayout";
 }
+
 @section Head{
     <link rel="stylesheet" href="~/css/Games/roulette.css">
 }
+
 <button onclick="startSpin(2)" style="color:black;">Spin</button>
 <input type="number" id="progress" placeholder="progress" style="color:black;">
 <button style="color:black;" onclick="setProgress()">Set</button>
@@ -12,8 +14,12 @@
 
 <div class="control-panel">
     <div class="control-button-hol">
-        <button class="control-button"><img src="~/img/direction-row.png" alt="direction-row"></button>
-        <button class="control-button"><img src="~/img/direction-column.png" alt="direction-column"></button>
+        <button class="control-button">
+            <img src="~/img/direction-row.png" alt="direction-row">
+        </button>
+        <button class="control-button">
+            <img src="~/img/direction-column.png" alt="direction-column">
+        </button>
     </div>
     <div class="volume-control">
         <div class="slideConatiner">
@@ -140,9 +146,9 @@
     </div>
 </div>
 <script
-  src="https://code.jquery.com/jquery-3.5.1.js"
-  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-  crossorigin="anonymous"></script>
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
 <script type="text/javascript" src="~/js/Games/Roulette/Winwheel.js"></script>
 <script src="~/js/Games/Roulette/roulette-controller.rb.js"></script>

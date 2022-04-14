@@ -4,11 +4,8 @@ using AspNet.Security.OAuth.Discord;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using RichbetsResurrected.Core.Interfaces;
-using RichbetsResurrected.Core.Interfaces.Stores;
-using RichbetsResurrected.Infrastructure.Games.Roulette;
-using RichbetsResurrected.Infrastructure.Identity;
-using RichbetsResurrected.Infrastructure.Identity.Models;
+using RichbetsResurrected.Identity;
+using RichbetsResurrected.Interfaces.Interfaces;
 
 namespace RichbetsResurrected.Web.Controllers;
 
@@ -21,7 +18,7 @@ public class AccountController : Controller
         _accountRepository = accountRepository;
         _richbetRepository = richbetRepository;
     }
-    
+
     [HttpGet]
     public async Task<IActionResult> Login(string returnUrl = null)
     {
@@ -30,11 +27,14 @@ public class AccountController : Controller
         ViewData["ReturnUrl"] = returnUrl;
         return View();
     }
-    
+
     public Task<IActionResult> ExternalLogin(string returnUrl = null)
     {
-        return _accountRepository.ChallengeResultAsync(DiscordAuthenticationDefaults.AuthenticationScheme, 
-            Url.Action("Signin_discord", "Account", new { returnUrl }));
+        return _accountRepository.ChallengeResultAsync(DiscordAuthenticationDefaults.AuthenticationScheme,
+            Url.Action("Signin_discord", "Account", new
+            {
+                returnUrl
+            }));
     }
 
     [Route("/signin-discord")]
@@ -42,10 +42,7 @@ public class AccountController : Controller
     {
         returnUrl ??= Url.Content("~/");
         var info = await _accountRepository.GetExternalLoginInfoAsync();
-        if (info == null)
-        {
-            return RedirectToAction("Login");
-        }
+        if (info == null) return RedirectToAction("Login");
 
         var result = await _accountRepository.ExternalLoginSignInAsync(info);
         if (result.Succeeded)
@@ -53,33 +50,30 @@ public class AccountController : Controller
             await _accountRepository.UpdateDiscordClaimsAsync(info);
             return LocalRedirect(returnUrl);
         }
-        
+
         var (createResult, user) = await _accountRepository.CreateUserFromExternalLoginAsync(info);
-        if (!createResult.Succeeded)
-        {
-            return RedirectToAction("Login");
-        }
+        if (!createResult.Succeeded) return RedirectToAction("Login");
 
         createResult = await _accountRepository.AddExternalLoginToUserAsync(user, info);
-        if (!createResult.Succeeded)
-        {
-            return RedirectToAction("Login");
-        }
-        
+        if (!createResult.Succeeded) return RedirectToAction("Login");
+
         await _accountRepository.UpdateDiscordClaimsAsync(info);
         await _richbetRepository.CreateRichbetUserAsync(user.Id, info.Principal.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
         await _accountRepository.LoginAsync(user);
         return LocalRedirect(returnUrl);
     }
-    
+
     public async Task<IActionResult> Logout()
     {
         await _accountRepository.LogoutAsync();
         return RedirectToAction("Login", "Account");
     }
-    
+
     public async Task<IActionResult> AccessDenied()
     {
-        return RedirectToAction("Index", "Error", new { statusCode = (int)HttpStatusCode.Unauthorized });
+        return RedirectToAction("Index", "Error", new
+        {
+            statusCode = (int) HttpStatusCode.Unauthorized
+        });
     }
 }

@@ -1,18 +1,11 @@
-﻿using System.Reflection;
-using Ardalis.ListStartupServices;
+﻿using Ardalis.ListStartupServices;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Autofac.Integration.SignalR;
-using Microsoft.AspNet.SignalR;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
-using RichbetsResurrected.Core;
-using RichbetsResurrected.Infrastructure;
-using RichbetsResurrected.Infrastructure.Data;
-using RichbetsResurrected.Infrastructure.Games.Roulette.Hub;
-using RichbetsResurrected.Infrastructure.Identity.Contexts;
-using RichbetsResurrected.Web;
+using RichbetsResurrected.Communication;
+using RichbetsResurrected.Communication.Roulette.Hub;
+using RichbetsResurrected.Identity;
+using RichbetsResurrected.Services;
 using Westwind.AspNetCore.LiveReload;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,7 +22,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 });
 
 
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddAuthStuff(builder.Configuration);
 
 builder.Services.AddLiveReload();
 builder.Services.AddSignalR();
@@ -58,10 +51,9 @@ builder.Services.Configure<ServiceConfig>(config =>
 
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
-    containerBuilder.RegisterModule(new DefaultCoreModule());
-    containerBuilder.RegisterModule(
-        new DefaultInfrastructureModule(builder.Environment.EnvironmentName == "Development"));
-    // containerBuilder.RegisterHubs(Assembly.GetExecutingAssembly());
+    containerBuilder.RegisterModule(new DefaultIdentityModule());
+    containerBuilder.RegisterModule(new DefaultCommunicationModule());
+    containerBuilder.RegisterModule(new DefaultServiceModule());
 });
 
 builder.Logging.ClearProviders();
@@ -70,7 +62,7 @@ builder.Logging.AddConsole();
 
 var app = builder.Build();
 
-GlobalHost.DependencyResolver = new AutofacDependencyResolver(app.Services.GetAutofacRoot());
+// GlobalHost.DependencyResolver = new AutofacDependencyResolver(app.Services.GetAutofacRoot());
 
 if (app.Environment.IsDevelopment())
 {
@@ -89,7 +81,7 @@ app.UseRouting();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseCookiePolicy(); 
+app.UseCookiePolicy();
 
 app.UseAuthentication();
 app.UseAuthorization();
