@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using RichbetsResurrected.Entities.DatabaseEntities;
-using RichbetsResurrected.Interfaces.Interfaces;
-using RichbetsResurrected.Interfaces.Interfaces.Stores;
+using RichbetsResurrected.Interfaces.DAL;
+using RichbetsResurrected.Interfaces.DAL.Stores;
 
 namespace RichbetsResurrected.Identity.BaseRichbet;
 

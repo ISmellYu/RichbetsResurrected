@@ -1,7 +1,6 @@
-﻿using System.Threading.Tasks;
-using RichbetsResurrected.Entities.Roulette;
+﻿using RichbetsResurrected.Entities.Roulette;
 
-namespace RichbetsResurrected.Interfaces.Interfaces.Games.Roulette;
+namespace RichbetsResurrected.Interfaces.Games.Roulette;
 
 public interface IRouletteService : IStartableGame
 {
