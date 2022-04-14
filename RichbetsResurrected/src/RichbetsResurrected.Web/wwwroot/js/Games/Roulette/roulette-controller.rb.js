@@ -1,3 +1,38 @@
+let conn = new signalR.HubConnectionBuilder().withUrl("/rouletteHub").build();
+let timerText = document.querySelector('.timer-text');
+
+conn.start().then(function () {
+
+    conn.stream("StreamRouletteInfo").subscribe({
+        next: function (data) {
+            //console.log(data.timeLeft);
+            time = (data.timeLeft * 100) / 15;
+
+            timeText = data.timeLeft.toFixed(1);
+            //timeText = timeText.toFixed(2);
+
+            //console.log(time);
+            if (time < 98) {
+                setProgress(time);
+                timerText.textContent = `${timeText}s`;
+            }
+        }
+    });
+
+    conn.on("EndRoulette", function (history, current) {
+        console.log(current.colorName);
+        resetTimer();
+    });
+
+    conn.on("StartAnimation", function (data) {
+        startSpin(data.stopAt);
+    });
+});
+
+
+
+
+
 let firstImg = new Image();
 
 // Create callback to execute once the image has finished loading.
@@ -147,7 +182,6 @@ let firstWheel = new Winwheel({
 
 
 function startSpin(stopAt) {
-    //DisableAllButtons();
     allowBetting = false;
     if (wheelSpinning == false) {
         if (wheelPower == 1) {

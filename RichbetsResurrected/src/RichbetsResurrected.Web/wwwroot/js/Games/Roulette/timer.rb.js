@@ -2,9 +2,7 @@ let progressBar = document.querySelector('.lay-circle');
 let speed = 5;
 
 
-function setProgress() {
-    console.log('setProgress');
-    inputProgressValue = document.getElementById('progress').value;
+function setProgress(inputProgressValue) {
     progressBar.style.background = `conic-gradient(
         #EE5353 ${inputProgressValue * 3.6}deg,
         #121212 ${inputProgressValue * 3.6}deg
