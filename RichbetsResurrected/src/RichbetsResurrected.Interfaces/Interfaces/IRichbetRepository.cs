@@ -1,4 +1,6 @@
-﻿namespace RichbetsResurrected.Interfaces.Interfaces;
+﻿using System.Threading.Tasks;
+
+namespace RichbetsResurrected.Interfaces.Interfaces;
 
 public interface IRichbetRepository
 {

@@ -1,4 +1,5 @@
-﻿using RichbetsResurrected.Entities.DiscordAggregate;
+﻿using System.Threading.Tasks;
+using RichbetsResurrected.Entities.DiscordAggregate;
 using RichbetsResurrected.Interfaces.Interfaces;
 using RichbetsResurrected.Interfaces.Interfaces.Stores;
 

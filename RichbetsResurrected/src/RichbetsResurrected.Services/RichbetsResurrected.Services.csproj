@@ -32,5 +32,4 @@
         <ProjectReference Include="..\RichbetsResurrected.Entities\RichbetsResurrected.Entities.csproj" />
         <ProjectReference Include="..\RichbetsResurrected.Interfaces\RichbetsResurrected.Interfaces.csproj" />
     </ItemGroup>
-
 </Project>

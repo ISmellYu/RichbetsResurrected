@@ -1,4 +1,5 @@
-﻿using RichbetsResurrected.Entities.Roulette;
+﻿using System.Threading.Tasks;
+using RichbetsResurrected.Entities.Roulette;
 
 namespace RichbetsResurrected.Interfaces.Interfaces.Games.Roulette;
 

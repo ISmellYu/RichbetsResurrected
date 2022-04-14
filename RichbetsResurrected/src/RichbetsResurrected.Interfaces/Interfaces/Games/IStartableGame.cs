@@ -1,4 +1,6 @@
-﻿namespace RichbetsResurrected.Interfaces.Interfaces.Games;
+﻿using System.Threading.Tasks;
+
+namespace RichbetsResurrected.Interfaces.Interfaces.Games;
 
 public interface IStartableGame
 {

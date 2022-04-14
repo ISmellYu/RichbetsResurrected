@@ -1,4 +1,6 @@
-﻿namespace RichbetsResurrected.Entities.Roulette;
+﻿using System;
+
+namespace RichbetsResurrected.Entities.Roulette;
 
 public static class RouletteConstants
 {

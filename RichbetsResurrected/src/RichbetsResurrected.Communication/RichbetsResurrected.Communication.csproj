@@ -31,5 +31,4 @@
         <ProjectReference Include="..\RichbetsResurrected.Interfaces\RichbetsResurrected.Interfaces.csproj" />
         <ProjectReference Include="..\RichbetsResurrected.Utilities\RichbetsResurrected.Utilities.csproj" />
     </ItemGroup>
-
 </Project>
