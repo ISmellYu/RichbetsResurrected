@@ -8,20 +8,14 @@
     <script src="~/lib/signalr/dist/browser/signalr.js"></script>
 }
 
-<button onclick="startSpin(2)" style="color:black;">Spin</button>
-<input type="number" id="progress" placeholder="progress" style="color:black;">
-<button style="color:black;" onclick="setProgress()">Set</button>
-<button onclick="resetTimer()">Reset</button>
-<button onclick="test()">TEST</button>
-
 <div id="player"></div>
 
 <div class="control-panel">
     <div class="control-button-hol">
-        <button class="control-button">
+        <button class="control-button" action="row">
             <img src="~/img/direction-row.png" alt="direction-row">
         </button>
-        <button class="control-button">
+        <button class="control-button" action="column">
             <img src="~/img/direction-column.png" alt="direction-column">
         </button>
     </div>

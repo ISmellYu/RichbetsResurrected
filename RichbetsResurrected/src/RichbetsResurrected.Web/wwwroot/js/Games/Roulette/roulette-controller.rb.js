@@ -211,12 +211,11 @@ conn.start().then(function () {
 
             if (actualProgress < 98) { // Prevent the timer from visual bug.
 
-                setProgress(actualProgress);
-                timerText.textContent = `${timeText}s`;
-            }
+                if (actualProgress != 0) {
+                    setProgress(actualProgress);
+                    timerText.textContent = `${timeText}s`;
+                }
 
-            if (actualProgress == 0) {
-                timerText.textContent = `Rolling...`;
             }
 
             if (JSON.stringify(data.players) !== JSON.stringify(dataPlayersOld)) {
@@ -239,10 +238,16 @@ conn.start().then(function () {
         else {
             playSound("rollEnd");
         }
+
+        timerText.textContent = `${current.colorName}`;
+
         PlayerBetHistory = [];
     });
 
     conn.on("StartAnimation", function (data) {
+
+        timerText.textContent = `Rolling...`;
+
         startSpin(data);
         playSound("rollStart");
     });

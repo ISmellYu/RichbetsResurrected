@@ -206,6 +206,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    z-index: 999;
 }
 
 .control-button-hol {
