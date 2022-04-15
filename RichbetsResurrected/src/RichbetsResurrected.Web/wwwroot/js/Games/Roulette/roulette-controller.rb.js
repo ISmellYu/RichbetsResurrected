@@ -213,6 +213,10 @@ conn.start().then(function () {
                 timerText.textContent = `${timeText}s`; 
             }
 
+            if (actualProgress == 0) {
+                timerText.textContent = `Rolling...`;
+            }
+
             if (JSON.stringify(data.players) !== JSON.stringify(dataPlayersOld)) { 
 
                 dataPlayersOld = data.players;
@@ -224,14 +228,11 @@ conn.start().then(function () {
 
    
     conn.on("EndRoulette", function (history, current) {
-
         resetTimer();
-
     });
 
 
     conn.on("StartAnimation", function (data) {
-
         startSpin(data);
 
     });
@@ -311,7 +312,7 @@ conn.start().then(function () {
 
                 coinsList.removeChild(coinsList.firstChild);
             }
-            
+
         });
     }
 

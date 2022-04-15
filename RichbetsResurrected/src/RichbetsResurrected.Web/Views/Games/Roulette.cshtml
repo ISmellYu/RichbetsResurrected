@@ -68,14 +68,14 @@
                 <input type="number" id="coins" placeholder="Coins..">
             </div>
             <div class="control-bar-inner">
-                <button>CLEAR</button>
-                <button>+1</button>
-                <button>+10</button>
-                <button>+100</button>
-                <button>+1000</button>
-                <button>1/2</button>
-                <button>X2</button>
-                <button>MAX</button>
+                <button class="control-bar-button" action="clear">CLEAR</button>
+                <button class="control-bar-button" action="1">+1</button>
+                <button class="control-bar-button" action="10">+10</button>
+                <button class="control-bar-button" action="100">+100</button>
+                <button class="control-bar-button" action="1000">+1000</button>
+                <button class="control-bar-button" action="half">1/2</button>
+                <button class="control-bar-button" action="double">X2</button>
+                <button class="control-bar-button" action="max">MAX</button>
             </div>
         </div>
         <div class="bets-bar">
@@ -131,3 +131,4 @@
 <script type="text/javascript" src="~/lib/WinWheel/Winwheel.min.js"></script>
 <script src="~/js/Games/Roulette/roulette-controller.rb.js"></script>
 <script src="~/js/Games/Roulette/timer.rb.js"></script>
+<script src="~/js/Games/Roulette/roulette-bar-controller.rb.js"></script>
