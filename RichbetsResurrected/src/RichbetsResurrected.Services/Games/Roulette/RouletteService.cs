@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using RichbetsResurrected.Communication.Roulette.Events;
@@ -18,33 +19,23 @@ namespace RichbetsResurrected.Services.Games.Roulette;
 public class RouletteService : IRouletteService
 {
     private readonly IMediator _mediator;
-    private readonly IRichbetRepository _repository;
+    private IRichbetRepository _repository;
+    private readonly IRouletteGameState _gameState;
+    private readonly ILifetimeScope _hubLifetimeScope;
+    
+    public IRouletteGameState GameState => _gameState;
 
-    public RouletteService(IRichbetRepository repository, IMediator mediator)
+    public RouletteService(IRichbetRepository repository, IMediator mediator, IRouletteGameState gameState, ILifetimeScope hubLifetimeScope)
     {
         _repository = repository;
         _mediator = mediator;
+        _gameState = gameState;
+        _hubLifetimeScope = hubLifetimeScope;
     }
-    private BlockingCollection<RoulettePlayer> Players { get; } = new();
-    private List<RouletteResult> History { get; } = new();
-    private bool IsRunning { get; set; }
-    private bool AllowBetting { get; set; }
-    private bool IsSpinning { get; set; }
-    private decimal TimeLeft { get; set; }
-
-    public void TurnOnBetting()
-    {
-        AllowBetting = true;
-    }
-
-    public void TurnOffBetting()
-    {
-        AllowBetting = false;
-    }
-
+    
     public async Task<RouletteJoinResult> AddPlayerAsync(RoulettePlayer player)
     {
-        if (!CheckIfCanBet())
+        if (!_gameState.CheckIfCanBet())
         {
             return new RouletteJoinResult()
             {
@@ -72,95 +63,67 @@ public class RouletteService : IRouletteService
 
 
         await _repository.RemovePointsFromUserAsync(player.IdentityUserId, player.Amount);
-        AddToPlayerList(player);
+        _gameState.AddPlayer(player);
         await SendJoinPlayerToClientsAsync(player);
         return new RouletteJoinResult
         {
             IsSuccess = true, Error = null, Player = player
         };
     }
-
-    public bool CheckIfCanBet()
-    {
-        return AllowBetting && IsRunning && !IsSpinning;
-    }
+    
     public async Task StartAsync()
     {
+        if (_gameState.CheckIfRunning())
+            return;
+        
         try
         {
-            IsRunning = true;
+            _gameState.TurnOnGame();
             while (true)
             {
-                ResetGame();
+                _gameState.ResetGame();
                 await WaitForPlayersAsync();
                 var winNumber = GetRandomWinNumber();
                 await SpinAsync(winNumber);
                 await WaitForAnimationEndAsync(RouletteConfigs.SpinDuration * 1000);
                 var winColor = RouletteHelper.GetRouletteColorForNumber(winNumber);
                 var result = await AwardWinnersAsync(winNumber, winColor);
-                AddToHistory(result);
+                _gameState.AddToHistory(result);
                 await SendEndRouletteToClientsAsync(result);
+                await Task.Delay(2000); // Wait for 2 seconds before starting again roulette
             }
         }
         catch (Exception e)
         {
-            IsRunning = false;
-        }
-    }
-
-    public RouletteInfo GetRouletteInfoAsync()
-    {
-        var rouletteInfo = new RouletteInfo
-        {
-            Players = Players.ToList(), Results = History.TakeLast(10).ToList(), AllowBetting = AllowBetting, IsRolling = IsSpinning,
-            TimeLeft = TimeLeft
-        };
-        return rouletteInfo;
-    }
-
-    private bool IsInGameColor(RoulettePlayer player)
-    {
-        return Players.Any(p => p.IdentityUserId == player.IdentityUserId && p.Color == player.Color);
-    }
-
-    private void AddToPlayerList(RoulettePlayer player)
-    {
-        if (IsInGameColor(player))
-        {
-            foreach (var roulettePlayer in Players)
-                if (roulettePlayer.IdentityUserId == player.IdentityUserId && roulettePlayer.Color == player.Color)
-                    roulettePlayer.Amount += player.Amount;
-        }
-        else
-        {
-            Players.TryAdd(player);
+            _gameState.TurnOffGame();
         }
     }
 
     private async Task WaitForPlayersAsync()
     {
-        TurnOnBetting();
+        _gameState.TurnOnBetting();
         for (decimal i = RouletteConfigs.TimeForUsersToBet; i >= 0; i -= 0.01m)
         {
-            TimeLeft = i;
+            _gameState.SetTimeLeft(i);
             // await SendUpdateTimerToClientsAsync(i);
             await Task.Delay(10);
         }
-        TurnOffBetting();
+        _gameState.TurnOffBetting();
         await Task.Delay(100); // Just to make sure every bet is done adding
     }
 
     private Task SpinAsync(int winNumber)
     {
-        IsSpinning = true;
+        _gameState.TurnOnSpinning();
         var segment = RouletteHelper.GetSegmentForNumber(winNumber);
         var stopAt = RouletteHelper.GetRandomAngleForSegment(segment, RouletteConfigs.TotalSegments);
         return StartAnimationForClientsAsync(stopAt);
     }
 
-    private Task WaitForAnimationEndAsync(int timeInMilliseconds)
+    private async Task WaitForAnimationEndAsync(int timeInMilliseconds)
     {
-        return Task.Delay(timeInMilliseconds);
+        await Task.Delay(timeInMilliseconds);
+        _gameState.TurnOffSpinning();
     }
 
     private Task StartAnimationForClientsAsync(double stopAt)
@@ -180,7 +143,7 @@ public class RouletteService : IRouletteService
 
     private Task SendEndRouletteToClientsAsync(RouletteResult result)
     {
-        var history = History.TakeLast(10).ToList();
+        var history = _gameState.GetHistory(10);
         return _mediator.Publish(new EndRouletteNotification(history, result));
     }
 
@@ -189,40 +152,27 @@ public class RouletteService : IRouletteService
         return Random.Shared.Next(0, RouletteConfigs.TotalSegments - 1);
     }
 
-    private void AddToHistory(RouletteResult result)
-    {
-        History.Add(result);
-    }
-
     private async Task<RouletteResult> AwardWinnersAsync(int number, RouletteColor winColor)
     {
-        var winners = Players.Where(p => p.Color == winColor).ToList();
-        var losers = Players.Where(p => p.Color != winColor).ToList();
-
+        var players = _gameState.GetPlayers();
+        var winners = players.Where(p => p.Color == winColor).ToList();
+        var losers = players.Where(p => p.Color != winColor).ToList();
+        
         var result = new RouletteResult(number, winColor, winners.ToList(), losers.ToList());
-        switch (winColor)
+        await using (var scope = _hubLifetimeScope.BeginLifetimeScope())
         {
-            case RouletteColor.Black or RouletteColor.Red:
-                foreach (var winner in winners) await _repository.AddPointsToUserAsync(winner.IdentityUserId, winner.Amount * 2);
-                break;
-            case RouletteColor.Green:
-                foreach (var winner in winners) await _repository.AddPointsToUserAsync(winner.IdentityUserId, winner.Amount * 14);
-                break;
+            _repository = scope.Resolve<IRichbetRepository>();
+            switch (winColor)
+            {
+                case RouletteColor.Black or RouletteColor.Red:
+                    foreach (var winner in winners) await _repository.AddPointsToUserAsync(winner.IdentityUserId, winner.Amount * 2);
+                    break;
+                case RouletteColor.Green:
+                    foreach (var winner in winners) await _repository.AddPointsToUserAsync(winner.IdentityUserId, winner.Amount * 14);
+                    break;
+            }
         }
+        
         return result;
-    }
-
-    private void ClearPlayers()
-    {
-        while (Players.TryTake(out _))
-        {
-        }
-    }
-    
-    private void ResetGame()
-    {
-        ClearPlayers();
-        AllowBetting = true;
-        IsSpinning = false;
     }
 }

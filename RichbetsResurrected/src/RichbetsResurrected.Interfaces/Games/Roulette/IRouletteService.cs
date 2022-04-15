@@ -4,9 +4,6 @@ namespace RichbetsResurrected.Interfaces.Games.Roulette;
 
 public interface IRouletteService : IStartableGame
 {
-    void TurnOnBetting();
-    void TurnOffBetting();
+    IRouletteGameState GameState { get; }
     Task<RouletteJoinResult> AddPlayerAsync(RoulettePlayer player);
-    bool CheckIfCanBet();
-    RouletteInfo GetRouletteInfoAsync();
 }
