@@ -82,18 +82,20 @@ var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 var player;
+
 function onYouTubeIframeAPIReady() {
-  player = new YT.Player('player', {
-    height: '0',
-    width: '0',
-    videoId: '0C3nAhSKBoU',
-    playerVars: {
-        'autoplay': 1,
-        'controls': 0 },
-    events: {
-        'onReady': onPlayerReady
-    }
-  });
+    player = new YT.Player('player', {
+        height: '0',
+        width: '0',
+        videoId: '0C3nAhSKBoU',
+        playerVars: {
+            'autoplay': 1,
+            'controls': 0
+        },
+        events: {
+            'onReady': onPlayerReady
+        }
+    });
 }
 
 function onPlayerReady(event) {
@@ -102,9 +104,10 @@ function onPlayerReady(event) {
 }
 
 document.addEventListener("mousemove", function () {
+    // LIKE A BOSS
     if (player.playerInfo.playerState == -1) {
         player.setVolume(parseInt(MusicCookieVolume));
         player.playVideo();
     }
-    return;
+
 });
