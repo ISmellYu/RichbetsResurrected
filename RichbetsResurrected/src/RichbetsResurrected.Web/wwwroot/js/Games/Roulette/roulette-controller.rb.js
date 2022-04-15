@@ -193,8 +193,11 @@ function restoreWheel() {
 
 conn.start().then(function () {
 
-    let timerText = document.querySelector('.timer-text'); 
+    let timerText = document.querySelector('.timer-text');
+
     const colors = ['Red', 'Black', 'Green']; 
+
+    let PlayerBetHistory = [];
 
     let dataPlayersOld; 
 
@@ -228,13 +231,20 @@ conn.start().then(function () {
 
    
     conn.on("EndRoulette", function (history, current) {
-        resetTimer();
-    });
 
+        resetTimer();
+
+        if (PlayerBetHistory.includes(current.color)) { // Play correct sound if the player won.
+            playSound("rollWin");
+        }else{
+            playSound("rollEnd");
+        }
+        PlayerBetHistory = [];
+    });
 
     conn.on("StartAnimation", function (data) {
         startSpin(data);
-
+        playSound("rollStart");
     });
 
 
@@ -242,14 +252,17 @@ conn.start().then(function () {
 
     document.getElementById("black-button").addEventListener("click", async function () {
         placeBet(1, 1); 
+        PlayerBetHistory.push(1);
     });
 
     document.getElementById("red-button").addEventListener("click", async function () { 
         placeBet(0, 1); 
+        PlayerBetHistory.push(0);
     });
 
     document.getElementById("green-button").addEventListener("click", async function () { 
         placeBet(2, 1); 
+        PlayerBetHistory.push(2);
     });
 
 

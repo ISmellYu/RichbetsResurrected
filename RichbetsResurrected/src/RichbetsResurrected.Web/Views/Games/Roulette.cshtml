@@ -14,6 +14,8 @@
 <button onclick="resetTimer()">Reset</button>
 <button onclick="test()">TEST</button>
 
+<div id="player"></div>
+
 <div class="control-panel">
     <div class="control-button-hol">
         <button class="control-button">
@@ -25,10 +27,10 @@
     </div>
     <div class="volume-control">
         <div class="slideConatiner">
-            <input type="range" min="0" max="100" value="50" id="myRange" class="slider">
+            <input type="range" min="0" max="100" value="40" id="fx" class="slider">
         </div>
         <div class="slideConatiner">
-            <input type="range" min="0" max="100" value="50" id="myRange" class="slider">
+            <input type="range" min="0" max="100" value="50" id="music" class="slider">
         </div>
     </div>
     <div class="control-panel-icons">
@@ -132,3 +134,4 @@
 <script src="~/js/Games/Roulette/roulette-controller.rb.js"></script>
 <script src="~/js/Games/Roulette/timer.rb.js"></script>
 <script src="~/js/Games/Roulette/roulette-bar-controller.rb.js"></script>
+<script src="~/js/Games/Roulette/control-panel.rb.js"></script>
