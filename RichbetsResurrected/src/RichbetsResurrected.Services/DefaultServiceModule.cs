@@ -16,11 +16,20 @@ public class DefaultServiceModule : Module
 
     private void RegisterGames(ContainerBuilder builder)
     {
-        builder.RegisterType<RouletteService>().As<IRouletteService>()
-            .SingleInstance() // Same instance for everything
-            .AutoActivate() // Resolve the service before anything else once to create the instance
-            .OnActivated(StartGame); // Run a function at service creation
+        RegisterRoulette(builder);
     }
+
+    private void RegisterRoulette(ContainerBuilder builder)
+    {
+        builder.RegisterType<RouletteGameState>().As<IRouletteGameState>().SingleInstance();
+
+        builder.RegisterType<RouletteService>().As<IRouletteService>()
+        .InstancePerLifetimeScope()
+        .AutoActivate() // Same instance for everything// Resolve the service before anything else once to create the instance
+        .OnActivated(StartGame); // Run a function at service creation
+    }
+    
+    
     private static void StartGame<T>(IActivatedEventArgs<T> gameArgs) where T : IStartableGame
     {
         _ = Task.Run(() => gameArgs.Instance.StartAsync());

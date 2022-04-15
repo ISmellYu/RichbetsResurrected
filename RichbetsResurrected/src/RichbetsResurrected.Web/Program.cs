@@ -53,7 +53,7 @@ builder.Services.Configure<ServiceConfig>(config =>
 
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
-    containerBuilder.RegisterModule(new DefaultIdentityModule());
+    containerBuilder.RegisterModule(new DefaultIdentityModule(builder.Configuration));
     containerBuilder.RegisterModule(new DefaultCommunicationModule());
     containerBuilder.RegisterModule(new DefaultServiceModule());
 });

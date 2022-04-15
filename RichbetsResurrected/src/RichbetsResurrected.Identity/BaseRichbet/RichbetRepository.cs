@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using RichbetsResurrected.Entities.DatabaseEntities;
+using RichbetsResurrected.Identity.Contexts;
 using RichbetsResurrected.Interfaces.DAL;
 using RichbetsResurrected.Interfaces.DAL.Stores;
 
@@ -7,11 +9,15 @@ namespace RichbetsResurrected.Identity.BaseRichbet;
 
 public class RichbetRepository : IRichbetRepository
 {
-    private readonly IRichbetStore _store;
+    private readonly AppDbContext _context;
+    public int KlantId { get; set; }
+    public IQueryable<RichbetAppUser> RichbetAppUsers => _context.RichbetAppUsers.AsNoTracking();
+    // Readonly
+    public IQueryable<RichbetUser> RichbetUsers => _context.RichbetUsers.AsNoTracking();
 
-    public RichbetRepository(IRichbetStore store)
+    public RichbetRepository(AppDbContext context)
     {
-        _store = store;
+        _context = context;
     }
 
     public async Task CreateRichbetUserAsync(int identityUserId, string discordId)
@@ -21,72 +27,81 @@ public class RichbetRepository : IRichbetRepository
             Multiplier = 1.0f, Points = 0, DailyRedeemed = false
         };
 
-        var exists = await _store.CheckIfExistsRichbetUserByAppUserIdAsync(identityUserId);
+        var exists = await RichbetAppUsers.AnyAsync(r => r.AppUserId == identityUserId);
         if (exists)
             return;
-
-        await _store.CreateRichbetUserAsync(user);
-        await _store.CreateRichbetAppUserAsync(new RichbetAppUser
+        
+        await _context.RichbetUsers.AddAsync(user);
+        await _context.RichbetAppUsers.AddAsync(new RichbetAppUser()
         {
-            AppUserId = identityUserId, RichbetUserId = user.Id, DiscordUserId = discordId
+            AppUserId = identityUserId, DiscordUserId = discordId,
+            RichbetUserId = user.Id
         });
     }
 
     public async Task DeleteRichbetUserByIdentityIdAsync(int identityUserId)
     {
-        var exists = await _store.CheckIfExistsRichbetUserByAppUserIdAsync(identityUserId);
-        if (!exists)
+        var richbetAppUser = await RichbetAppUsers.FirstOrDefaultAsync(r => r.AppUserId == identityUserId);
+        if (richbetAppUser == null)
             return;
 
-        await _store.RemoveRichbetUserByAppUserIdAsync(identityUserId);
+        
+        _context.RichbetUsers.Remove(new RichbetUser() { Id = richbetAppUser.RichbetUserId });
+        _context.RichbetAppUsers.Remove(richbetAppUser);
 
-        exists = await _store.CheckIfExistsRichbetAppUserByAppUserIdAsync(identityUserId);
-        if (!exists)
-            return;
-
-        await _store.RemoveRichbetAppUserByAppUserIdAsync(identityUserId);
     }
 
     public async Task AddPointsToUserAsync(int identityUserId, int points)
     {
-        var exists = await _store.CheckIfExistsRichbetUserByAppUserIdAsync(identityUserId);
-        if (!exists)
+        var richbetAppUser = await RichbetAppUsers.FirstOrDefaultAsync(r => r.AppUserId == identityUserId);
+        if (richbetAppUser == null)
             return;
-        var richbetUser = await _store.GetRichbetUserByIdentityIdAsync(identityUserId);
-        await _store.AddPointsToRichbetUserAsync(richbetUser.Id, points);
+        var richbetUser = await _context.RichbetUsers.FindAsync(richbetAppUser.RichbetUserId);
+        Console.WriteLine($"Add: {KlantId}");
+        richbetUser.Points += points;
+        await _context.SaveChangesAsync();
+        KlantId++;
     }
 
     public async Task RemovePointsFromUserAsync(int identityUserId, int points)
     {
-        var exists = await _store.CheckIfExistsRichbetUserByAppUserIdAsync(identityUserId);
-        if (!exists)
+        var richbetAppUser = await RichbetAppUsers.FirstOrDefaultAsync(r => r.AppUserId == identityUserId);
+        if (richbetAppUser == null)
             return;
-        var richbetUser = await _store.GetRichbetUserByIdentityIdAsync(identityUserId);
-        await _store.RemovePointsFromRichbetUserAsync(richbetUser.Id, points);
+        var richbetUser = await _context.RichbetUsers.FindAsync(richbetAppUser.RichbetUserId);
+        Console.WriteLine($"Remove: {KlantId}");
+        richbetUser.Points -= points;
+        await _context.SaveChangesAsync();
+        KlantId++;
     }
 
     public async Task SetDailyToUserAsync(int identityUserId, bool isRedeemed)
     {
-        var exists = await _store.CheckIfExistsRichbetUserByAppUserIdAsync(identityUserId);
-        if (!exists)
+        var richbetAppUser = await RichbetAppUsers.FirstOrDefaultAsync(r => r.AppUserId == identityUserId);
+        if (richbetAppUser == null)
             return;
-        var richbetUser = await _store.GetRichbetUserByIdentityIdAsync(identityUserId);
-        await _store.SetDailyToRichbetUserAsync(richbetUser.Id, isRedeemed);
+        var richbetUser = await _context.RichbetUsers.FindAsync(richbetAppUser.RichbetUserId);
+        richbetUser.DailyRedeemed = isRedeemed;
+        await _context.SaveChangesAsync();
     }
 
     public async Task<float> GetMultiplierFromUserAsync(int identityUserId)
     {
-        var exists = await _store.CheckIfExistsRichbetUserByAppUserIdAsync(identityUserId);
-        if (!exists)
+        var richbetAppUser = await RichbetAppUsers.FirstOrDefaultAsync(r => r.AppUserId == identityUserId);
+        if (richbetAppUser == null)
             return -1;
-        var richbetUser = await _store.GetRichbetUserByIdentityIdAsync(identityUserId);
+        var richbetUser = await _context.RichbetUsers.FirstOrDefaultAsync(r => r.Id == richbetAppUser.RichbetUserId);
         var multiplier = richbetUser.Multiplier;
         return multiplier;
     }
 
     public async Task<int> GetPointsFromUserAsync(int identityUserId)
     {
-        var richbetUser = await _store.GetRichbetUserByIdentityIdAsync(identityUserId);
-        return richbetUser.Points;
+        var richbetAppUser = await RichbetAppUsers.FirstOrDefaultAsync(r => r.AppUserId == identityUserId);
+        if (richbetAppUser == null)
+            return -1;
+        var richbetUser = await _context.RichbetUsers.FirstOrDefaultAsync(r => r.Id == richbetAppUser.RichbetUserId);
+        var points = richbetUser.Points;
+        return points;
     }
 }

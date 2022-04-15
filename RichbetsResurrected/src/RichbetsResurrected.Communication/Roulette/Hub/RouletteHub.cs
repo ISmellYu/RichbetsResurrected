@@ -28,7 +28,7 @@ public class RouletteHub : Hub<IRouletteHub>
     [SignalRMethod(summary: "Invokable by clients to get roulette info")]
     public async Task<RouletteInfo> RouletteHello()
     {
-        var rouletteInfo = _rouletteService.GetRouletteInfoAsync();
+        var rouletteInfo = _rouletteService.GameState.GetRouletteInfoAsync();
         return rouletteInfo;
     }
     
@@ -56,7 +56,7 @@ public class RouletteHub : Hub<IRouletteHub>
     {
         while (true)
         {
-            var rouletteInfo = _rouletteService.GetRouletteInfoAsync();
+            var rouletteInfo = _rouletteService.GameState.GetRouletteInfoAsync();
             await Task.Delay(10);
             yield return rouletteInfo;
         }
