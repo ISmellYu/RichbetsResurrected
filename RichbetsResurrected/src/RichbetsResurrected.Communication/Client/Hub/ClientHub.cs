@@ -23,6 +23,7 @@ public class ClientHub : Microsoft.AspNetCore.SignalR.Hub
         _richbetRepository = richbetRepository;
 
     }
+    
     [SignalRMethod(summary: "Invokable by client to get currently logged in user info")]
     public async Task<ClientInfo> GetClientInfo()
     {
@@ -40,4 +41,13 @@ public class ClientHub : Microsoft.AspNetCore.SignalR.Hub
         };
         return clientInfo;
     }
+    
+    [SignalRMethod(summary: "Invokable by client to get points for currently logged in user")]
+    public async Task<int> GetPoints()
+    {
+        var appUserId = Convert.ToInt32(Context.UserIdentifier);
+        var points = await _richbetRepository.GetPointsFromUserAsync(appUserId);
+        return points;
+    }
+    
 }
