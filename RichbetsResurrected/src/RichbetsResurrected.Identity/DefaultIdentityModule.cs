@@ -17,12 +17,12 @@ public class DefaultIdentityModule : Module
 
     private void RegisterStores(ContainerBuilder builder)
     {
-        builder.RegisterType<RichbetStore>().As<IRichbetStore>().InstancePerLifetimeScope();
+        builder.RegisterType<RichbetStore>().As<IRichbetStore>();
     }
 
     private void RegisterRepositories(ContainerBuilder builder)
     {
-        builder.RegisterType<AccountRepository>().As<IAccountRepository>().InstancePerLifetimeScope();
-        builder.RegisterType<RichbetRepository>().As<IRichbetRepository>().InstancePerLifetimeScope();
+        builder.RegisterType<AccountRepository>().As<IAccountRepository>();
+        builder.RegisterType<RichbetRepository>().As<IRichbetRepository>();
     }
 }

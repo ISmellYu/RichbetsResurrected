@@ -122,6 +122,7 @@ public class RichbetStore : IRichbetStore
     {
         var richbetUser = await GetRichbetUserByIdAsync(richbetUserId);
         richbetUser.Points += points;
+        _context.ChangeTracker.Clear();
         _context.RichbetUsers.Update(richbetUser);
         await _context.SaveChangesAsync();
     }
@@ -130,6 +131,7 @@ public class RichbetStore : IRichbetStore
     {
         var richbetUser = await GetRichbetUserByIdAsync(richbetUserId);
         richbetUser.Points -= points;
+        _context.ChangeTracker.Clear();
         _context.RichbetUsers.Update(richbetUser);
         await _context.SaveChangesAsync();
     }
