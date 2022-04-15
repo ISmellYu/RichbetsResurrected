@@ -61,7 +61,7 @@ let firstWheel = new Winwheel({
     'strokeStyle': 'red', // as desired to change appearance of the overlay.
     'animation': {
         'type': 'spinToStop',
-        'duration': 2,
+        'duration': 3,
         'spins': 8,
         // Remember to do something after the animation has finished specify callback function.
         'callbackFinished': restoreWheel,
