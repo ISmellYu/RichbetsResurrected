@@ -111,3 +111,37 @@ document.addEventListener("mousemove", function () {
     }
 
 });
+
+// Styling section
+
+$('.control-button').click(function () {
+    let action = $(this).attr("action");
+    console.log(action);
+    switch (action) {
+        case "column":
+            setStylingColumn();
+            break;
+        case "row":
+            setStylingRow();
+            break;
+    }
+});
+
+
+function setStylingColumn() {
+    document.querySelector('.mbody').style.flexDirection = 'column';
+    document.querySelector('.mbody').style.alignItems = 'center';
+
+    document.querySelector('.roulette-body').style.width = '100%';
+
+    document.querySelector('.control-body').style.width = '100%';
+}
+
+function setStylingRow() {
+    document.querySelector('.mbody').style.flexDirection = 'row';
+    document.querySelector('.mbody').style.alignItems = 'auto';
+
+    document.querySelector('.roulette-body').style.width = '45%';
+
+    document.querySelector('.control-body').style.width = '55%';
+}
