@@ -1,4 +1,6 @@
-﻿namespace RichbetsResurrected.Interfaces.DAL;
+﻿using RichbetsResurrected.Entities.DatabaseEntities;
+
+namespace RichbetsResurrected.Interfaces.DAL;
 
 public interface IRichbetRepository
 {
@@ -9,4 +11,5 @@ public interface IRichbetRepository
     Task SetDailyToUserAsync(int identityUserId, bool isRedeemed);
     Task<float> GetMultiplierFromUserAsync(int identityUserId);
     Task<int> GetPointsFromUserAsync(int identityUserId);
-}
+    Task<RichbetUser> GetRichbetUserAsync(int identityUserId);
+ }
