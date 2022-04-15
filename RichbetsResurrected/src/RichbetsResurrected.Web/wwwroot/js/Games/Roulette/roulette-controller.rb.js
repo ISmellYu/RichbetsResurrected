@@ -180,6 +180,10 @@ function restoreWheel() {
     firstWheel.rotationAngle = firstWheel.rotationAngle % 360;
 }
 
+
+// Roulette controller. 
+
+
 // Start the connection.
 conn.start().then(function () {
 
@@ -201,6 +205,32 @@ conn.start().then(function () {
                 setProgress(actualProgress); // Set the progress bar.
                 timerText.textContent = `${timeText}s`; // Set the timer text.
             }
+
+            const colors = ['black', 'red', 'green'];
+
+            colors.forEach(color => {
+
+                let res = document.querySelector(`.members-${color}`).childElementCount;
+
+                data.players.forEach(player => {
+                    
+                    switch (color) { // Switch the color.
+                        case "red":
+                            color = 0;
+                            break;
+                        case "black":
+                            color = 1;
+                            break;
+                        case "green":
+                            color = 2;
+                            break;
+                    }
+
+                    if (player.color == color) { // If the player is in the color.
+                        console.log(player.color);
+                    }
+                });
+            });
         }
     });
 
@@ -218,24 +248,70 @@ conn.start().then(function () {
         startSpin(data);
     });
 
-    document.getElementById("black-button").addEventListener("click", function () {
+    // 0 - red 1 - black 2 - green  // Color notes
 
-        conn.invoke("JoinRoulette", 3, 0).catch(function (err) {
-            return console.log(err);
-        });
+    document.getElementById("black-button").addEventListener("click", async function () { // Add click event listener to the black button.
+
+        placeBet(1, 1); // Place a bet.
     });
 
-    document.getElementById("red-button").addEventListener("click", function () {
+    document.getElementById("red-button").addEventListener("click", async function () { // Add click event listener to the red button.
 
-        conn.invoke("JoinRoulette", 3, 1).catch(function (err) {
-            return console.error(err.toString());
-        });
+        placeBet(0, 1); // Place a bet.
     });
 
-    document.getElementById("green-button").addEventListener("click", function () {
+    document.getElementById("green-button").addEventListener("click", async function () { // Add click event listener to the green button.
 
-        conn.invoke("JoinRoulette", 3, 2).catch(function (err) {
-            return console.error(err.toString());
-        });
+        placeBet(2, 1); // Place a bet.
     });
+
+    // Function to place a bet.
+    async function placeBet(color, amount) {
+
+        let result = await conn.invoke("JoinRoulette", amount, color).catch(function (err) { // Invoke the JoinRoulette method.
+
+            return console.error(err.toString()); // Log the error.
+        });
+
+        if (result.isSuccess == true) { // If the result is successful.
+
+            console.log(`Bet placed on ${color}`); // Log the bet.
+        }
+    }
+
+    // conn.on("PlayerJoined", function (data) {
+    //     addMemberToList(data.color, data.userName, data.amount, data.avatarUrl, data.discordUserId)
+    //     console.log(data);
+    // });
+
+    function addMemberToList(color, username, amount, avatarUrl, id) {
+
+        switch (color) { // Switch the color.
+            case 0:
+                color = "red";
+                break;
+            case 1:
+                color = "black";
+                break;
+            case 2:
+                color = "green";
+                break;
+        }
+
+        let membersUl = document.querySelector(`.members-${color}`); // Get the members list.
+        let coinsUl = document.querySelector(`.coins-${color}`); // Get the members list.
+
+        let [newMemberLi, newCoinsLi] = [document.createElement("li"), document.createElement("li")]; // Create a new list items.
+
+        newMemberLi.textContent = username; // Set the text content.
+        newCoinsLi.textContent = amount; // Set the text content.
+
+        newMemberLi.style.backgroundImage = `url(${avatarUrl})`; // Set the background image.
+
+        newCoinsLi.dataset.id = id; // Set the data attribute.
+
+        membersUl.appendChild(newMemberLi); // Append the new list item to the members list.
+        coinsUl.appendChild(newCoinsLi); // Append the new list item to the members list.
+
+    }
 });
