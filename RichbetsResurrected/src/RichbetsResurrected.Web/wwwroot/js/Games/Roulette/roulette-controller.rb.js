@@ -1,21 +1,21 @@
 let conn = new signalR.HubConnectionBuilder().withUrl("/rouletteHub").build(); // Create a new connection to the hub.
 
-let firstImg = new Image(); 
+let firstImg = new Image();
 
 firstImg.onload = function () {
-    firstWheel.wheelImage = firstImg; 
-    firstWheel.draw(); 
+    firstWheel.wheelImage = firstImg;
+    firstWheel.draw();
 }
 
 
-firstImg.src = "/img/roulette-body.png"; 
+firstImg.src = "/img/roulette-body.png";
 firstImg.height = 500;
 firstImg.width = 500;
 
 
 let wheelPower = 3; // scope 1-3
-let wheelSpinning = false; 
-let allowBetting = false; 
+let wheelSpinning = false;
+let allowBetting = false;
 
 
 // Make wheel spinning without focus.
@@ -158,9 +158,9 @@ function startSpin(stopAt) {
 
     allowBetting = false;
 
-    if (wheelSpinning == false) { 
+    if (wheelSpinning == false) {
 
-        switch(wheelPower){
+        switch (wheelPower) {
             case 1:
                 firstWheel.animation.spins = 3;
                 break;
@@ -172,16 +172,16 @@ function startSpin(stopAt) {
                 break;
         }
 
-        firstWheel.animation.stopAngle = stopAt; 
+        firstWheel.animation.stopAngle = stopAt;
 
-        firstWheel.startAnimation(); 
+        firstWheel.startAnimation();
     }
 }
 
 
 function restoreWheel() {
 
-    firstWheel.stopAnimation(false); 
+    firstWheel.stopAnimation(false);
 
     firstWheel.rotationAngle = firstWheel.rotationAngle % 360;
 }
@@ -190,16 +190,15 @@ function restoreWheel() {
 // Roulette controller. 
 
 
-
 conn.start().then(function () {
 
     let timerText = document.querySelector('.timer-text');
 
-    const colors = ['Red', 'Black', 'Green']; 
+    const colors = ['Red', 'Black', 'Green'];
 
     let PlayerBetHistory = [];
 
-    let dataPlayersOld; 
+    let dataPlayersOld;
 
 
     // Listen to the roulette data stream from the server.
@@ -212,15 +211,15 @@ conn.start().then(function () {
 
             if (actualProgress < 98) { // Prevent the timer from visual bug.
 
-                setProgress(actualProgress); 
-                timerText.textContent = `${timeText}s`; 
+                setProgress(actualProgress);
+                timerText.textContent = `${timeText}s`;
             }
 
             if (actualProgress == 0) {
                 timerText.textContent = `Rolling...`;
             }
 
-            if (JSON.stringify(data.players) !== JSON.stringify(dataPlayersOld)) { 
+            if (JSON.stringify(data.players) !== JSON.stringify(dataPlayersOld)) {
 
                 dataPlayersOld = data.players;
 
@@ -229,14 +228,15 @@ conn.start().then(function () {
         }
     });
 
-   
+
     conn.on("EndRoulette", function (history, current) {
 
         resetTimer();
 
         if (PlayerBetHistory.includes(current.color)) { // Play correct sound if the player won.
             playSound("rollWin");
-        }else{
+        } 
+        else {
             playSound("rollEnd");
         }
         PlayerBetHistory = [];
@@ -251,17 +251,17 @@ conn.start().then(function () {
     // 0 - red 1 - black 2 - green  // Color notes
 
     document.getElementById("black-button").addEventListener("click", async function () {
-        placeBet(1, 1); 
+        placeBet(1, 1);
         PlayerBetHistory.push(1);
     });
 
-    document.getElementById("red-button").addEventListener("click", async function () { 
-        placeBet(0, 1); 
+    document.getElementById("red-button").addEventListener("click", async function () {
+        placeBet(0, 1);
         PlayerBetHistory.push(0);
     });
 
-    document.getElementById("green-button").addEventListener("click", async function () { 
-        placeBet(2, 1); 
+    document.getElementById("green-button").addEventListener("click", async function () {
+        placeBet(2, 1);
         PlayerBetHistory.push(2);
     });
 
@@ -271,39 +271,38 @@ conn.start().then(function () {
 
         let result = await conn.invoke("JoinRoulette", amount, color).catch(function (err) {
 
-            return console.error(err.toString()); 
+            return console.error(err.toString());
 
         });
 
 
-        if (result.isSuccess == true) { 
+        if (result.isSuccess == true) {
 
-            console.log(`Bet placed on ${color}`); 
+            console.log(`Bet placed on ${color}`);
 
         }
     }
 
 
-
     function renderPlayersList(data) {
 
-        clearPlayersList(); 
+        clearPlayersList();
 
         data.forEach(player => { // Prepare list for each player.
 
-            let memberList = document.querySelector(`.members-${player.colorName}`); 
-            let coinsList = document.querySelector(`.coins-${player.colorName}`); 
+            let memberList = document.querySelector(`.members-${player.colorName}`);
+            let coinsList = document.querySelector(`.coins-${player.colorName}`);
 
-            let memberElement = document.createElement("li"); 
-            let coinsElement = document.createElement("li"); 
+            let memberElement = document.createElement("li");
+            let coinsElement = document.createElement("li");
 
-            memberElement.textContent = player.userName; 
-            coinsElement.textContent = player.amount; 
+            memberElement.textContent = player.userName;
+            coinsElement.textContent = player.amount;
 
-            memberElement.style.backgroundImage = `url(${player.avatarUrl})`; 
+            memberElement.style.backgroundImage = `url(${player.avatarUrl})`;
 
-            memberList.appendChild(memberElement); 
-            coinsList.appendChild(coinsElement); 
+            memberList.appendChild(memberElement);
+            coinsList.appendChild(coinsElement);
 
         });
     }
