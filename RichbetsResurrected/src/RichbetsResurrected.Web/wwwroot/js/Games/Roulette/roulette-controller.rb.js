@@ -1,55 +1,22 @@
-let conn = new signalR.HubConnectionBuilder().withUrl("/rouletteHub").build();
-let timerText = document.querySelector('.timer-text');
+let conn = new signalR.HubConnectionBuilder().withUrl("/rouletteHub").build(); // Create a new connection to the hub.
 
-conn.start().then(function () {
+let firstImg = new Image(); // Create a new image object.
 
-    conn.stream("StreamRouletteInfo").subscribe({
-        next: function (data) {
-            //console.log(data.timeLeft);
-            time = (data.timeLeft * 100) / 15;
-
-            timeText = data.timeLeft.toFixed(1);
-            //timeText = timeText.toFixed(2);
-
-            //console.log(time);
-            if (time < 98) {
-                setProgress(time);
-                timerText.textContent = `${timeText}s`;
-            }
-        }
-    });
-
-    conn.on("EndRoulette", function (history, current) {
-        console.log(current.colorName);
-        resetTimer();
-    });
-
-    conn.on("StartAnimation", function (data) {
-        startSpin(data);
-    });
-});
-
-
-
-
-
-let firstImg = new Image();
-
-// Create callback to execute once the image has finished loading.
+// Render the wheel image.
 firstImg.onload = function () {
-    firstWheel.wheelImage = firstImg; // Make wheelImage equal the loaded image object.
-    firstWheel.draw(); // Also call draw function to render the wheel.
+    firstWheel.wheelImage = firstImg; 
+    firstWheel.draw(); 
 }
 
-// Set the image source, once complete this will trigger the onLoad callback (above).
-firstImg.src = "/img/roulette-body.png"; //"https://i.imgur.com/nJfYAzd.png";
+// Set the image source, and wheel size.
+firstImg.src = "/img/roulette-body.png"; 
 firstImg.height = 500;
 firstImg.width = 500;
 
-// Vars used by the code in this page to do power controls.
-let wheelPower = 3;
-let wheelSpinning = false;
-let allowBetting = false;
+let wheelPower = 3; // Used to hold current value of power. 1-3
+let wheelSpinning = false; // Used to determine if the wheel is currently spinning.
+let allowBetting = false; // Used to determine if betting is allowed.
+
 
 let firstWheel = new Winwheel({
     'responsive': true,
@@ -180,27 +147,95 @@ let firstWheel = new Winwheel({
     ]
 });
 
-
+// Spin the wheel.
 function startSpin(stopAt) {
-    allowBetting = false;
-    if (wheelSpinning == false) {
-        if (wheelPower == 1) {
-            firstWheel.animation.spins = 3;
-        } else if (wheelPower == 2) {
-            firstWheel.animation.spins = 8;
-        } else if (wheelPower == 3) {
-            firstWheel.animation.spins = 15;
+
+    allowBetting = false; // Set flag so that betting is not allowed.
+
+    if (wheelSpinning == false) { 
+
+        switch(wheelPower){
+            case 1:
+                firstWheel.animation.spins = 3;
+                break;
+            case 2:
+                firstWheel.animation.spins = 8;
+                break;
+            case 3:
+                firstWheel.animation.spins = 15;
+                break;
         }
-        firstWheel.animation.stopAngle = stopAt;
-        // Begin the spin animation by calling startAnimation on the wheel object.
-        firstWheel.startAnimation();
+
+        firstWheel.animation.stopAngle = stopAt; // Set the stop angle to our passed in value.
+
+        firstWheel.startAnimation(); // Start the animation.
     }
 }
 
-async function restoreWheel(indicatedSegment) {
-    // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
-    //alert("You have won " + indicatedSegment.text);
-    firstWheel.stopAnimation(false); // Stop the animation, false as param so does not call callback function.
+// Function to call when the spin animation has finished.
+function restoreWheel() {
+
+    firstWheel.stopAnimation(false);  // Stop the animation
 
     firstWheel.rotationAngle = firstWheel.rotationAngle % 360;
 }
+
+// Start the connection.
+conn.start().then(function () {
+
+    let timerText = document.querySelector('.timer-text'); // Get the timer text element.
+
+
+    // Listen to the roulette data stream from the server.
+    conn.stream("StreamRouletteInfo").subscribe({
+        next: function (data) {
+            
+            // data: {players: Array(0), results: Array(10), allowBetting: true, isRolling: false, timeLeft: 12.76}
+
+            let actualProgress = (data.timeLeft * 100) / 15; // Calculate the actual progress. 0-100
+
+            let timeText = data.timeLeft.toFixed(1); // Split output data into one decimal place.
+
+            if (actualProgress < 98) { // Prevent the timer from visual bug.
+
+                setProgress(actualProgress); // Set the progress bar.
+                timerText.textContent = `${timeText}s`; // Set the timer text.
+            }
+        }
+    });
+
+    // Listen for end of game.
+    conn.on("EndRoulette", function (history, current) {
+
+        console.log(current.colorName);
+        console.log(current.winners);
+        resetTimer();
+    });
+
+    // Listen for start of game.
+    conn.on("StartAnimation", function (data) {
+
+        startSpin(data);
+    });
+
+    document.getElementById("black-button").addEventListener("click", function () {
+
+        conn.invoke("JoinRoulette", 3, 0).catch(function (err) {
+            return console.log(err);
+        });
+    });
+
+    document.getElementById("red-button").addEventListener("click", function () {
+
+        conn.invoke("JoinRoulette", 3, 1).catch(function (err) {
+            return console.error(err.toString());
+        });
+    });
+
+    document.getElementById("green-button").addEventListener("click", function () {
+
+        conn.invoke("JoinRoulette", 3, 2).catch(function (err) {
+            return console.error(err.toString());
+        });
+    });
+});
