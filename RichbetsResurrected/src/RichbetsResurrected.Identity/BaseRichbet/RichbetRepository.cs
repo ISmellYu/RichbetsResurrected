@@ -104,4 +104,13 @@ public class RichbetRepository : IRichbetRepository
         var points = richbetUser.Points;
         return points;
     }
+
+    public async Task<RichbetUser> GetRichbetUserAsync(int identityUserId)
+    {
+        var richbetAppUser = await RichbetAppUsers.FirstOrDefaultAsync(r => r.AppUserId == identityUserId);
+        if (richbetAppUser == null)
+            return null;
+        var richbetUser = await _context.RichbetUsers.FirstOrDefaultAsync(r => r.Id == richbetAppUser.RichbetUserId);
+        return richbetUser;
+    }
 }
