@@ -147,7 +147,7 @@ public class RouletteService : IRouletteService
             await Task.Delay(10);
         }
         TurnOffBetting();
-        await Task.Delay(1000); // Just to make sure every bet is done adding
+        await Task.Delay(100); // Just to make sure every bet is done adding
     }
 
     private Task SpinAsync(int winNumber)
