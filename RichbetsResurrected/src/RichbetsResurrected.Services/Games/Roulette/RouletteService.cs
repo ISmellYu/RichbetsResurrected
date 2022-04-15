@@ -18,15 +18,12 @@ namespace RichbetsResurrected.Services.Games.Roulette;
 public class RouletteService : IRouletteService
 {
     private readonly IMediator _mediator;
-    private readonly IHubContext<RouletteHub> _hubContext;
-    private readonly IHubClients<RouletteHub> _hubClients;
     private readonly IRichbetRepository _repository;
 
-    public RouletteService(IRichbetRepository repository, IMediator mediator, IHubContext<RouletteHub> hubContext)
+    public RouletteService(IRichbetRepository repository, IMediator mediator)
     {
         _repository = repository;
         _mediator = mediator;
-        _hubContext = hubContext;
     }
     private BlockingCollection<RoulettePlayer> Players { get; } = new();
     private List<RouletteResult> History { get; } = new();
@@ -143,7 +140,7 @@ public class RouletteService : IRouletteService
     private async Task WaitForPlayersAsync()
     {
         TurnOnBetting();
-        for (decimal i = 15; i >= 0; i -= 0.01m)
+        for (decimal i = RouletteConfigs.TimeForUsersToBet; i >= 0; i -= 0.01m)
         {
             TimeLeft = i;
             // await SendUpdateTimerToClientsAsync(i);

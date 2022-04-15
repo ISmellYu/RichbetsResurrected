@@ -3,8 +3,9 @@ let conn = new signalR.HubConnectionBuilder().withUrl("/rouletteHub").build();
 conn.start().then(function () {
     console.log("connected");
     
-    conn.on("EndRoulette", function (data) {
-        console.log(data);
+    conn.on("EndRoulette", function (history, current) {
+        console.log(history);
+        console.log(current);
     });
     
 
