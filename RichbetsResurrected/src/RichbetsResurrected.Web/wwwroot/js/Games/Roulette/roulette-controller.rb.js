@@ -200,6 +200,7 @@ conn.start().then(function () {
 
     let dataPlayersOld;
     let historyColorsOld;
+    let onlinePlayersOld;
 
 
     // Listen to the roulette data stream from the server.
@@ -233,6 +234,13 @@ conn.start().then(function () {
                 historyColorsOld = data.results;
 
                 updateHistory(data.results);
+            }
+
+            if (JSON.stringify(data.onlinePlayers) !== JSON.stringify(onlinePlayersOld)) {
+
+                onlinePlayersOld = data.onlinePlayers;
+
+                renderOnlinePlayers(data.onlinePlayers);
             }
         }
     });
@@ -337,6 +345,26 @@ conn.start().then(function () {
             coinsList.appendChild(coinsElement);
 
         });
+    }
+
+    function renderOnlinePlayers(data) {
+        let list = document.querySelector('.onlinePlayersList');
+
+        while (list.firstChild) {
+            list.removeChild(list.firstChild);
+        }   
+
+        data.forEach(player => {
+                
+            let memberElement = document.createElement("li");
+
+            memberElement.textContent = player.userName;
+            memberElement.style.backgroundImage = `url(${player.avatarUrl})`;
+            memberElement.classList.add('onlinePlayersElement');
+
+            list.appendChild(memberElement);
+        });
+
     }
 
 
