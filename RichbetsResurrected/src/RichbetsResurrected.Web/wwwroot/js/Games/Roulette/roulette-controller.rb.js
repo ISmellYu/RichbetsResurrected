@@ -271,7 +271,7 @@ conn.start().then(function () {
     conn.on("StartAnimation", function (data) {
 
         timerText.textContent = `Rolling...`;
-
+        setProgress(0);
         startSpin(data);
         playSound("rollStart");
     });
