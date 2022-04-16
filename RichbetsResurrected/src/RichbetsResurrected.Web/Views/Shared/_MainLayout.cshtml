@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="~/css/main.layout.css">
     <link rel="stylesheet" href="~/lib/odometer/odometer-theme-default.css">
     <script src="~/lib/odometer/odometer.min.js"></script>
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/Shared/layout.rb.js"></script>
     @RenderSection("Head", false)
 </head>
 <body>
@@ -19,7 +21,7 @@
         <ul class="nav-list">
             <div class="point-box">
                 <img class="rbc-logo" src="~/img/rbcoin30x30.png" alt="rbcoin">
-                <p id="odometer" class="odometer">%points%</p>
+                <p id="odometer" class="odometer">0</p>
                 <p class="points-currency">RBC</p>
             </div>
             <li>
@@ -42,11 +44,6 @@
         </ul>
     </nav>
 </header>
-<script>
-    setTimeout(function(){
-        document.getElementById("odometer").innerHTML = 13900;
-    }, 1000);
-</script>
 
 @RenderBody()
 

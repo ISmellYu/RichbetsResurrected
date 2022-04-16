@@ -39,8 +39,18 @@ $('.control-bar-button').click(function () {
             break;
 
         case "max":
-            //todo
+            getAll();
             break;
     }
-
 });
+
+async function getAll() {
+
+    let inputField = document.querySelector('#coins');
+    let result = await connection.invoke("GetPoints").catch(function (err) {
+    
+        return console.error(err.toString());
+    
+    });
+    inputField.value = result;
+}
