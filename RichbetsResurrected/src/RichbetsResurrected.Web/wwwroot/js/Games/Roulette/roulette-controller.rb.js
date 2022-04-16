@@ -388,8 +388,7 @@ conn.start().then(function () {
         });
     }
 
-    // <div class="color" id="n1" style="background-color: #252525;"></div>
-    // circle-colors
+
     function updateHistory(history) {
         let historyList = document.querySelector(".circle-colors");
 
@@ -415,5 +414,27 @@ conn.start().then(function () {
                 return "#36AF31";
         }
     }
+
+    function updateAllBets(color, amount) {
+        document.querySelector(`.all-bets-${color}`).textContent = amount;
+    }
+
+    setInterval(() => {
+        colors.forEach(color => {
+            let i = 0;
+            let lowerColor = color.toLowerCase();
+            let nodes = document.querySelector(`.coins-${color}`).childNodes;
+
+            if (nodes.length == 0) {
+                document.querySelector(`.all-bets-${lowerColor}`).textContent = 0;
+                return;
+            }
+
+            nodes.forEach(node => {
+                i += parseInt(node.textContent);
+            });
+            document.querySelector(`.all-bets-${lowerColor}`).textContent = i;
+        });
+    }, 1000);
 
 });
