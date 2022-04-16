@@ -1,0 +1,178 @@
+.pink_leopard{
+    font-size: 14px;
+    background: url("https://i.pinimg.com/736x/b4/ab/5d/b4ab5dec71a33a5e81198915dd517718.jpg");
+    background-size: cover;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: fit-content;
+    font-weight: 500;
+    text-shadow: 0 0 8px #000;
+}
+
+.giraffe{
+    font-size: 14px;
+    background: url("https://murals-weblinc.netdna-ssl.com/product_images/giraffe-print-10263661/5ec82fa4bd89dd0018f779d1/product_large_image.jpg?c=1590177700");
+    background-size: cover;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: fit-content;
+    font-weight: 500;
+}
+
+.tiger{
+    font-size: 14px;
+    background: url("https://i.postimg.cc/Bvw94dgD/tiger.jpg");
+    background-size: cover;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: fit-content;
+    font-weight: 500;
+}
+
+.fade{
+    font-size: 14px;
+    background: url("https://ih1.redbubble.net/image.213300789.4460/flat,750x1000,075,f.u2.jpg");
+    background-size: cover;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: fit-content;
+    font-weight: 500;
+}
+
+.marble-fade{
+    font-size: 14px;
+    background: url("https://i.imgur.com/Dik8l2g.png");
+    background-size: cover;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: fit-content;
+    font-weight: 500;
+}
+
+.poland2{
+    font-size: 14px;
+    background: url("https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/1200px-Flag_of_Poland.svg.png");
+    -webkit-background-clip: text; 
+    background-position: bottom;
+    background-position-y: center;
+    -webkit-text-fill-color: transparent; 
+    font-weight: 500;
+    width: fit-content;
+}
+
+
+
+.strawberries{
+    font-size: 14px;
+    background: url("https://static.vecteezy.com/system/resources/previews/002/859/881/large_2x/a-pattern-background-with-small-and-cute-strawberries-and-flowers-and-leaves-arranged-randomly-simple-pattern-design-template-free-vector.jpg");
+    background-size: cover;
+    /* -webkit-background-clip: text; */
+    background-position: bottom;
+    /* -webkit-text-fill-color: transparent; */
+    font-weight: 500;
+    width: fit-content;
+    border-radius: 8px;
+    padding: 0 5px 0 5px;
+    text-shadow: 0 0 4px #000;
+    color: white;
+}
+
+.cash{
+    font-size: 14px;
+    background: url("https://thumbs.dreamstime.com/b/money-cash-pattern-28000619.jpg");
+    background-size: 90px;
+    /* -webkit-background-clip: text; */
+    background-position: bottom;
+    /* -webkit-text-fill-color: transparent; */
+    font-weight: 500;
+    width: fit-content;
+    border-radius: 8px;
+    padding: 0 5px 0 5px;
+    text-shadow: 0 0 4px #000;
+    color: white;
+}
+
+.poland{
+    font-size: 14px;
+    background: url("https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/1200px-Flag_of_Poland.svg.png");
+    /* -webkit-background-clip: text; */
+    background-position: bottom;
+    background-position-y: center;
+    background-size: 160px;
+    /* -webkit-text-fill-color: transparent; */
+    font-weight: 500;
+    width: fit-content;
+    border-radius: 8px;
+    padding: 0 5px 0 5px;
+    text-shadow: 0 0 3px #000;
+    color: white;
+}
+
+.fastfood{
+    font-size: 14px;
+    background: url("https://www.creativefabrica.com/wp-content/uploads/2020/11/01/Fast-Food-Seamless-Pattern-1-Graphics-6399037-1.jpg");
+    /* -webkit-background-clip: text; */
+    background-position: bottom;
+    background-position-y: center;
+    background-size: 160px;
+    /* -webkit-text-fill-color: transparent; */
+    font-weight: 500;
+    width: fit-content;
+    border-radius: 8px;
+    padding: 0 5px 0 5px;
+    text-shadow: 0 0 3px #000;
+    color: white;
+}
+
+.redline{
+    font-size: 14px;
+    background: url("https://i.postimg.cc/90MQb6TD/redline.jpg");
+    /* -webkit-background-clip: text; */
+    background-position: bottom;
+    background-position-y: center;
+    background-size: cover;
+    /* -webkit-text-fill-color: transparent; */
+    font-weight: 500;
+    width: fit-content;
+    border-radius: 8px;
+    padding: 0 5px 0 5px;
+    text-shadow: 0 0 3px #000;
+    color: white;
+}
+
+
+
+.anim-fire{
+    font-size: 14px;
+    background: url("https://upload.wikimedia.org/wikipedia/commons/2/22/Animated_fire_by_nevit.gif");
+    background-size: cover;
+    background-position-y: 16px;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: fit-content;
+    font-weight: 500;
+    text-shadow: 0 0 8px #000;
+}
+
+.anim-water{
+    font-size: 14px;
+    background: url("https://i.pinimg.com/originals/92/b8/19/92b819465492e2f9f1a385cf7916d3a0.gif");
+    background-size: cover;
+    background-position-y: center;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: fit-content;
+    font-weight: 500;
+}
+
+.anim-color-wave{
+    font-size: 14px;
+    background: url("https://i.pinimg.com/originals/84/d8/7e/84d87eb7e536135161c55887d878d44b.gif");
+    background-size: cover;
+    background-position-y: bottom;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: fit-content;
+    font-weight: 500;
+}
+

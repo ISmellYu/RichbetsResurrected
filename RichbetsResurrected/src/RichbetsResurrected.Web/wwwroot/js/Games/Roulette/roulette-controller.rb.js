@@ -207,7 +207,6 @@ conn.start().then(function () {
         next: function (data) {
 
             let actualProgress = (data.timeLeft * 100) / 15; // Actual progress. 0-100.
-
             let timeText = toFixed(data.timeLeft, 1) // Split output data into one decimal place.
 
             if (actualProgress != 0) {
