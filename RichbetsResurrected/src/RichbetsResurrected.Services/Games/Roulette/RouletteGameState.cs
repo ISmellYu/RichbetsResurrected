@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using RichbetsResurrected.Entities.Client;
 using RichbetsResurrected.Entities.Roulette;
 using RichbetsResurrected.Interfaces.Games.Roulette;
 using RichbetsResurrected.Utilities.Constants;
@@ -8,6 +9,7 @@ namespace RichbetsResurrected.Services.Games.Roulette;
 public class RouletteGameState : IRouletteGameState
 {
     private BlockingCollection<RoulettePlayer> Players { get; } = new();
+    private ConcurrentDictionary<string, ClientInfo> OnlinePlayers { get; } = new();
     private List<RouletteResult> History { get; } = new();
     private bool IsRunning { get; set; }
     private bool AllowBetting { get; set; }
@@ -64,7 +66,7 @@ public class RouletteGameState : IRouletteGameState
         var rouletteInfo = new RouletteInfo
         {
             Players = Players.ToList(), Results = History.TakeLast(10).ToList(), AllowBetting = AllowBetting, IsRolling = IsSpinning,
-            TimeLeft = TimeLeft
+            TimeLeft = TimeLeft, OnlinePlayers = GetOnlinePlayers()
         };
         return rouletteInfo;
     }
@@ -121,4 +123,25 @@ public class RouletteGameState : IRouletteGameState
     {
         return Players.Any(p => p.IdentityUserId == player.IdentityUserId && p.Color == player.Color);
     }
+    
+    public void AddOnlinePlayer(string connId, ClientInfo clientInfo)
+    {
+        if (OnlinePlayers.ContainsKey(connId))
+            return;
+        
+        if (OnlinePlayers.Any(pair => pair.Value.IdentityUserId == clientInfo.IdentityUserId))
+            return;
+        
+        OnlinePlayers.TryAdd(connId, clientInfo);
+    }
+    
+    public void RemoveOnlinePlayer(string connId)
+    {
+        OnlinePlayers.TryRemove(connId, out _);
+    }
+    public List<ClientInfo> GetOnlinePlayers()
+    {
+        return OnlinePlayers.Select(p => p.Value).ToList();
+    }
+
 }

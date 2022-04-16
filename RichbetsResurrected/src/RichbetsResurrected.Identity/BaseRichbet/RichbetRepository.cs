@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using RichbetsResurrected.Entities.Client;
 using RichbetsResurrected.Entities.DatabaseEntities;
 using RichbetsResurrected.Identity.Contexts;
 using RichbetsResurrected.Interfaces.DAL;
@@ -112,5 +113,9 @@ public class RichbetRepository : IRichbetRepository
             return null;
         var richbetUser = await _context.RichbetUsers.FirstOrDefaultAsync(r => r.Id == richbetAppUser.RichbetUserId);
         return richbetUser;
+    }
+    public Task<List<ClientInfo>> GetTop15UsersAsync()
+    {
+        throw new NotImplementedException();
     }
 }
