@@ -112,15 +112,14 @@
 }
 
 .live-bets-container {
-    width: 100%;
+    width: 90%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    margin-top: 10px;
 }
 
 .live-members li {
-    margin: 15px 0 0 -25px;
+    margin: 15px 0 0 -46px;
     padding: 1px 0 0 26px;
     list-style: none;
     background-image: url(/img/dc-default.png);
@@ -137,6 +136,28 @@
     background-repeat: no-repeat;
     background-position: left center;
     background-size: 20px;
+}
+
+.live-coins li:first-child, .live-members li:first-child {
+    margin-top: 0;
+}
+
+.all-bets-container {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.all-bets{
+    margin: 0 0 0 -20px !important;
+    text-align: center;
+    background-image: url(/img/rbcoin30x30.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 20px;
+    padding: 1px 0 0 26px;
 }
 
 .live-text {
