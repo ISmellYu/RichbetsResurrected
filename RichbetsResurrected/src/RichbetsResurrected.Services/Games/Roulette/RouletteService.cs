@@ -48,6 +48,19 @@ public class RouletteService : IRouletteService
             };
         }
         
+        if (player.Amount <= 0)
+        {
+            return new RouletteJoinResult()
+            {
+                IsSuccess = false,
+                Error = new RouletteError()
+                {
+                    Message = "You cannot bet with a negative amount"
+                },
+                Player = player
+            };
+        }
+        
         var points = await _repository.GetPointsFromUserAsync(player.IdentityUserId);
 
         if (points - player.Amount < 0)

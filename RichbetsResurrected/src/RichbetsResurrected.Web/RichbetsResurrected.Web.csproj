@@ -44,4 +44,10 @@
         <ProjectReference Include="..\RichbetsResurrected.Services\RichbetsResurrected.Services.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="database.sqlite">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
