@@ -22,9 +22,10 @@ public class DefaultServiceModule : Module
     private void RegisterRoulette(ContainerBuilder builder)
     {
         builder.RegisterType<RouletteGameState>().As<IRouletteGameState>().SingleInstance();
+        builder.RegisterType<RouletteService>().As<IRouletteService>().InstancePerLifetimeScope();
 
-        builder.RegisterType<RouletteService>().As<IRouletteService>()
-        .InstancePerLifetimeScope()
+        builder.RegisterType<RouletteWorker>().As<IRouletteWorker>()
+        .SingleInstance()
         .AutoActivate() // Same instance for everything// Resolve the service before anything else once to create the instance
         .OnActivated(StartGame); // Run a function at service creation
     }
