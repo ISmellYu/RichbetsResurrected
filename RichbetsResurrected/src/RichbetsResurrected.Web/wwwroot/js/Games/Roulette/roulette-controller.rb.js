@@ -199,6 +199,7 @@ conn.start().then(function () {
     let PlayerBetHistory = [];
 
     let dataPlayersOld;
+    let historyColorsOld;
 
 
     // Listen to the roulette data stream from the server.
@@ -216,13 +217,22 @@ conn.start().then(function () {
                     timerText.textContent = `${timeText}s`;
                 }
 
-            }
+            }   
 
+            // compare objects and update players list.
             if (JSON.stringify(data.players) !== JSON.stringify(dataPlayersOld)) {
 
                 dataPlayersOld = data.players;
 
                 renderPlayersList(data.players);
+            }
+
+            //history section
+            if (JSON.stringify(data.results) !== JSON.stringify(historyColorsOld)) {
+
+                historyColorsOld = data.results;
+
+                updateHistory(data.results);
             }
         }
     });
@@ -270,17 +280,20 @@ conn.start().then(function () {
     // 0 - red 1 - black 2 - green  // Color notes
 
     document.getElementById("black-button").addEventListener("click", async function () {
-        placeBet(1, 1);
+        let amount = document.getElementById("coins").value;
+        placeBet(1, parseInt(amount));
         PlayerBetHistory.push(1);
     });
 
     document.getElementById("red-button").addEventListener("click", async function () {
-        placeBet(0, 1);
+        let amount = document.getElementById("coins").value;
+        placeBet(0, parseInt(amount));
         PlayerBetHistory.push(0);
     });
 
     document.getElementById("green-button").addEventListener("click", async function () {
-        placeBet(2, 1);
+        let amount = document.getElementById("coins").value;
+        placeBet(2, parseInt(amount));
         PlayerBetHistory.push(2);
     });
 
@@ -345,6 +358,34 @@ conn.start().then(function () {
             }
 
         });
+    }
+
+    // <div class="color" id="n1" style="background-color: #252525;"></div>
+    // circle-colors
+    function updateHistory(history) {
+        let historyList = document.querySelector(".circle-colors");
+
+        while (historyList.firstChild) {
+            historyList.removeChild(historyList.firstChild);
+        }
+
+        history.forEach(element => {
+            let colorElement = document.createElement("div");
+            colorElement.classList.add("color");
+            colorElement.style.backgroundColor = getColor(element.colorName);
+            historyList.appendChild(colorElement);
+        });
+    }
+
+    function getColor(color) {
+        switch (color) {
+            case "Red":
+                return "#EE5353";
+            case "Black":
+                return "#252525";
+            case "Green":
+                return "#36AF31";
+        }
     }
 
 });
