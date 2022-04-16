@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using RichbetsResurrected.Entities.Client;
 using RichbetsResurrected.Entities.Roulette;
+using RichbetsResurrected.Interfaces.DAL;
 using RichbetsResurrected.Interfaces.Games.Roulette;
 using RichbetsResurrected.Interfaces.Identity;
 using RichbetsResurrected.Utilities.Constants;
@@ -19,12 +21,41 @@ public class RouletteHub : Hub<IRouletteHub>
 {
     private readonly IAccountRepository _accountRepository;
     private readonly IRouletteService _rouletteService;
-    public RouletteHub(IRouletteService rouletteService, IAccountRepository accountRepository)
+    private readonly IRichbetRepository _richbetRepository;
+    public RouletteHub(IRouletteService rouletteService, IAccountRepository accountRepository, IRichbetRepository richbetRepository)
     {
         _rouletteService = rouletteService;
         _accountRepository = accountRepository;
+        _richbetRepository = richbetRepository;
+    }
+
+    public override async Task OnConnectedAsync()
+    {
+        var appUserId = Convert.ToInt32(Context.UserIdentifier);
+        var discordId = Context.User.Claims.FirstOrDefault(c => c.Type == OAuthConstants.DiscordId).Value;
+        var avatarUrl = _accountRepository.GetDiscordAvatarUrlAsync(Context.User);
+        var richbetUser = await _richbetRepository.GetRichbetUserAsync(appUserId);
+        var clientInfo = new ClientInfo()
+        {
+            UserName = Context.User?.Identity.Name,
+            DiscordUserId = discordId,
+            IdentityUserId = appUserId,
+            AvatarUrl = avatarUrl,
+            RichbetUser = richbetUser
+        };
+        _rouletteService.GameState.AddOnlinePlayer(Context.ConnectionId, clientInfo);
+        Console.WriteLine("Connected to roulette hub");
+        await base.OnConnectedAsync();
     }
     
+    public override Task OnDisconnectedAsync(Exception? exception)
+    {
+        _rouletteService.GameState.RemoveOnlinePlayer(Context.ConnectionId);
+        Console.WriteLine("Disconnected from roulette hub");
+        return base.OnDisconnectedAsync(exception);
+    }
+
+
     [SignalRMethod(summary: "Invokable by clients to get roulette info")]
     public async Task<RouletteInfo> RouletteHello()
     {

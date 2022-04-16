@@ -1,4 +1,5 @@
-﻿using RichbetsResurrected.Entities.DatabaseEntities;
+﻿using RichbetsResurrected.Entities.Client;
+using RichbetsResurrected.Entities.DatabaseEntities;
 
 namespace RichbetsResurrected.Interfaces.DAL;
 
@@ -12,4 +13,5 @@ public interface IRichbetRepository
     Task<float> GetMultiplierFromUserAsync(int identityUserId);
     Task<int> GetPointsFromUserAsync(int identityUserId);
     Task<RichbetUser> GetRichbetUserAsync(int identityUserId);
+    Task<List<ClientInfo>> GetTop15UsersAsync();
  }

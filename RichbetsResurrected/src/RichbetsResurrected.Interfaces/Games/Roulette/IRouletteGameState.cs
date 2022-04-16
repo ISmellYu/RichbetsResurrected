@@ -1,4 +1,5 @@
-﻿using RichbetsResurrected.Entities.Roulette;
+﻿using RichbetsResurrected.Entities.Client;
+using RichbetsResurrected.Entities.Roulette;
 
 namespace RichbetsResurrected.Interfaces.Games.Roulette;
 
@@ -20,4 +21,7 @@ public interface IRouletteGameState
     void AddPlayer(RoulettePlayer player);
     void ResetGame();
     void AddToHistory(RouletteResult result);
+    void AddOnlinePlayer(string connId, ClientInfo clientInfo);
+    void RemoveOnlinePlayer(string connId);
+    List<ClientInfo> GetOnlinePlayers();
 }
