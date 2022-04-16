@@ -180,7 +180,6 @@ function startSpin(stopAt) {
 
 
 function restoreWheel() {
-
     firstWheel.stopAnimation(false);
 
     firstWheel.rotationAngle = firstWheel.rotationAngle % 360;
@@ -201,7 +200,7 @@ conn.start().then(function () {
     let dataPlayersOld;
     let historyColorsOld;
     let onlinePlayersOld;
-
+    let countSwitch = false;
 
     // Listen to the roulette data stream from the server.
     conn.stream("StreamRouletteInfo").subscribe({
@@ -210,6 +209,13 @@ conn.start().then(function () {
             let actualProgress = (data.timeLeft * 100) / 15; // Actual progress. 0-100.
 
             let timeText = toFixed(data.timeLeft, 1) // Split output data into one decimal place.
+
+            if (actualProgress != 0) {
+                let element = document.querySelectorAll('.all-bets');
+                element.forEach(function (item) {
+                    item.removeAttribute('data-value');
+                });
+            }
 
             if (actualProgress < 98) { // Prevent the timer from visual bug.
 
@@ -272,16 +278,20 @@ conn.start().then(function () {
         }
 
         timerText.textContent = `${current.colorName}`;
-
+        showWinners(current.colorName);
+        showLosers(current.colorName);
         PlayerBetHistory = [];
     });
 
     conn.on("StartAnimation", function (data) {
 
         timerText.textContent = `Rolling...`;
+
         setProgress(0);
+
         startSpin(data);
         playSound("rollStart");
+
     });
 
 
@@ -415,8 +425,32 @@ conn.start().then(function () {
         }
     }
 
-    function updateAllBets(color, amount) {
-        document.querySelector(`.all-bets-${color}`).textContent = amount;
+    function showWinners(color) { // Black
+        let colorLower = color.toLowerCase();
+        let list = document.querySelector(`.coins-${color}`);
+        let nodes = list.childNodes;
+
+        nodes.forEach(element => {
+            element.style.color = "#00C74D";
+            let winningAmount = element.textContent * 2
+            element.textContent = `+${winningAmount}`;
+        });
+        
+    }
+
+    function showLosers(color) { 
+        let colorLower = color.toLowerCase();
+        for(let elementColor of colors){
+            if(elementColor != color){
+                let list = document.querySelector(`.coins-${elementColor}`);
+                let nodes = list.childNodes;
+
+                nodes.forEach(element => {
+                    element.style.color = "#EE5353";
+                    element.textContent = `-${element.textContent}`;
+                });
+            }
+        }
     }
 
     setInterval(() => {
@@ -424,6 +458,15 @@ conn.start().then(function () {
             let i = 0;
             let lowerColor = color.toLowerCase();
             let nodes = document.querySelector(`.coins-${color}`).childNodes;
+
+            
+            if (nodes.length < 2) {
+                document.querySelector(`.count-bets-${lowerColor}`).textContent = `${nodes.length} Bet`;
+            }
+            else{
+                document.querySelector(`.count-bets-${lowerColor}`).textContent = `${nodes.length} Bets`;
+            }
+
 
             if (nodes.length == 0) {
                 document.querySelector(`.all-bets-${lowerColor}`).textContent = 0;
@@ -434,7 +477,16 @@ conn.start().then(function () {
                 i += parseInt(node.textContent);
             });
             document.querySelector(`.all-bets-${lowerColor}`).textContent = i;
+            document.querySelector(`.all-bets-${lowerColor}`).setAttribute("data-value", i);
+
         });
-    }, 1000);
+    }, 500);
+
+    function resetBetCounter() {
+        colors.forEach(color => {
+            let lowerColor = color.toLowerCase();
+            document.querySelector(`.count-bets-${lowerColor}`).textContent = `0 Bets`;
+        });
+    }
 
 });
