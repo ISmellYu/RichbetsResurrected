@@ -116,7 +116,6 @@ document.addEventListener("mousemove", function () {
 
 $('.control-button').click(function () {
     let action = $(this).attr("action");
-    console.log(action);
     switch (action) {
         case "column":
             setStylingColumn();
