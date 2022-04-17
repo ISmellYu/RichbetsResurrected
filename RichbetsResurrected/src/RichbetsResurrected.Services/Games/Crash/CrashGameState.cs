@@ -1,0 +1,217 @@
+﻿using System.Collections.Concurrent;
+using RichbetsResurrected.Entities.Client;
+using RichbetsResurrected.Entities.Crash;
+using RichbetsResurrected.Entities.Roulette;
+using RichbetsResurrected.Interfaces.Games.Crash;
+
+namespace RichbetsResurrected.Services.Games.Crash;
+
+public class CrashGameState : ICrashGameState
+{
+    private BlockingCollection<CrashPlayer> Players { get; set; } = new BlockingCollection<CrashPlayer>();
+    private ConcurrentDictionary<string, ClientInfo> OnlinePlayers = new ConcurrentDictionary<string, ClientInfo>();
+    private List<CrashResult> History { get; set; } = new List<CrashResult>();
+    private List<decimal> Multipliers { get; set; } = new List<decimal>();
+
+    private decimal Multiplier { get; set; }
+    private decimal TimeLeft { get; set; }
+
+    private bool AllowPlacingBets { get; set; }
+    private bool AllowRemovingBets { get; set; }
+    private bool Crashed { get; set; }
+    private bool GameStarted { get; set; }
+    private bool Running { get; set; }
+    
+    public void TurnOnPlacingBets()
+    {
+        AllowPlacingBets = true;
+    }
+    
+    public void TurnOffPlacingBets()
+    {
+        AllowPlacingBets = false;
+    }
+    
+    public void TurnOnRemovingBets()
+    {
+        AllowRemovingBets = true;
+    }
+    
+    public void TurnOffRemovingBets()
+    {
+        AllowRemovingBets = false;
+    }
+    
+    public void TurnOnCrashed()
+    {
+        Crashed = true;
+    }
+    
+    public void TurnOffCrashed()
+    {
+        Crashed = false;
+    }
+    
+    public void TurnOnGameStarted()
+    {
+        GameStarted = true;
+    }
+    
+    public void TurnOffGameStarted()
+    {
+        GameStarted = false;
+    }
+    
+    public void TurnOnRunning()
+    {
+        Running = true;
+    }
+    
+    public void TurnOffRunning()
+    {
+        Running = false;
+    }
+    
+    public bool IsRunning()
+    {
+        return Running;
+    }
+    
+    public bool IsCrashed()
+    {
+        return Crashed;
+    }
+    
+    public bool IsGameStarted()
+    {
+        return GameStarted;
+    }
+    
+    public bool IsRemovingBetsAllowed()
+    {
+        return AllowRemovingBets;
+    }
+    
+    public bool IsPlacingBetsAllowed()
+    {
+        return AllowPlacingBets;
+    }
+    
+    public void SetMultiplier(decimal multiplier)
+    {
+        Multiplier = multiplier;
+    }
+    
+    public void SetTimeLeft(decimal timeLeft)
+    {
+        TimeLeft = timeLeft;
+    }
+    
+    public decimal GetTimeLeft()
+    {
+        return TimeLeft;
+    }
+    
+    public decimal GetMultiplier()
+    {
+        return Multiplier;
+    }
+    
+    public List<CrashPlayer> GetPlayers()
+    {
+        return Players.ToList();
+    }
+    
+    public List<ClientInfo> GetOnlinePlayers()
+    {
+        return OnlinePlayers.Values.DistinctBy(p => p.IdentityUserId).ToList();
+    }
+
+    public List<CrashResult> GetResults(int amount)
+    {
+        return History.TakeLast(amount).ToList();
+    }
+    
+    public void AddToHistory(CrashResult result)
+    {
+        History.Add(result);
+    }
+    
+    public void AddPlayer(CrashPlayer player)
+    {
+        if (IsInGame(player))
+        {
+            foreach (var crashPlayer in Players)
+            {
+                if (crashPlayer.IdentityUserId != player.IdentityUserId) continue;
+                crashPlayer.Amount += player.Amount;
+                return;
+            }
+        }
+        
+        Players.TryAdd(player);
+    }
+    
+    public void AddOnlinePlayer(string connId, ClientInfo clientInfo)
+    {
+        OnlinePlayers.TryAdd(connId, clientInfo);
+    }
+    
+    public void RemoveOnlinePlayer(string connId)
+    {
+        OnlinePlayers.TryRemove(connId, out _);
+    }
+    
+    public bool IsInGame(CrashPlayer crashPlayer)
+    {
+        return Players.Any(p => p.IdentityUserId == crashPlayer.IdentityUserId);
+    }
+    
+    public void ClearPlayers()
+    {
+        while (Players.TryTake(out _))
+        {
+        }
+    }
+    
+    public void ResetGame()
+    {
+        ClearMultipliers();
+        ClearPlayers();
+        TurnOffCrashed();
+        SetMultiplier(1);
+    }
+
+    public bool CheckIfCanBet()
+    {
+        return IsRunning() && IsPlacingBetsAllowed() && !IsRemovingBetsAllowed();
+    }
+    
+    public void AddToMultipliers(decimal multiplier)
+    {
+        Multipliers.Add(multiplier);
+    }
+    
+    public void ClearMultipliers()
+    {
+        Multipliers.Clear();
+    }
+    public CrashInfo GetCrashInfo()
+    {
+        return new CrashInfo()
+        {
+            Players = Players.ToList(),
+            Multipliers = Multipliers.ToList(),
+            Results = History,
+            Multiplier = Multiplier,
+            OnlinePlayers = GetOnlinePlayers(),
+            TimeLeft = TimeLeft,
+            AllowPlacingBets = AllowPlacingBets,
+            AllowRemovingBets = AllowRemovingBets,
+            Running = Running,
+            Crashed = Crashed,
+            GameStarted = GameStarted
+        };
+    }
+
+}

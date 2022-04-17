@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using RichbetsResurrected.Communication.Crash.Hub;
 using RichbetsResurrected.Entities.Crash;
+using RichbetsResurrected.Entities.Roulette;
 using RichbetsResurrected.Interfaces.DAL;
 using RichbetsResurrected.Interfaces.Games;
 using RichbetsResurrected.Interfaces.Games.Crash;
@@ -13,100 +14,69 @@ namespace RichbetsResurrected.Services.Games.Crash;
 
 public class CrashService : ICrashService
 {
-    private BlockingCollection<CrashPlayer> Players { get; set; } = new();
-    private List<CrashResult> History { get; set; } = new();
+    private readonly ICrashGameState _crashGameState;
+    private readonly IRichbetRepository _richbetRepository;
     
-    private bool IsRunning { get; set; }
-    private bool AllowPlacingBets { get; set; }
-    private bool AllowRemovingBets { get; set; }
-    private bool Crashed { get; set; }
-    
-    private decimal Multiplier { get; set; } = 1;
-    private decimal TimeLeft { get; set; }
-
-    private readonly IMediator _mediator;
-    private readonly IRichbetRepository _repository;
-    public CrashService(IRichbetRepository repository, IMediator mediator)
+    public ICrashGameState GameState => _crashGameState;
+    public CrashService(ICrashGameState crashGameState, IRichbetRepository richbetRepository)
     {
-        _repository = repository;
-        _mediator = mediator;
+        _crashGameState = crashGameState;
+        _richbetRepository = richbetRepository;
     }
-    
-    public async Task StartAsync()
+
+    public async Task<CrashJoinResult> JoinCrashAsync(CrashPlayer crashPlayer)
     {
-        try
+        if (_crashGameState.CheckIfCanBet())
         {
-            IsRunning = true;
-            while (true)
+            return new CrashJoinResult()
             {
-                ResetCrash();
-                await WaitForPlayersAsync();
-                var winNumber = CrashHelper.RandomMultiplier();
-                
+                IsSuccess = false,
+                Error = new CrashError()
+                {
+                    Message = "You cannot bet at this time"
+                },
+                Player = crashPlayer
+            };
+        }
+        
+        if (crashPlayer.Amount <= 0)
+        {
+            return new CrashJoinResult()
+            {
+                IsSuccess = false,
+                Error = new CrashError()
+                {
+                    Message = "You cannot bet with a negative amount"
+                },
+                Player = crashPlayer
+            };
+        }
+        
+        var points = await _richbetRepository.GetPointsFromUserAsync(crashPlayer.IdentityUserId);
 
-            }
-        }
-        catch (Exception ex)
+        if (points - crashPlayer.Amount < 0)
+            return new CrashJoinResult()
+            {
+                IsSuccess = false,
+                Error = new CrashError()
+                {
+                    Message = "You don't have enough points"
+                },
+                Player = crashPlayer
+            };
+
+
+        await _richbetRepository.RemovePointsFromUserAsync(crashPlayer.IdentityUserId, crashPlayer.Amount);
+        
+        _crashGameState.AddPlayer(crashPlayer);
+        
+        return new CrashJoinResult()
         {
-            
-        }
-        IsRunning = false;
-    }
-    
-    private async Task WaitForPlayersAsync()
-    {
-        TurnOnBetting();
-        for (decimal i = CrashConfigs.TimeForUsersToBet; i <= 0; i -= 0.1m)
-        {
-            TimeLeft = i;
-            await Task.Delay(10);
-        }
-        TurnOffBetting();
-        await Task.Delay(100); // Just to make sure every bet is done adding
-    }
-    
-    public CrashInfo GetCrashInfo()
-    {
-        var crashInfo = new CrashInfo()
-        {
-            Results = History.TakeLast(10).ToList(), 
-            Crashed = Crashed, 
-            AllowPlacingBets = AllowPlacingBets,
-            AllowRemovingBets = AllowRemovingBets,
-            Multiplier = Multiplier, 
-            TimeLeft = TimeLeft
+            IsSuccess = true,
+            Error = null,
+            Player = crashPlayer
         };
-        return crashInfo;
     }
     
-    private bool CanPlaceBet()
-    {
-        return AllowPlacingBets && IsRunning;
-    }
-    
-    private void TurnOnBetting()
-    {
-        AllowPlacingBets = true;
-    }
-    
-    private void TurnOffBetting()
-    {
-        AllowPlacingBets = false;
-    }
-    
-    private void ClearPlayers()
-    {
-        while (Players.TryTake(out _))
-        {
-        }
-    }
-    
-    private void ResetCrash()
-    {
-        ClearPlayers();
-        Crashed = false;
-        AllowPlacingBets = true;
-        AllowRemovingBets = false;
-        Multiplier = 1;
-    }
+    // TODO: Add cashout method
 }
