@@ -7,20 +7,20 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Ardalis.EFCore.Extensions" Version="1.1.0" />
-        <PackageReference Include="AspNet.Security.OAuth.Discord" Version="6.0.5" />
-        <PackageReference Include="Autofac" Version="6.3.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.4" />
-        <PackageReference Include="SQLite" Version="3.13.0" />
+        <PackageReference Include="Ardalis.EFCore.Extensions" Version="1.1.0"/>
+        <PackageReference Include="AspNet.Security.OAuth.Discord" Version="6.0.5"/>
+        <PackageReference Include="Autofac" Version="6.3.0"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.4"/>
+        <PackageReference Include="SQLite" Version="3.13.0"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\RichbetsResurrected.Interfaces\RichbetsResurrected.Interfaces.csproj" />
-        <ProjectReference Include="..\RichbetsResurrected.Utilities\RichbetsResurrected.Utilities.csproj" />
+        <ProjectReference Include="..\RichbetsResurrected.Interfaces\RichbetsResurrected.Interfaces.csproj"/>
+        <ProjectReference Include="..\RichbetsResurrected.Utilities\RichbetsResurrected.Utilities.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="BaseRichbet\Stores" />
+        <Folder Include="BaseRichbet\Stores"/>
     </ItemGroup>
 </Project>

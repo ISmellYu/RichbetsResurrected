@@ -11,22 +11,22 @@ namespace RichbetsResurrected.Services.Games.Roulette;
 
 public class RouletteWorker : IRouletteWorker
 {
-    private readonly IMediator _mediator;
     private readonly IRouletteGameState _gameState;
     private readonly ILifetimeScope _hubLifetimeScope;
-    
+    private readonly IMediator _mediator;
+
     public RouletteWorker(IRouletteGameState gameState, ILifetimeScope hubLifetimeScope, IMediator mediator)
     {
         _gameState = gameState;
         _hubLifetimeScope = hubLifetimeScope;
         _mediator = mediator;
     }
-    
+
     public async Task StartAsync()
     {
         if (_gameState.CheckIfRunning())
             return;
-        
+
         try
         {
             _gameState.TurnOnGame();
@@ -108,7 +108,7 @@ public class RouletteWorker : IRouletteWorker
         var players = _gameState.GetPlayers();
         var winners = players.Where(p => p.Color == winColor).ToList();
         var losers = players.Where(p => p.Color != winColor).ToList();
-        
+
         var result = new RouletteResult(number, winColor, winners.ToList(), losers.ToList());
         await using (var scope = _hubLifetimeScope.BeginLifetimeScope())
         {
@@ -123,7 +123,7 @@ public class RouletteWorker : IRouletteWorker
                     break;
             }
         }
-        
+
         return result;
     }
 }
