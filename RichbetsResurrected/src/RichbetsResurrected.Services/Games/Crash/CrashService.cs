@@ -62,6 +62,24 @@ public class CrashService : ICrashService
             IsSuccess = true, Error = null, Player = crashPlayer
         };
     }
+    public async Task<CrashCashoutResult> CashoutAsync(int identityUserId)
+    {
+        if (GameState.IsCrashed() || !GameState.IsGameStarted() || !GameState.IsRunning() || !GameState.IsRemovingBetsAllowed())
+        {
+            return new CrashCashoutResult()
+            {
+                IsSuccess = false,
+                Error = new CrashError
+                {
+                    Message = "You cannot cashout at this time"
+                },
+                Player = null
+            };
+        }
+
+        var result = GameState.Cashout(identityUserId);
+        return result;
+    }
 
     // TODO: Add cashout method
 }

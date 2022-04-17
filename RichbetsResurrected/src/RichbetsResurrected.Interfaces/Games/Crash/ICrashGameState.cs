@@ -29,9 +29,12 @@ public interface ICrashGameState
     List<CrashResult> GetResults(int amount);
     void AddToHistory(CrashResult result);
     void AddPlayer(CrashPlayer player);
+    CrashCashoutResult Cashout(int identityUserId);
     void AddOnlinePlayer(string connId, ClientInfo clientInfo);
     void RemoveOnlinePlayer(string connId);
     bool IsInGame(CrashPlayer crashPlayer);
+    bool IsInGame(int identityUserId);
+    bool AlreadyCashouted(int identityUserId);
     void ClearPlayers();
     void ResetGame();
     bool CheckIfCanBet();

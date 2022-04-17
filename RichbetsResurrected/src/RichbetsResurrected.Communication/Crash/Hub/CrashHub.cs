@@ -72,6 +72,13 @@ public class CrashHub : Hub<ICrashHub>
         return result;
     }
 
+    public async Task<CrashCashoutResult> Cashout()
+    {
+        var appUserId = Convert.ToInt32(Context.UserIdentifier);
+        var result = await _crashService.CashoutAsync(appUserId);
+        return result;
+    }
+
     [SignalRMethod(summary: "Stream for clients to receive the actual crash info")]
     public async IAsyncEnumerable<CrashInfo> StreamCrashInfo()
     {
