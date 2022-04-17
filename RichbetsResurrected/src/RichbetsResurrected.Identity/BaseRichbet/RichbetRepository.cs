@@ -106,11 +106,7 @@ public class RichbetRepository : IRichbetRepository
         var richbetAppUser = await RichbetAppUsers.FirstOrDefaultAsync(r => r.AppUserId == identityUserId);
         if (richbetAppUser == null)
             return null;
-        var richbetUser = await _context.RichbetUsers.FirstOrDefaultAsync(r => r.Id == richbetAppUser.RichbetUserId);
+        var richbetUser = await RichbetUsers.FirstOrDefaultAsync(r => r.Id == richbetAppUser.RichbetUserId);
         return richbetUser;
-    }
-    public Task<List<ClientInfo>> GetTop15UsersAsync()
-    {
-        throw new NotImplementedException();
     }
 }

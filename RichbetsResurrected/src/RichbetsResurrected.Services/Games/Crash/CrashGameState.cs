@@ -148,6 +148,37 @@ public class CrashGameState : ICrashGameState
 
         Players.TryAdd(player);
     }
+    
+    public CrashCashoutResult Cashout(int identityUserId)
+    {
+        if (!IsInGame(identityUserId))
+        {
+            return new CrashCashoutResult(){IsSuccess = false, Error = new CrashError(){Message = "You are not in game"}};
+        }
+
+        if (AlreadyCashouted(identityUserId))
+        {
+            return new CrashCashoutResult(){IsSuccess = false, Error = new CrashError(){Message = "You already cashouted"}};
+        }
+
+        CrashPlayer player = null;
+        foreach (var crashPlayer in Players)
+        {
+            if (crashPlayer.IdentityUserId != identityUserId) continue;
+            crashPlayer.Cashouted = true;
+            crashPlayer.WhenCashouted = Multiplier;
+            player = crashPlayer;
+            break;
+        }
+        
+        var result = new CrashCashoutResult()
+        {
+            IsSuccess = true,
+            Error = null,
+            Player = player
+        };
+        return result;
+    }
 
     public void AddOnlinePlayer(string connId, ClientInfo clientInfo)
     {
@@ -162,6 +193,14 @@ public class CrashGameState : ICrashGameState
     public bool IsInGame(CrashPlayer crashPlayer)
     {
         return Players.Any(p => p.IdentityUserId == crashPlayer.IdentityUserId);
+    }
+    public bool IsInGame(int identityUserId)
+    {
+        return Players.Any(p => p.IdentityUserId == identityUserId);
+    }
+    public bool AlreadyCashouted(int identityUserId)
+    {
+        return Players.Any(p => p.IdentityUserId == identityUserId && p.Cashouted);
     }
 
     public void ClearPlayers()
