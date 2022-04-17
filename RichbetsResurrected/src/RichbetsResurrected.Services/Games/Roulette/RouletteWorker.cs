@@ -39,9 +39,9 @@ public class RouletteWorker : IRouletteWorker
                 await WaitForAnimationEndAsync(RouletteConfigs.SpinDuration * 1000);
                 var winColor = RouletteHelper.GetRouletteColorForNumber(winNumber);
                 var result = await AwardWinnersAsync(winNumber, winColor);
-                _gameState.AddToHistory(result);
                 await SendEndRouletteToClientsAsync(result);
                 await Task.Delay(2000); // Wait for 2 seconds before starting again roulette
+                _gameState.AddToHistory(result);
             }
         }
         catch (Exception e)

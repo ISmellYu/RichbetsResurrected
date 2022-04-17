@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using RichbetsResurrected.Communication;
 using RichbetsResurrected.Communication.Client.Hub;
+using RichbetsResurrected.Communication.Crash.Hub;
 using RichbetsResurrected.Communication.Roulette.Hub;
 using RichbetsResurrected.Identity;
 using RichbetsResurrected.Services;
@@ -103,6 +104,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapRazorPages();
     endpoints.MapHub<RouletteHub>("/rouletteHub");
     endpoints.MapHub<ClientHub>("/clientHub");
+    endpoints.MapHub<CrashHub>("crashHub");
 });
 
 app.UseStatusCodePagesWithRedirects("/errors/{0}");

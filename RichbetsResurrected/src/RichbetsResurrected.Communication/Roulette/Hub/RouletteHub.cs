@@ -82,7 +82,7 @@ public class RouletteHub : Hub<IRouletteHub>
         return joinResult;
     }
 
-    [SignalRMethod(summary: "Stream for clients to receive the actual roulette result")]
+    [SignalRMethod(summary: "Stream for clients to receive the actual roulette info")]
     public async IAsyncEnumerable<RouletteInfo> StreamRouletteInfo()
     {
         while (true)

@@ -126,12 +126,6 @@ public class RouletteGameState : IRouletteGameState
     
     public void AddOnlinePlayer(string connId, ClientInfo clientInfo)
     {
-        if (OnlinePlayers.ContainsKey(connId))
-            return;
-        
-        if (OnlinePlayers.Any(pair => pair.Value.IdentityUserId == clientInfo.IdentityUserId))
-            return;
-        
         OnlinePlayers.TryAdd(connId, clientInfo);
     }
     
@@ -139,9 +133,10 @@ public class RouletteGameState : IRouletteGameState
     {
         OnlinePlayers.TryRemove(connId, out _);
     }
+    
     public List<ClientInfo> GetOnlinePlayers()
     {
-        return OnlinePlayers.Select(p => p.Value).ToList();
+        return OnlinePlayers.Values.DistinctBy(p => p.IdentityUserId).ToList();
     }
 
 }
