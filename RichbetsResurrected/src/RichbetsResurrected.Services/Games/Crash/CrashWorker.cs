@@ -10,7 +10,7 @@ public class CrashWorker : ICrashWorker
 {
     private readonly ICrashGameState _gameState;
     private readonly ILifetimeScope _hubLifetimeScope;
-    
+
     public CrashWorker(ICrashGameState gameState, ILifetimeScope hubLifetimeScope)
     {
         _gameState = gameState;
@@ -37,13 +37,13 @@ public class CrashWorker : ICrashWorker
                 _gameState.AddToHistory(result);
             }
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Console.WriteLine(e);
         }
         _gameState.TurnOffRunning();
-    } 
-    
+    }
+
     private async Task WaitForPlayersAsync()
     {
         _gameState.TurnOnPlacingBets();
@@ -66,25 +66,25 @@ public class CrashWorker : ICrashWorker
         {
             if (maxMultiplier == 1.0m || multiplier == maxMultiplier)
                 break;
-            
+
             _gameState.SetMultiplier(multiplier);
             _gameState.AddToMultipliers(multiplier);
-            
+
             multiplier += multiplier * step;
             await Task.Delay(100);
 
         }
-        
+
         _gameState.TurnOffRemovingBets();
         _gameState.TurnOnCrashed();
         _gameState.SetMultiplier(multiplier);
         _gameState.AddToMultipliers(multiplier);
-        
+
     }
 
     private CrashResult GetResult()
     {
-        var result = new CrashResult()
+        var result = new CrashResult
         {
             Losers = _gameState.GetPlayers().Where(p => p.Cashouted == false).ToList(),
             Winners = _gameState.GetPlayers().Where(p => p.Cashouted).ToList(),
@@ -92,6 +92,6 @@ public class CrashWorker : ICrashWorker
         };
         return result;
     }
-    
+
     // TODO: Add autocashout method
 }

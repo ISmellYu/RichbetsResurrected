@@ -7,10 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\RichbetsResurrected.Entities\RichbetsResurrected.Entities.csproj" />
+        <ProjectReference Include="..\RichbetsResurrected.Entities\RichbetsResurrected.Entities.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="AspNet.Security.OAuth.Discord" Version="6.0.5" />
+        <PackageReference Include="AspNet.Security.OAuth.Discord" Version="6.0.5"/>
     </ItemGroup>
 </Project>

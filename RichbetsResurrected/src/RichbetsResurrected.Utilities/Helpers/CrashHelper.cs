@@ -26,10 +26,8 @@ public static class CrashHelper
         var hs = Convert.ToInt32(100 / CrashConfigs.PercentValueToCrashInstantly);
 
         if (CheckIfShouldCrashInstantly(sHash, hs))
-        {
             //Debug.WriteLine("Rolled 1");
             return 1;
-        }
 
         var h = Convert.ToInt64(sHash.Substring(0, 52 / 4), 16);
         var e = Math.Pow(2, 52);
@@ -53,8 +51,8 @@ public static class CrashHelper
         var x = new HMACSHA256().ComputeHash(seed);
         return x;
     }
-    
-    
+
+
     private static string ConvertByteToString(this byte[] bytes)
     {
         var sb = new StringBuilder();

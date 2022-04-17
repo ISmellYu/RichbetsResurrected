@@ -14,4 +14,4 @@ public interface IRichbetRepository
     Task<int> GetPointsFromUserAsync(int identityUserId);
     Task<RichbetUser> GetRichbetUserAsync(int identityUserId);
     Task<List<ClientInfo>> GetTop15UsersAsync();
- }
+}

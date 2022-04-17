@@ -1,5 +1,4 @@
-﻿using RichbetsResurrected.Entities.Client;
-using RichbetsResurrected.Entities.Roulette;
+﻿using RichbetsResurrected.Entities.Roulette;
 
 namespace RichbetsResurrected.Interfaces.Games.Roulette;
 

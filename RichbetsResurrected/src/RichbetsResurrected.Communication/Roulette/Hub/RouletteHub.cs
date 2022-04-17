@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using RichbetsResurrected.Entities.Client;
@@ -20,8 +17,8 @@ namespace RichbetsResurrected.Communication.Roulette.Hub;
 public class RouletteHub : Hub<IRouletteHub>
 {
     private readonly IAccountRepository _accountRepository;
-    private readonly IRouletteService _rouletteService;
     private readonly IRichbetRepository _richbetRepository;
+    private readonly IRouletteService _rouletteService;
     public RouletteHub(IRouletteService rouletteService, IAccountRepository accountRepository, IRichbetRepository richbetRepository)
     {
         _rouletteService = rouletteService;
@@ -35,7 +32,7 @@ public class RouletteHub : Hub<IRouletteHub>
         var discordId = Context.User.Claims.FirstOrDefault(c => c.Type == OAuthConstants.DiscordId).Value;
         var avatarUrl = _accountRepository.GetDiscordAvatarUrl(Context.User);
         var richbetUser = await _richbetRepository.GetRichbetUserAsync(appUserId);
-        var clientInfo = new ClientInfo()
+        var clientInfo = new ClientInfo
         {
             UserName = Context.User?.Identity.Name,
             DiscordUserId = discordId,
@@ -47,7 +44,7 @@ public class RouletteHub : Hub<IRouletteHub>
         Console.WriteLine("Connected to roulette hub");
         await base.OnConnectedAsync();
     }
-    
+
     public override Task OnDisconnectedAsync(Exception? exception)
     {
         _rouletteService.GameState.RemoveOnlinePlayer(Context.ConnectionId);
@@ -62,7 +59,7 @@ public class RouletteHub : Hub<IRouletteHub>
         var rouletteInfo = _rouletteService.GameState.GetRouletteInfoAsync();
         return rouletteInfo;
     }
-    
+
     [SignalRMethod(summary: "Invokable by clients to join the roulette")]
     public async Task<RouletteJoinResult> JoinRoulette(int amount, RouletteColor color)
     {

@@ -223,7 +223,7 @@ conn.start().then(function () {
                     timerText.textContent = `${timeText}s`;
                 }
 
-            }   
+            }
 
             // compare objects and update players list.
             if (JSON.stringify(data.players) !== JSON.stringify(dataPlayersOld)) {
@@ -251,11 +251,11 @@ conn.start().then(function () {
     });
 
     function toFixed(value, precision) {
-            precision = precision || 0,
+        precision = precision || 0,
             power = Math.pow(10, precision),
             absValue = Math.abs(Math.round(value * power)),
             result = (value < 0 ? '-' : '') + String(Math.floor(absValue / power));
-    
+
         if (precision > 0) {
             let fraction = String(absValue % power),
                 padding = new Array(Math.max(precision - fraction.length, 0) + 1).join('0');
@@ -271,8 +271,7 @@ conn.start().then(function () {
 
         if (PlayerBetHistory.includes(current.color)) { // Play correct sound if the player won.
             playSound("rollWin");
-        } 
-        else {
+        } else {
             playSound("rollEnd");
         }
 
@@ -361,10 +360,10 @@ conn.start().then(function () {
 
         while (list.firstChild) {
             list.removeChild(list.firstChild);
-        }   
+        }
 
         data.forEach(player => {
-                
+
             let memberElement = document.createElement("li");
 
             memberElement.textContent = player.userName;
@@ -434,13 +433,13 @@ conn.start().then(function () {
             let winningAmount = element.textContent * 2
             element.textContent = `+${winningAmount}`;
         });
-        
+
     }
 
-    function showLosers(color) { 
+    function showLosers(color) {
         let colorLower = color.toLowerCase();
-        for(let elementColor of colors){
-            if(elementColor != color){
+        for (let elementColor of colors) {
+            if (elementColor != color) {
                 let list = document.querySelector(`.coins-${elementColor}`);
                 let nodes = list.childNodes;
 
@@ -458,11 +457,10 @@ conn.start().then(function () {
             let lowerColor = color.toLowerCase();
             let nodes = document.querySelector(`.coins-${color}`).childNodes;
 
-            
+
             if (nodes.length < 2) {
                 document.querySelector(`.count-bets-${lowerColor}`).textContent = `${nodes.length} Bet`;
-            }
-            else{
+            } else {
                 document.querySelector(`.count-bets-${lowerColor}`).textContent = `${nodes.length} Bets`;
             }
 

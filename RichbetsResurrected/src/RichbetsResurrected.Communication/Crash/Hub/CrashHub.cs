@@ -17,8 +17,8 @@ namespace RichbetsResurrected.Communication.Crash.Hub;
 public class CrashHub : Hub<ICrashHub>
 {
     private readonly IAccountRepository _accountRepository;
-    private readonly IRichbetRepository _richbetRepository;
     private readonly ICrashService _crashService;
+    private readonly IRichbetRepository _richbetRepository;
     public CrashHub(IAccountRepository accountRepository, IRichbetRepository richbetRepository, ICrashService crashService)
     {
         _accountRepository = accountRepository;
@@ -26,14 +26,14 @@ public class CrashHub : Hub<ICrashHub>
         _crashService = crashService;
 
     }
-    
+
     public override async Task OnConnectedAsync()
     {
         var appUserId = Convert.ToInt32(Context.UserIdentifier);
         var discordId = Context.User.Claims.FirstOrDefault(c => c.Type == OAuthConstants.DiscordId).Value;
         var avatarUrl = _accountRepository.GetDiscordAvatarUrl(Context.User);
         var richbetUser = await _richbetRepository.GetRichbetUserAsync(appUserId);
-        var clientInfo = new ClientInfo()
+        var clientInfo = new ClientInfo
         {
             UserName = Context.User?.Identity.Name,
             DiscordUserId = discordId,
@@ -45,7 +45,7 @@ public class CrashHub : Hub<ICrashHub>
         Console.WriteLine("Connected to crash hub");
         await base.OnConnectedAsync();
     }
-    
+
     public override Task OnDisconnectedAsync(Exception? exception)
     {
         _crashService.GameState.RemoveOnlinePlayer(Context.ConnectionId);
@@ -59,8 +59,8 @@ public class CrashHub : Hub<ICrashHub>
         var appUserId = Context.UserIdentifier;
         var discordId = Context.User.Claims.FirstOrDefault(c => c.Type == OAuthConstants.DiscordId).Value;
         var avatarUrl = _accountRepository.GetDiscordAvatarUrl(Context.User);
-        
-        var crashPlayer = new CrashPlayer()
+
+        var crashPlayer = new CrashPlayer
         {
             UserName = Context.User?.Identity.Name,
             DiscordUserId = discordId,
@@ -71,7 +71,7 @@ public class CrashHub : Hub<ICrashHub>
         var result = await _crashService.JoinCrashAsync(crashPlayer);
         return result;
     }
-    
+
     [SignalRMethod(summary: "Stream for clients to receive the actual crash info")]
     public async IAsyncEnumerable<CrashInfo> StreamCrashInfo()
     {
@@ -82,6 +82,6 @@ public class CrashHub : Hub<ICrashHub>
             await Task.Delay(1000);
         }
     }
-    
+
     // TODO: Add cashout method and autocashout endpoint
 }

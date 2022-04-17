@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Autofac;
+﻿using Autofac;
 using Autofac.Core;
 using RichbetsResurrected.Interfaces.Games;
 using RichbetsResurrected.Interfaces.Games.Crash;
