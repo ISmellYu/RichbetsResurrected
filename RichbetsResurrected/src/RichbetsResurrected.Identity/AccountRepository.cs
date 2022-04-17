@@ -115,7 +115,7 @@ public class AccountRepository : IAccountRepository
     public async Task UpdateRichbetUserAsync(AppUser user, ExternalLoginInfo info)
     {
     }
-    public string GetDiscordAvatarUrlAsync(ClaimsPrincipal user)
+    public string GetDiscordAvatarUrl(ClaimsPrincipal user)
     {
         var discordId = user.Claims.FirstOrDefault(c => c.Type == OAuthConstants.DiscordId).Value;
         var avatarHash = user.FindFirst(c => c.Type == DiscordAuthenticationConstants.Claims.AvatarHash)?.Value;

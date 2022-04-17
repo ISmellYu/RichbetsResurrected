@@ -33,7 +33,7 @@ public class RouletteHub : Hub<IRouletteHub>
     {
         var appUserId = Convert.ToInt32(Context.UserIdentifier);
         var discordId = Context.User.Claims.FirstOrDefault(c => c.Type == OAuthConstants.DiscordId).Value;
-        var avatarUrl = _accountRepository.GetDiscordAvatarUrlAsync(Context.User);
+        var avatarUrl = _accountRepository.GetDiscordAvatarUrl(Context.User);
         var richbetUser = await _richbetRepository.GetRichbetUserAsync(appUserId);
         var clientInfo = new ClientInfo()
         {
@@ -68,7 +68,7 @@ public class RouletteHub : Hub<IRouletteHub>
     {
         var appUserId = Context.UserIdentifier;
         var discordId = Context.User.Claims.FirstOrDefault(c => c.Type == OAuthConstants.DiscordId).Value;
-        var avatarUrl = _accountRepository.GetDiscordAvatarUrlAsync(Context.User);
+        var avatarUrl = _accountRepository.GetDiscordAvatarUrl(Context.User);
         var roulettePlayer = new RoulettePlayer
         {
             Amount = amount,

@@ -11,7 +11,6 @@ namespace RichbetsResurrected.Identity.BaseRichbet;
 public class RichbetRepository : IRichbetRepository
 {
     private readonly AppDbContext _context;
-    public int KlantId { get; set; }
     public IQueryable<RichbetAppUser> RichbetAppUsers => _context.RichbetAppUsers.AsNoTracking();
     // Readonly
     public IQueryable<RichbetUser> RichbetUsers => _context.RichbetUsers.AsNoTracking();
@@ -58,10 +57,8 @@ public class RichbetRepository : IRichbetRepository
         if (richbetAppUser == null)
             return;
         var richbetUser = await _context.RichbetUsers.FindAsync(richbetAppUser.RichbetUserId);
-        Console.WriteLine($"Add: {KlantId}");
         richbetUser.Points += points;
         await _context.SaveChangesAsync();
-        KlantId++;
     }
 
     public async Task RemovePointsFromUserAsync(int identityUserId, int points)
@@ -70,10 +67,8 @@ public class RichbetRepository : IRichbetRepository
         if (richbetAppUser == null)
             return;
         var richbetUser = await _context.RichbetUsers.FindAsync(richbetAppUser.RichbetUserId);
-        Console.WriteLine($"Remove: {KlantId}");
         richbetUser.Points -= points;
         await _context.SaveChangesAsync();
-        KlantId++;
     }
 
     public async Task SetDailyToUserAsync(int identityUserId, bool isRedeemed)

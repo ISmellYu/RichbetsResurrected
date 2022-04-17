@@ -29,7 +29,7 @@ public class ClientHub : Microsoft.AspNetCore.SignalR.Hub
     {
         var appUserId = Convert.ToInt32(Context.UserIdentifier);
         var discordId = Context.User.Claims.FirstOrDefault(c => c.Type == OAuthConstants.DiscordId).Value;
-        var avatarUrl = _accountRepository.GetDiscordAvatarUrlAsync(Context.User);
+        var avatarUrl = _accountRepository.GetDiscordAvatarUrl(Context.User);
         var richbetUser = await _richbetRepository.GetRichbetUserAsync(appUserId);
         var clientInfo = new ClientInfo()
         {
