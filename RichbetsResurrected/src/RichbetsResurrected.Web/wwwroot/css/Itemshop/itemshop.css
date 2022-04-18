@@ -1,5 +1,16 @@
 /* NAVBAR SECTION */
 .navbar{
+    width:100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0 auto;
+    height: 50px;
+    flex-wrap: wrap;
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* .navbar{
     width: 80%;
     display: flex;
     justify-content: space-evenly;
@@ -8,7 +19,8 @@
     height: 40px;
     margin-top: 10px;
     flex-wrap: wrap;
-}
+    background-color: rgba(255, 255, 255, 0.03);
+} */
 
 .nav-item{
     text-decoration: none;
