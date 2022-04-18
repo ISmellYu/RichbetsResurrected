@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RichbetsResurrected.Web.Controllers;
@@ -5,6 +6,7 @@ namespace RichbetsResurrected.Web.Controllers;
 [ApiExplorerSettings(IgnoreApi = true)]
 public class GamesController : Controller
 {
+    [Authorize]
     public IActionResult Roulette()
     {
         return View();

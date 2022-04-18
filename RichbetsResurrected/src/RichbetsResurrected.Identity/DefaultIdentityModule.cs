@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using RichbetsResurrected.Identity.BaseRichbet;
 using RichbetsResurrected.Identity.Contexts;
 using RichbetsResurrected.Interfaces.DAL;
-using RichbetsResurrected.Interfaces.DAL.Stores;
 using RichbetsResurrected.Interfaces.Identity;
 
 namespace RichbetsResurrected.Identity;
@@ -21,10 +20,10 @@ public class DefaultIdentityModule : Module
     {
         var connectionString = _configuration.GetConnectionString("SqliteConnection");
         var dbContextOptionsBuilder = new DbContextOptionsBuilder<AppDbContext>().UseSqlite(connectionString).EnableSensitiveDataLogging();
-        
+
         builder.RegisterType<AppDbContext>()
-            .WithParameter("options", dbContextOptionsBuilder.Options); 
-        
+            .WithParameter("options", dbContextOptionsBuilder.Options);
+
         RegisterStores(builder);
         RegisterRepositories(builder);
     }

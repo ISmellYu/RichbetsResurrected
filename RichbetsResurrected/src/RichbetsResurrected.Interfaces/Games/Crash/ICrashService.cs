@@ -1,6 +1,10 @@
-﻿namespace RichbetsResurrected.Interfaces.Games.Crash;
+﻿using RichbetsResurrected.Entities.Crash;
 
-public interface ICrashService : IStartableGame
+namespace RichbetsResurrected.Interfaces.Games.Crash;
+
+public interface ICrashService
 {
-    
+    ICrashGameState GameState { get; }
+    Task<CrashJoinResult> JoinCrashAsync(CrashPlayer crashPlayer);
+    Task<CrashCashoutResult> CashoutAsync(int identityUserId);
 }

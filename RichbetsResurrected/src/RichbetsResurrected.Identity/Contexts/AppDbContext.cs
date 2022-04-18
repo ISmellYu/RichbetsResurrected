@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Ardalis.EFCore.Extensions;
+﻿using Ardalis.EFCore.Extensions;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using RichbetsResurrected.Entities.DatabaseEntities;

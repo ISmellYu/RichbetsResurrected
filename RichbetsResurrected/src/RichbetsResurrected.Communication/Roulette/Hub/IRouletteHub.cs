@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using System.Diagnostics.CodeAnalysis;
 using RichbetsResurrected.Entities.Roulette;
 using SignalRSwaggerGen.Attributes;
 

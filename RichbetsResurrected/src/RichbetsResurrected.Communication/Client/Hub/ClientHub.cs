@@ -1,12 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Authorization;
 using RichbetsResurrected.Entities.Client;
-using RichbetsResurrected.Entities.Roulette;
 using RichbetsResurrected.Interfaces.DAL;
 using RichbetsResurrected.Interfaces.Identity;
 using RichbetsResurrected.Utilities.Constants;
 using SignalRSwaggerGen.Attributes;
-
 
 namespace RichbetsResurrected.Communication.Client.Hub;
 
@@ -23,15 +21,15 @@ public class ClientHub : Microsoft.AspNetCore.SignalR.Hub
         _richbetRepository = richbetRepository;
 
     }
-    
+
     [SignalRMethod(summary: "Invokable by client to get currently logged in user info")]
     public async Task<ClientInfo> GetClientInfo()
     {
         var appUserId = Convert.ToInt32(Context.UserIdentifier);
         var discordId = Context.User.Claims.FirstOrDefault(c => c.Type == OAuthConstants.DiscordId).Value;
-        var avatarUrl = _accountRepository.GetDiscordAvatarUrlAsync(Context.User);
+        var avatarUrl = _accountRepository.GetDiscordAvatarUrl(Context.User);
         var richbetUser = await _richbetRepository.GetRichbetUserAsync(appUserId);
-        var clientInfo = new ClientInfo()
+        var clientInfo = new ClientInfo
         {
             UserName = Context.User?.Identity.Name,
             DiscordUserId = discordId,
@@ -41,7 +39,7 @@ public class ClientHub : Microsoft.AspNetCore.SignalR.Hub
         };
         return clientInfo;
     }
-    
+
     [SignalRMethod(summary: "Invokable by client to get points for currently logged in user")]
     public async Task<int> GetPoints()
     {
@@ -49,5 +47,4 @@ public class ClientHub : Microsoft.AspNetCore.SignalR.Hub
         var points = await _richbetRepository.GetPointsFromUserAsync(appUserId);
         return points;
     }
-    
 }

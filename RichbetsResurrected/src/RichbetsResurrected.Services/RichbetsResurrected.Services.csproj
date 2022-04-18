@@ -7,12 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="6.3.0" />
+        <PackageReference Include="Autofac" Version="6.3.0"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\RichbetsResurrected.Communication\RichbetsResurrected.Communication.csproj" />
-        <ProjectReference Include="..\RichbetsResurrected.Entities\RichbetsResurrected.Entities.csproj" />
-        <ProjectReference Include="..\RichbetsResurrected.Interfaces\RichbetsResurrected.Interfaces.csproj" />
+        <ProjectReference Include="..\RichbetsResurrected.Communication\RichbetsResurrected.Communication.csproj"/>
+        <ProjectReference Include="..\RichbetsResurrected.Entities\RichbetsResurrected.Entities.csproj"/>
+        <ProjectReference Include="..\RichbetsResurrected.Interfaces\RichbetsResurrected.Interfaces.csproj"/>
     </ItemGroup>
 </Project>
