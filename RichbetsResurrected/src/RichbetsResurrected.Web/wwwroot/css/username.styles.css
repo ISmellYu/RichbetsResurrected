@@ -6,7 +6,6 @@
     -webkit-text-fill-color: transparent;
     width: fit-content;
     font-weight: 500;
-    text-shadow: 0 0 8px #000;
 }
 
 .giraffe{
@@ -73,8 +72,8 @@
     width: fit-content;
     border-radius: 8px;
     padding: 0 5px 0 5px;
-    text-shadow: 0 0 4px #000;
-    color: white;
+    text-shadow: 0 0 2px #000;
+    color: #EE5353;
 }
 
 .cash{

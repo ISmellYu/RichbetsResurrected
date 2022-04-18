@@ -9,4 +9,24 @@ public class ItemshopController : Controller
     {
         return View();
     }
+
+    public IActionResult CustomStyling()
+    {
+        return View();
+    }
+
+    public IActionResult LureModules()
+    {
+        return View();
+    }
+
+    public IActionResult MuteBypass()
+    {
+        return View();
+    }
+
+    public IActionResult BuildingItems()
+    {
+        return View();
+    }
 }
