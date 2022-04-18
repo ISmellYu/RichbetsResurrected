@@ -14,6 +14,15 @@ connection.start().then(async function () {
     
     }, 1000);
 
+    
+    let clientInfo = await connection.invoke("GetClientInfo").catch(function (err) {
+
+        return console.error(err.toString());
+    
+    });
+
+    globalThis.clientInfo = clientInfo;
+ 
 }).catch(function (err) {
     return console.error(err.toString());
 });
