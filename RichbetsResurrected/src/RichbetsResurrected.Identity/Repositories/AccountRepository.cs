@@ -7,7 +7,7 @@ using RichbetsResurrected.Interfaces.Identity;
 using RichbetsResurrected.Utilities.Constants;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
-namespace RichbetsResurrected.Identity;
+namespace RichbetsResurrected.Identity.Repositories;
 
 public class AccountRepository : IAccountRepository
 {

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RichbetsResurrected.Identity.BaseRichbet;
 using RichbetsResurrected.Identity.Contexts;
+using RichbetsResurrected.Identity.Repositories;
 using RichbetsResurrected.Interfaces.DAL;
 using RichbetsResurrected.Interfaces.Identity;
 

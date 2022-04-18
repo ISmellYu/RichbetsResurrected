@@ -1,5 +1,6 @@
 ﻿using RichbetsResurrected.Entities.Client;
 using RichbetsResurrected.Entities.DatabaseEntities;
+using RichbetsResurrected.Entities.DatabaseEntities.BaseRichbet;
 
 namespace RichbetsResurrected.Interfaces.DAL;
 
