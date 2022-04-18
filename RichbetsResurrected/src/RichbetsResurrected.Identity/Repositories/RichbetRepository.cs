@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RichbetsResurrected.Entities.Client;
-using RichbetsResurrected.Entities.DatabaseEntities;
+using RichbetsResurrected.Entities.DatabaseEntities.BaseRichbet;
 using RichbetsResurrected.Identity.Contexts;
 using RichbetsResurrected.Interfaces.DAL;
 
-namespace RichbetsResurrected.Identity.BaseRichbet;
+namespace RichbetsResurrected.Identity.Repositories;
 
 public class RichbetRepository : IRichbetRepository
 {

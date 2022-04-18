@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using RichbetsResurrected.Entities.DatabaseEntities;
+using RichbetsResurrected.Entities.DatabaseEntities.BaseRichbet;
 using RichbetsResurrected.Entities.Identity.Models;
 
 namespace RichbetsResurrected.Identity.Contexts;

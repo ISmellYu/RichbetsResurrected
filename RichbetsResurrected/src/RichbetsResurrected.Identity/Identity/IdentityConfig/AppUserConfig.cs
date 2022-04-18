@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RichbetsResurrected.Entities.DatabaseEntities;
+using RichbetsResurrected.Entities.DatabaseEntities.BaseRichbet;
 using RichbetsResurrected.Entities.Identity.Models;
 
-namespace RichbetsResurrected.Identity.Config.IdentityConfig;
+namespace RichbetsResurrected.Identity.Identity.IdentityConfig;
 
 public class AppUserConfig : IEntityTypeConfiguration<AppUser>
 {

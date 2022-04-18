@@ -21,7 +21,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="BaseRichbet\Stores" />
-        <Folder Include="Config\ShopConfig" />
+        <Folder Include="Identity" />
     </ItemGroup>
 </Project>

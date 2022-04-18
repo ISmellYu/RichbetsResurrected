@@ -1,4 +1,4 @@
-﻿namespace RichbetsResurrected.Entities.DatabaseEntities;
+﻿namespace RichbetsResurrected.Entities.DatabaseEntities.BaseRichbet;
 
 public class RichbetAppUser
 {
