@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 using AspNet.Security.OAuth.Discord;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -115,7 +113,7 @@ public class AccountRepository : IAccountRepository
     public async Task UpdateRichbetUserAsync(AppUser user, ExternalLoginInfo info)
     {
     }
-    public string GetDiscordAvatarUrlAsync(ClaimsPrincipal user)
+    public string GetDiscordAvatarUrl(ClaimsPrincipal user)
     {
         var discordId = user.Claims.FirstOrDefault(c => c.Type == OAuthConstants.DiscordId).Value;
         var avatarHash = user.FindFirst(c => c.Type == DiscordAuthenticationConstants.Claims.AvatarHash)?.Value;

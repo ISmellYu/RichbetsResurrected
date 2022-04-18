@@ -157,7 +157,7 @@
     padding: 4px 0 4px 0;
 }
 
-.all-bets{
+.all-bets {
     margin: 0 7px 0 -25px !important;
     padding: 1px 0 0 25px;
     list-style: none;
@@ -168,7 +168,7 @@
     font-size: 14px !important;
 }
 
-.count-bets{
+.count-bets {
     font-size: 13px;
     margin: 0 0 0 7px;
 }
@@ -307,8 +307,9 @@
     height: 35px;
     border-radius: 2px;
 }
+
 /* ONLINE PLAYERS LIST */
-.onlinePlayers{
+.onlinePlayers {
     width: 10%;
     min-width: 150px;
     background-color: #0707076c;
@@ -322,14 +323,14 @@
     padding: 5px;
 }
 
-.onlinePlayersText{
+.onlinePlayersText {
     margin: 5px 5px 10px 5px;
     padding: 0;
     font-size: 14px;
     font-weight: 300;
 }
 
-.onlinePlayersList{
+.onlinePlayersList {
     width: 100%;
     height: 100%;
     padding: 0;
@@ -339,7 +340,7 @@
     margin: 0;
 }
 
-.onlinePlayersElement{
+.onlinePlayersElement {
     padding: 1px 0 0 26px;
     list-style: none;
     background-image: url(/img/dc-default.png);
@@ -352,7 +353,7 @@
     color: rgba(255, 255, 255, 0.9);
 }
 
-.onlinePlayersElement::after{
+.onlinePlayersElement::after {
     margin-left: 5px;
     content: " ";
     background-color: #89E837;
