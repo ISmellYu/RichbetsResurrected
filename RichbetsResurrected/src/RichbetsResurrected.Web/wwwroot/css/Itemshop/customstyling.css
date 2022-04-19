@@ -10,7 +10,7 @@
     background-color: gray;
     margin: 0 auto;
     width: 85%;
-    height: 400px;
+    margin-top: 50px;
 }
 
 .category-title{
@@ -27,4 +27,15 @@
     background-color: rgba(0, 128, 0, 0.212);
     width: 100%;
     height: 87%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+
+.product-container{
+    min-width: 332px;
+    width: fit-content;
+    height: 82px;
+    background-color: rgba(128, 0, 128, 0.233);
+    margin: 10px;
 }
