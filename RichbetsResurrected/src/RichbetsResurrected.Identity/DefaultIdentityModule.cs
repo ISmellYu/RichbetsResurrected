@@ -6,6 +6,7 @@ using RichbetsResurrected.Identity.Contexts;
 using RichbetsResurrected.Identity.Repositories;
 using RichbetsResurrected.Interfaces.DAL;
 using RichbetsResurrected.Interfaces.Identity;
+using RichbetsResurrected.Interfaces.Shop;
 
 namespace RichbetsResurrected.Identity;
 
@@ -37,5 +38,6 @@ public class DefaultIdentityModule : Module
     {
         builder.RegisterType<AccountRepository>().As<IAccountRepository>().InstancePerLifetimeScope();
         builder.RegisterType<RichbetRepository>().As<IRichbetRepository>().InstancePerLifetimeScope();
+        builder.RegisterType<ShopRepository>().As<IShopRepository>().InstancePerLifetimeScope();
     }
 }
