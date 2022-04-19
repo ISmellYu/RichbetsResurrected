@@ -5,6 +5,7 @@ using RichbetsResurrected.Interfaces.Games.Crash;
 using RichbetsResurrected.Interfaces.Games.Roulette;
 using RichbetsResurrected.Services.Games.Crash;
 using RichbetsResurrected.Services.Games.Roulette;
+using RichbetsResurrected.Services.Shop;
 
 namespace RichbetsResurrected.Services;
 
@@ -12,6 +13,7 @@ public class DefaultServiceModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
+        RegisterShop(builder);
         RegisterGames(builder);
     }
 
@@ -41,6 +43,11 @@ public class DefaultServiceModule : Module
             .SingleInstance()
             .AutoActivate() // Same instance for everything// Resolve the service before anything else once to create the instance
             .OnActivated(StartGame); // Run a function at service creation
+    }
+    
+    private void RegisterShop(ContainerBuilder builder)
+    {
+        builder.RegisterType<ShopService>().AsSelf().InstancePerLifetimeScope();
     }
 
 

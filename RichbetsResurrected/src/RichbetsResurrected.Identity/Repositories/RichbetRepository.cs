@@ -29,10 +29,12 @@ public class RichbetRepository : IRichbetRepository
             return;
 
         await _context.RichbetUsers.AddAsync(user);
+        await _context.SaveChangesAsync();
         await _context.RichbetAppUsers.AddAsync(new RichbetAppUser
         {
             AppUserId = identityUserId, DiscordUserId = discordId, RichbetUserId = user.Id
         });
+        await _context.SaveChangesAsync();
     }
 
     public async Task DeleteRichbetUserByIdentityIdAsync(int identityUserId)

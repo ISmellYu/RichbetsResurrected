@@ -9,7 +9,11 @@ public class DiscountConfig : IEntityTypeConfiguration<Discount>
 
     public void Configure(EntityTypeBuilder<Discount> builder)
     {
-        builder.HasKey(d => d.Id);
+        builder.HasKey(u => u.ItemId);
+        // builder.HasOne<Category>().WithOne()
+        //     .HasForeignKey<Discount>(p => p.CategoryId);
+        // builder.HasOne<Item>().WithOne()
+        //     .HasForeignKey<Discount>(p => p.ItemId);
         builder.ToTable("discounts");
     }
 }
