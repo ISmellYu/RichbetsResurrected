@@ -68,49 +68,129 @@ public class ShopRepository : IShopRepository
         _context.ActiveItems.Add(activeItem);
         _context.SaveChanges();
     }
-    
+    public void RemoveActiveItem(ActiveItem activeItem)
+    {
+        _context.ActiveItems.Remove(activeItem);
+        _context.SaveChanges();
+    }
+    public void UpdateActiveItem(ActiveItem activeItem)
+    {
+        _context.ActiveItems.Update(activeItem);
+        _context.SaveChanges();
+    }
+
     public void AddCategory(Category category)
     {
         _context.Categories.Add(category);
         _context.SaveChanges();
     }
-    
+    public void RemoveCategory(Category category)
+    {
+        _context.Categories.Remove(category);
+        _context.SaveChanges();
+    }
+    public void UpdateCategory(Category category)
+    {
+        _context.Categories.Update(category);
+        _context.SaveChanges();
+    }
+
     public void AddConsumableItem(ConsumableItem consumableItem)
     {
         _context.ConsumableItems.Add(consumableItem);
         _context.SaveChanges();
     }
-    
+    public void RemoveConsumableItem(ConsumableItem consumableItem)
+    {
+        _context.ConsumableItems.Remove(consumableItem);
+        _context.SaveChanges();
+    }
+    public void UpdateConsumableItem(ConsumableItem consumableItem)
+    {
+        _context.ConsumableItems.Update(consumableItem);
+        _context.SaveChanges();
+    }
+
     public void AddDiscount(Discount discount)
     {
         _context.Discounts.Add(discount);
         _context.SaveChanges();
     }
-    
+    public void RemoveDiscount(Discount discount)
+    {
+        _context.Discounts.Remove(discount);
+        _context.SaveChanges();
+    }
+    public void UpdateDiscount(Discount discount)
+    {
+        _context.Discounts.Update(discount);
+        _context.SaveChanges();
+    }
+
     public void AddItem(Item item)
     {
         _context.Items.Add(item);
         _context.SaveChanges();
     }
-    
+    public void RemoveItem(Item item)
+    {
+        _context.Items.Remove(item);
+        _context.SaveChanges();
+    }
+    public void UpdateItem(Item item)
+    {
+        _context.Items.Update(item);
+        _context.SaveChanges();
+    }
+
     public void AddUserItem(UserItem userItem)
     {
         _context.UserItems.Add(userItem);
         _context.SaveChanges();
     }
-    
+    public void RemoveUserItem(UserItem userItem)
+    {
+        _context.UserItems.Remove(userItem);
+        _context.SaveChanges();
+    }
+    public void UpdateUserItem(UserItem userItem)
+    {
+        _context.UserItems.Update(userItem);
+        _context.SaveChanges();
+    }
+
     public void AddSubCategory(SubCategory subCategory)
     {
         _context.SubCategories.Add(subCategory);
         _context.SaveChanges();
     }
-    
+    public void RemoveSubCategory(SubCategory subCategory)
+    {
+        _context.SubCategories.Remove(subCategory);
+        _context.SaveChanges();
+    }
+    public void UpdateSubCategory(SubCategory subCategory)
+    {
+        _context.SubCategories.Update(subCategory);
+        _context.SaveChanges();
+    }
+
     public void AddItemType(ItemType itemType)
     {
         _context.ItemTypes.Add(itemType);
         _context.SaveChanges();
     }
-    
+    public void RemoveItemType(ItemType itemType)
+    {
+        _context.ItemTypes.Remove(itemType);
+        _context.SaveChanges();
+    }
+    public void UpdateItemType(ItemType itemType)
+    {
+        _context.ItemTypes.Update(itemType);
+        _context.SaveChanges();
+    }
+
     public List<SubCategory> GetSubCategoriesByCategory(Category category)
     {
         return SubCategories.Where(x => x.CategoryId == category.Id).ToList();
@@ -152,5 +232,4 @@ public class ShopRepository : IShopRepository
     {
         return ItemTypes.FirstOrDefault(x => x.ItemId == itemId);
     }
-
 }

@@ -9,6 +9,7 @@ public class ItemType
     public bool IsNicknameEffect { get; set; }
     public bool IsNicknamePattern { get; set; }
     public bool IsNicknameAnimation { get; set; }
+    public bool IsUnique { get; set; }
     
     public int ItemId { get; set; }
     public Item Item { get; set; }
