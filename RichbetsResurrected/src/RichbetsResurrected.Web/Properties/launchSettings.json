@@ -30,7 +30,7 @@
       "applicationUrl": "https://localhost:57680/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Release",
-        "DB_SCHEMA": "richbets_beta"
+        "DB_SCHEMA": "richbets"
       }
     },
     "DEV": {
@@ -40,7 +40,7 @@
       "applicationUrl": "https://localhost:57680/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DB_SCHEMA": "richbets"
+        "DB_SCHEMA": "richbets_beta"
       }
     }
   }

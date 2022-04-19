@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RichbetsResurrected.Entities.DatabaseEntities.BaseRichbet;
 using RichbetsResurrected.Entities.DatabaseEntities.Shop;
-using SQLitePCL;
 
 namespace RichbetsResurrected.Identity.Shop.Config;
 

@@ -44,10 +44,12 @@
         <ProjectReference Include="..\RichbetsResurrected.Services\RichbetsResurrected.Services.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-        <None Update="database.sqlite">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == '' Or '$(Configuration)' == 'Debug'">
+        <EnvironmentName>Development</EnvironmentName>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' != '' AND '$(Configuration)' != 'Debug' ">
+        <EnvironmentName>Release</EnvironmentName>
+    </PropertyGroup>
 
 </Project>
