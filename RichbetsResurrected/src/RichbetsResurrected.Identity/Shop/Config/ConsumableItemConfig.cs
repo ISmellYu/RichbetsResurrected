@@ -9,7 +9,8 @@ public class ConsumableItemConfig : IEntityTypeConfiguration<ConsumableItem>
 
     public void Configure(EntityTypeBuilder<ConsumableItem> builder)
     {
-        builder.HasKey(ui => ui.Id);
-        builder.ToTable("usableItems");
+        builder.HasKey(u => u.ItemId);
+        //builder.HasOne<Item>().WithOne().HasForeignKey<ConsumableItem>(p => p.ItemId).IsRequired();
+        builder.ToTable("consumableItems");
     }
 }
