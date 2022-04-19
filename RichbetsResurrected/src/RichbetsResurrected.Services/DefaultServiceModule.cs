@@ -3,6 +3,7 @@ using Autofac.Core;
 using RichbetsResurrected.Interfaces.Games;
 using RichbetsResurrected.Interfaces.Games.Crash;
 using RichbetsResurrected.Interfaces.Games.Roulette;
+using RichbetsResurrected.Interfaces.Shop;
 using RichbetsResurrected.Services.Games.Crash;
 using RichbetsResurrected.Services.Games.Roulette;
 using RichbetsResurrected.Services.Shop;
@@ -47,7 +48,7 @@ public class DefaultServiceModule : Module
     
     private void RegisterShop(ContainerBuilder builder)
     {
-        builder.RegisterType<ShopService>().AsSelf().InstancePerLifetimeScope();
+        builder.RegisterType<ShopService>().As<IShopService>().InstancePerLifetimeScope();
     }
 
 
