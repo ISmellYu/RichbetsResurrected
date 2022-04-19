@@ -1,6 +1,6 @@
 ﻿using RichbetsResurrected.Entities.DatabaseEntities.Shop;
 
-namespace RichbetsResurrected.Interfaces.Shop;
+namespace RichbetsResurrected.Interfaces.DAL.Shop;
 
 public interface IShopRepository
 {

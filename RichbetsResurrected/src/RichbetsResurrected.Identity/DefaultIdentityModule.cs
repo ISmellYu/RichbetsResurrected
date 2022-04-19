@@ -5,8 +5,8 @@ using RichbetsResurrected.Identity.BaseRichbet;
 using RichbetsResurrected.Identity.Contexts;
 using RichbetsResurrected.Identity.Repositories;
 using RichbetsResurrected.Interfaces.DAL;
+using RichbetsResurrected.Interfaces.DAL.Shop;
 using RichbetsResurrected.Interfaces.Identity;
-using RichbetsResurrected.Interfaces.Shop;
 
 namespace RichbetsResurrected.Identity;
 
