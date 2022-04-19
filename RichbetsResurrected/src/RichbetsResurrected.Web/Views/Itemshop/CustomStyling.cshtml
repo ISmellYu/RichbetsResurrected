@@ -20,18 +20,33 @@
     <a asp-controller="Itemshop" asp-action="BuildingItems" class="nav-item">Building items</a>
 </nav>
 
-
-@foreach (var subCategory in Model.SubCategories){
-    <p>@subCategory.Name</p>
-}
-
 <h1 class="page-title">Custom styling</h1>
 
-<div class="product-box">
+@foreach (var subCategory in Model.SubCategories){
+    <div class="product-box">
 
-    <h1 class="category-title">Pattern</h1>
+        <h1 class="category-title">@subCategory.Name</h1>
 
-    <div class="product-list-box">
-        
+        <div class="product-list-box">
+
+    @foreach (var item in subCategory.Items){
+
+        <div class="product-container">
+
+            <div class="product-desc">
+                <p>@item.Name</p>
+                <p>@item.Price</p>
+                <button>Buy</button>
+            </div>
+
+            <div class="product-presentation">
+                <p>@User?.Identity.Name</p>
+            </div>
+
+        </div>
+
+    }
+
+        </div>
     </div>
-</div>
+}
