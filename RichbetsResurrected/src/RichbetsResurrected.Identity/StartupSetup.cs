@@ -13,7 +13,7 @@ public static class StartupSetup
 
     public static void AddAuthStuff(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("SqliteConnection"); //Configuration.GetConnectionString("DefaultConnection");
+        var connectionString = configuration.GetConnectionString("MysqlConnection"); //Configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext(connectionString);
         services.ConfigureCookies();
         services.AddIdentity();

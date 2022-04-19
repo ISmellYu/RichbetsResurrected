@@ -29,5 +29,15 @@ public class ShopService
         return totalPrice;
     }
     
+    public List<SubCategory> GetSubCategories()
+    {
+        return _shopRepository.GetSubCategories();
+    }
     
+    public List<Discount> GetDiscounts()
+    {
+        return _shopRepository.GetDiscounts();
+    }
+    
+
 }
