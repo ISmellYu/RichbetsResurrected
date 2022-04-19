@@ -9,5 +9,5 @@ public class SubCategory
     public int CategoryId { get; set; }
     public Category Category { get; set; }
     
-    public ICollection<Item> Items { get; set; }
+    public IEnumerable<Item> Items { get; set; }
 }

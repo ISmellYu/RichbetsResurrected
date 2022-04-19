@@ -10,5 +10,5 @@ public class Category
     public string Description { get; set; }
     public string ImageUrl { get; set; }
     
-    public ICollection<SubCategory> SubCategories { get; set; }
+    public IEnumerable<SubCategory> SubCategories { get; set; }
 }
