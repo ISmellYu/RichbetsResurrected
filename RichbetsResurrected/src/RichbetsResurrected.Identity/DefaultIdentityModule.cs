@@ -20,8 +20,8 @@ public class DefaultIdentityModule : Module
     }
     protected override void Load(ContainerBuilder builder)
     {
-        var connectionString = _configuration.GetConnectionString("SqliteConnection");
-        var dbContextOptionsBuilder = new DbContextOptionsBuilder<AppDbContext>().UseSqlite(connectionString).EnableSensitiveDataLogging();
+        var connectionString = _configuration.GetConnectionString("MysqlConnection");
+        var dbContextOptionsBuilder = new DbContextOptionsBuilder<AppDbContext>().UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)).EnableSensitiveDataLogging();
 
         builder.RegisterType<AppDbContext>()
             .WithParameter("options", dbContextOptionsBuilder.Options);

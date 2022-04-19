@@ -22,6 +22,26 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "https://localhost:57680/"
+    },
+    "PROD": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:57680/",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Release",
+        "DB_SCHEMA": "richbets_beta"
+      }
+    },
+    "DEV": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:57680/",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DB_SCHEMA": "richbets"
+      }
     }
   }
 }
