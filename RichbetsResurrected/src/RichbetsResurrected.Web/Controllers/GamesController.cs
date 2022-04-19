@@ -10,7 +10,7 @@ namespace RichbetsResurrected.Web.Controllers;
 public class GamesController : Controller
 {
     private readonly IShopService _shopService;
-    public GamesController(ShopService shopService)
+    public GamesController(IShopService shopService)
     {
         _shopService = shopService;
     }
