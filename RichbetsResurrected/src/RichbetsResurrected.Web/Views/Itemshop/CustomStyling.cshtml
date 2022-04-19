@@ -1,5 +1,4 @@
-@using RichbetsResurrected.Interfaces.Shop
-@inject IShopService _itemService
+@model RichbetsResurrected.Web.ViewModels.CustomStylingViewModel
 
 @{
     ViewData["Title"] = "Itemshop";
@@ -21,12 +20,9 @@
     <a asp-controller="Itemshop" asp-action="BuildingItems" class="nav-item">Building items</a>
 </nav>
 
-@{
-    var items = _itemService.GetItems();
-}
 
-@foreach (var item in items){
-    <p>@item.Name</p>
+@foreach (var subCategory in Model.SubCategories){
+    <p>@subCategory.Name</p>
 }
 
 <h1 class="page-title">Custom styling</h1>
