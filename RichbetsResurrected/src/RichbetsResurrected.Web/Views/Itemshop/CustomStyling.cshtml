@@ -1,3 +1,6 @@
+@using RichbetsResurrected.Interfaces.Shop
+@inject IShopService _itemService
+
 @{
     ViewData["Title"] = "Itemshop";
     Layout = "_MainLayout";
@@ -17,6 +20,14 @@
     <a asp-controller="Itemshop" asp-action="MuteBypass" class="nav-item">Mute bypass</a>
     <a asp-controller="Itemshop" asp-action="BuildingItems" class="nav-item">Building items</a>
 </nav>
+
+@{
+    var items = _itemService.GetItems();
+}
+
+@foreach (var item in items){
+    <p>@item.Name</p>
+}
 
 <h1 class="page-title">Custom styling</h1>
 
