@@ -9,7 +9,7 @@ public class CategoryConfig : IEntityTypeConfiguration<Category>
 
     public void Configure(EntityTypeBuilder<Category> builder)
     {
-        builder.HasKey(c => c.Id);
+        // builder.HasOne<Discount>().WithOne().HasForeignKey<Category>(p => p.DiscountId);
         builder.ToTable("categories");
     }
 }
