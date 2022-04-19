@@ -12,7 +12,10 @@ using Westwind.AspNetCore.LiveReload;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseSetting("https_port", "57680");
-builder.WebHost.UseUrls("https://*:57680");
+builder.WebHost.UseSetting("http_port", "57681");
+
+// builder.WebHost.UseUrls("https://*:57680");
+builder.WebHost.UseUrls("http://*:57681");
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
@@ -75,14 +78,15 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error");
+    // app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
+    //app.UseHttpsRedirection();
 }
 
 app.UseRouting();
 
 
-app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 app.UseCookiePolicy();
 
