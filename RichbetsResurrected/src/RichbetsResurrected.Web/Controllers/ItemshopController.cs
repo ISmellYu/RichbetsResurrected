@@ -49,4 +49,12 @@ public class ItemshopController : Controller
     {
         return View();
     }
+    
+    [HttpPost]
+    public IActionResult BuyItem(int subCategoryId)
+    {
+        var items = _shopService.GetItems()
+            .Where(p => p.SubCategoryId == subCategoryId);
+        return Json(items);
+    }
 }
