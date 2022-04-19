@@ -32,6 +32,9 @@
             <li>
                 <a class="-link" asp-action="Privacy" asp-controller="Dashboard">Regulamin</a>
             </li>
+            <li>
+                <a class="-link" asp-action="Index" asp-controller="Itemshop">Itemshop</a>
+            </li>
             <li class="-link-active">
                 <a class="-link" href="/home">Gry</a>
             </li>
@@ -49,7 +52,18 @@
         </ul>
     </nav>
 </header>
-
+<div class="loading-wrapper">
+    <img src="~/img/rbcoin.png" alt="Richbets Coin">
+    LOADING
+</div>
+<script>
+    $(document).ready(function () {
+        $('.loading-wrapper').toggleClass('showHide');
+        setTimeout(function () {
+            $('.loading-wrapper').hide();
+        }, 500);
+    });
+</script>
 @RenderBody()
 
 @await RenderSectionAsync("scripts", false).ConfigureAwait(false)
