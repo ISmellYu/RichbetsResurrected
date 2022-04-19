@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RichbetsResurrected.Entities.DatabaseEntities.Shop;
 using RichbetsResurrected.Identity.Contexts;
-using RichbetsResurrected.Interfaces.Shop;
+using RichbetsResurrected.Interfaces.DAL.Shop;
 
 namespace RichbetsResurrected.Identity.Repositories;
 

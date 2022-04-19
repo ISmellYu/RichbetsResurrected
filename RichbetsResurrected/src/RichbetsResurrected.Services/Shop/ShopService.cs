@@ -1,5 +1,5 @@
 ﻿using RichbetsResurrected.Entities.DatabaseEntities.Shop;
-using RichbetsResurrected.Interfaces.Shop;
+using RichbetsResurrected.Interfaces.DAL.Shop;
 
 namespace RichbetsResurrected.Services.Shop;
 
