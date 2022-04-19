@@ -31,16 +31,20 @@
 
     @foreach (var item in subCategory.Items){
 
-        <div class="product-container">
+        <div class="product-container" style="border-image-source: url('@item.ImageUrl')">
 
             <div class="product-desc">
-                <p>@item.Name</p>
-                <p>@item.Price</p>
-                <button>Buy</button>
+                <div class="product-data">
+                    <p class="product-name product-text">@item.Name</p>
+                    <p class="product-price product-text">Cost: <span style="color: #EE5353;">@item.Price</span></p>
+                </div>
+                <button class="buy-button">Buy</button>
             </div>
 
             <div class="product-presentation">
-                <p>@User?.Identity.Name</p>
+                <p class="uName-presentation @item.Description" style="font-size: 22px;">@User?.Identity.Name</p>
+                <p class="uName-presentation @item.Description" style="font-size: 18px;">@User?.Identity.Name</p>
+                <p class="uName-presentation @item.Description" style="font-size: 14px;">@User?.Identity.Name</p>
             </div>
 
         </div>

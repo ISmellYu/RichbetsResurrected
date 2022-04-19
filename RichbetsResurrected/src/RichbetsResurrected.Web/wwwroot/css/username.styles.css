@@ -4,7 +4,6 @@
     background-size: cover;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    width: fit-content;
     font-weight: 500;
 }
 
@@ -14,7 +13,6 @@
     background-size: cover;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    width: fit-content;
     font-weight: 500;
 }
 
@@ -24,7 +22,6 @@
     background-size: cover;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    width: fit-content;
     font-weight: 500;
 }
 
@@ -34,7 +31,6 @@
     background-size: cover;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    width: fit-content;
     font-weight: 500;
 }
 
@@ -44,7 +40,6 @@
     background-size: cover;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    width: fit-content;
     font-weight: 500;
 }
 
@@ -56,7 +51,6 @@
     background-position-y: center;
     -webkit-text-fill-color: transparent;
     font-weight: 500;
-    width: fit-content;
 }
 
 
@@ -68,11 +62,11 @@
     background-position: bottom;
     /* -webkit-text-fill-color: transparent; */
     font-weight: 500;
-    width: fit-content;
     border-radius: 8px;
     padding: 0 5px 0 5px;
     text-shadow: 0 0 2px #000;
     color: #EE5353;
+    width: min-content;
 }
 
 .cash {
@@ -83,11 +77,11 @@
     background-position: bottom;
     /* -webkit-text-fill-color: transparent; */
     font-weight: 500;
-    width: fit-content;
     border-radius: 8px;
     padding: 0 5px 0 5px;
     text-shadow: 0 0 4px #000;
     color: white;
+    width: min-content;
 }
 
 .poland {
@@ -99,11 +93,11 @@
     background-size: 160px;
     /* -webkit-text-fill-color: transparent; */
     font-weight: 500;
-    width: fit-content;
     border-radius: 8px;
     padding: 0 5px 0 5px;
     text-shadow: 0 0 3px #000;
     color: white;
+    width: min-content;
 }
 
 .fastfood {
@@ -115,11 +109,11 @@
     background-size: 160px;
     /* -webkit-text-fill-color: transparent; */
     font-weight: 500;
-    width: fit-content;
     border-radius: 8px;
     padding: 0 5px 0 5px;
     text-shadow: 0 0 3px #000;
     color: white;
+    width: min-content;
 }
 
 .redline {
@@ -131,11 +125,11 @@
     background-size: cover;
     /* -webkit-text-fill-color: transparent; */
     font-weight: 500;
-    width: fit-content;
     border-radius: 8px;
     padding: 0 5px 0 5px;
     text-shadow: 0 0 3px #000;
     color: white;
+    width: min-content;
 }
 
 
@@ -146,7 +140,6 @@
     background-position-y: 16px;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    width: fit-content;
     font-weight: 500;
     text-shadow: 0 0 8px #000;
 }
@@ -158,7 +151,6 @@
     background-position-y: center;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    width: fit-content;
     font-weight: 500;
 }
 
@@ -169,7 +161,6 @@
     background-position-y: bottom;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    width: fit-content;
     font-weight: 500;
 }
 
