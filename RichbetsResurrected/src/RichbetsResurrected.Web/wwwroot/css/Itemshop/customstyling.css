@@ -48,7 +48,7 @@
     border-style: solid;
 
     border-image-repeat: stretch;
-    border-image-slice: 100;
+    border-image-slice: 50;
     border-image-width: 0 0 0 3px;
 }
 

@@ -140,6 +140,7 @@
     background-position-y: 16px;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-position-y: center;
     font-weight: 500;
     text-shadow: 0 0 8px #000;
 }
