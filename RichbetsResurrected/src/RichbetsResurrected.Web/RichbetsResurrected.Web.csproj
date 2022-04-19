@@ -35,10 +35,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="ViewModels" />
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\RichbetsResurrected.Communication\RichbetsResurrected.Communication.csproj" />
         <ProjectReference Include="..\RichbetsResurrected.Identity\RichbetsResurrected.Identity.csproj" />
         <ProjectReference Include="..\RichbetsResurrected.Services\RichbetsResurrected.Services.csproj" />
