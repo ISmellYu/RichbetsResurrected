@@ -7,7 +7,7 @@ namespace RichbetsResurrected.Identity.Repositories;
 
 public class ShopRepository : IShopRepository
 {
-    private AppDbContext _context;
+    private readonly AppDbContext _context;
     
     public ShopRepository(AppDbContext context)
     {
@@ -33,7 +33,11 @@ public class ShopRepository : IShopRepository
     {
         return Categories.ToList();
     }
-    
+    public List<SubCategory> GetSubCategories()
+    {
+        return SubCategories.ToList();
+    }
+
     public List<ConsumableItem> GetConsumableItems()
     {
         return ConsumableItems.ToList();
@@ -54,7 +58,11 @@ public class ShopRepository : IShopRepository
     {
         return UserItems.ToList();
     }
-    
+    public List<ItemType> GetItemTypes()
+    {
+        return ItemTypes.ToList();
+    }
+
     public void AddActiveItem(ActiveItem activeItem)
     {
         _context.ActiveItems.Add(activeItem);
@@ -90,4 +98,59 @@ public class ShopRepository : IShopRepository
         _context.UserItems.Add(userItem);
         _context.SaveChanges();
     }
+    
+    public void AddSubCategory(SubCategory subCategory)
+    {
+        _context.SubCategories.Add(subCategory);
+        _context.SaveChanges();
+    }
+    
+    public void AddItemType(ItemType itemType)
+    {
+        _context.ItemTypes.Add(itemType);
+        _context.SaveChanges();
+    }
+    
+    public List<SubCategory> GetSubCategoriesByCategory(Category category)
+    {
+        return SubCategories.Where(x => x.CategoryId == category.Id).ToList();
+    }
+    
+    public List<Item> GetItemsBySubCategory(SubCategory subCategory)
+    {
+        return Items.Where(x => x.SubCategoryId == subCategory.Id).ToList();
+    }
+    public ActiveItem? GetActiveItemByIds(int richbetUserId, int itemId)
+    {
+        return ActiveItems.FirstOrDefault(u => u.ItemId == itemId && u.RichetUserId == richbetUserId);
+    }
+    public Category? GetCategoryById(int categoryId)
+    {
+        return Categories.FirstOrDefault(x => x.Id == categoryId);
+    }
+    public SubCategory? GetSubCategoryById(int subCategoryId)
+    {
+        return SubCategories.FirstOrDefault(x => x.Id == subCategoryId);
+    }
+    public ConsumableItem? GetConsumableItemByItemId(int itemId)
+    {
+        return ConsumableItems.FirstOrDefault(x => x.ItemId == itemId);
+    }
+    public Discount? GetDiscountByItemId(int itemId)
+    {
+        return Discounts.FirstOrDefault(x => x.ItemId == itemId);
+    }
+    public Item? GetItemById(int itemId)
+    {
+        return Items.FirstOrDefault(x => x.Id == itemId);
+    }
+    public UserItem? GetUserItemByIds(int richbetUserId, int itemId)
+    {
+        return UserItems.FirstOrDefault(u => u.ItemId == itemId && u.RichbetUserId == richbetUserId);
+    }
+    public ItemType? GetItemTypeByItemId(int itemId)
+    {
+        return ItemTypes.FirstOrDefault(x => x.ItemId == itemId);
+    }
+
 }
