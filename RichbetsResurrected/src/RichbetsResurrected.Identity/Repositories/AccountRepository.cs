@@ -106,6 +106,13 @@ public class AccountRepository : IAccountRepository
             refreshSignIn = true;
         }
 
+        if (user.UserName != info.Principal.FindFirstValue(ClaimTypes.Name))
+        {
+            var usernameNew = info.Principal.FindFirstValue(ClaimTypes.Name);
+            await _userManager.SetUserNameAsync(user, usernameNew);
+            await _userManager.UpdateNormalizedUserNameAsync(user);
+            refreshSignIn = true;
+        }
 
         if (refreshSignIn) await _signInManager.RefreshSignInAsync(user);
     }
