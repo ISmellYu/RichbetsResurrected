@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RichbetsResurrected.Entities.DatabaseEntities.Shop;
 using RichbetsResurrected.Interfaces.Shop;
@@ -23,7 +24,7 @@ public class ItemshopController : Controller
     public IActionResult CustomStyling()
     {
         var allCategories = _shopService.GetCategories();
-        var correctCategory = allCategories.FirstOrDefault(p => p.Name == "Styling");
+        var correctCategory = allCategories.FirstOrDefault(p => p.Name == "User Styling");
         var subCategories = _shopService.GetSubCategories()
             .Where(p => p.CategoryId == correctCategory.Id);
         foreach (var subCategory in subCategories)
@@ -50,11 +51,10 @@ public class ItemshopController : Controller
         return View();
     }
     
+    [Authorize]
     [HttpPost]
-    public IActionResult BuyItem(int subCategoryId)
+    public IActionResult BuyItem(int itemId)
     {
-        var items = _shopService.GetItems()
-            .Where(p => p.SubCategoryId == subCategoryId);
-        return Json(items);
+        return Json(1);
     }
 }
