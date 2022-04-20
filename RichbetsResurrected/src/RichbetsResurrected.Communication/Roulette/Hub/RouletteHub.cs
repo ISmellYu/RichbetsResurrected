@@ -85,8 +85,8 @@ public class RouletteHub : Hub<IRouletteHub>
         while (true)
         {
             var rouletteInfo = _rouletteService.GameState.GetRouletteInfoAsync();
-            await Task.Delay(10);
             yield return rouletteInfo;
+            await Task.Delay(10);
         }
     }
 }
