@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "Itemshop";
+    ViewData["Title"] = "Lure modules";
     Layout = "_MainLayout";
 }
 
@@ -12,123 +12,8 @@
 }
 
 <nav class="navbar">
-    <a href="../Itemshop" class="nav-item">Main shop</a>
+    <a asp-controller="Itemshop" asp-action="CustomStyling" class="nav-item">Custom styling</a>
     <a asp-controller="Itemshop" asp-action="LureModules" class="nav-item">Lure modules</a>
     <a asp-controller="Itemshop" asp-action="MuteBypass" class="nav-item">Mute bypass</a>
     <a asp-controller="Itemshop" asp-action="BuildingItems" class="nav-item">Building items</a>
 </nav>
-
-<div class="main">
-
-    <div class="product-container">
-            <fieldset class="product-fieldset">
-                <legend class="product-legend">Effect</legend>
-
-                <div class="product">
-                    <div class="product-desc">
-                        <p class="product-title">Tiger</p>
-                        <p class="product-cost">Cost: <span style="color: #EE5353;">2000</span></p>
-                        <button class="product-buy">Buy</button>
-                    </div>
-                    <div class="presentation">
-                        <p class="tiger" style="font-size: 24px;">Drairan</p>
-                        <p class="tiger" style="font-size: 18px;">Drairan</p>
-                        <p class="tiger" style="font-size: 14px;">Drairan</p>
-                    </div>
-                </div>
-
-                <div class="product">
-                    <div class="product-desc">
-                        <p class="product-title">Pink Leopard</p>
-                        <p class="product-cost">Cost: <span style="color: #EE5353;">2500</span></p>
-                        <button class="product-buy">Buy</button>
-                    </div>
-                    <div class="presentation">
-                        <p class="pink_leopard" style="font-size: 24px;">Drairan</p>
-                        <p class="pink_leopard" style="font-size: 18px;">Drairan</p>
-                        <p class="pink_leopard" style="font-size: 14px;">Drairan</p>
-                    </div>
-                </div>
-
-                <div class="product">
-
-                </div>
-
-                <div class="product">
-
-                </div>
-
-            </fieldset>
-    </div>
-
-    <div class="product-container">
-            <fieldset class="product-fieldset">
-                <legend class="product-legend">Pattern</legend>
-
-                <div class="product">
-
-                </div>
-
-                <div class="product">
-
-                </div>
-
-                <div class="product">
-
-                </div>
-
-                <div class="product">
-
-                </div>
-
-            </fieldset>
-    </div>
-
-    <div class="product-container">
-            <fieldset class="product-fieldset">
-                <legend class="product-legend">Banner</legend>
-
-                <div class="product">
-
-                </div>
-
-                <div class="product">
-
-                </div>
-
-                <div class="product">
-
-                </div>
-
-                <div class="product">
-
-                </div>
-
-            </fieldset>
-    </div>
-
-    <div class="product-container">
-            <fieldset class="product-fieldset">
-                <legend class="product-legend">Animated</legend>
-
-                <div class="product">
-
-                </div>
-
-                <div class="product">
-
-                </div>
-
-                <div class="product">
-
-                </div>
-
-                <div class="product">
-
-                </div>
-
-            </fieldset>
-    </div>
-
-</div>
-
