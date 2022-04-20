@@ -21,7 +21,7 @@ public class DefaultServiceModule : Module
     private void RegisterGames(ContainerBuilder builder)
     {
         RegisterRoulette(builder);
-        // RegisterCrash(builder);
+        RegisterCrash(builder);
     }
 
     private void RegisterRoulette(ContainerBuilder builder)
