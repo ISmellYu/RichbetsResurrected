@@ -91,6 +91,9 @@ function showLure(){
     img2.attr("alt","Basic rule");
     img3.attr("alt","Regular rule");
 
+    $(".redir-styling").css("display", "none");
+    $(".redir-lure").css("display", "flex");
+
     $(".sc-presentation-left").each(function() {
         $(this).empty();
         $(this).append(img1);
@@ -117,6 +120,9 @@ function showStyling() {
     div1.addClass("giraffe").addClass("pre-anim");
     div2.addClass("anim-fire").addClass("pre-anim");
     div3.addClass("strawberries");
+
+    $(".redir-styling").css("display", "flex");
+    $(".redir-lure").css("display", "none");
 
     $(".sc-presentation-left").each(function() {
         $(this).empty();

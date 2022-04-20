@@ -13,14 +13,12 @@
 .nav-item{
     text-decoration: none;
     font-size: 17px;
-    border-style: none none solid none;
-    border-width: 2px;
-    border-color: #EE5353;
     margin: 10px;
 }
 
 .nav-item:hover{
     border-color: rgba(196, 68, 68, 0.5);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 /* SHOWCASE */
@@ -110,6 +108,8 @@
 
 .sc-img{
     width: 100%;
+    max-height: 256px;
+    max-width: 256px;
 }
 
 .present-text{
