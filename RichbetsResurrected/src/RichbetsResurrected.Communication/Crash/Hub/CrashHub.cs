@@ -85,8 +85,8 @@ public class CrashHub : Hub<ICrashHub>
         while (true)
         {
             var crashInfo = _crashService.GameState.GetCrashInfo();
-            await Task.Delay(10);
             yield return crashInfo;
+            await Task.Delay(10);
         }
     }
 
