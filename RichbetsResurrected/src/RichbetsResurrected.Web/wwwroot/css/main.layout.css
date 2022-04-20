@@ -118,6 +118,7 @@ header {
     cursor: pointer;
     display: flex;
     margin: 0 10px 0 10px;
+    z-index: 10;
 }
 
 .bar{
@@ -133,7 +134,7 @@ header {
     top: 0;
     right: 0;
     height: 100%;
-    z-index: 5;
+    z-index: 10;
     overflow: hidden;
 }
 
@@ -245,6 +246,13 @@ header {
     animation: roll 1s infinite;
 }
 
+.navbar-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+}
+
 @keyframes roll {
     0% {
         transform: rotate(0deg);
@@ -261,6 +269,18 @@ header {
     .hamburger{
         display: flex;
     }
+    #odometer{
+        font-size: 14px
+    }
+    .point-box{
+        margin: 0;
+    }
+    .points-currency{
+        font-size: 14px;
+    }
+    .logo-text{
+        margin-left: 10px;
+    }
 }
 @media screen and (min-width: 715px) {
     .nav-list {
@@ -270,3 +290,6 @@ header {
         display: none;
     }
 }
+
+/* odometer 15px */
+/* pointbox margin 0 */

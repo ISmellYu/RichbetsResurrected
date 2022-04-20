@@ -42,7 +42,8 @@
 <div class="mbody">
     <div class="roulette-body">
         <img src="~/img/roulette-arrow.png" alt="pointer" class="pointer">
-        <canvas id="canvas" height="550px" width="550px">
+        @* <canvas id="canvas" height="550px" width="550px"> *@
+        <canvas id="canvas">
             <p style="{color: white}" align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
         </canvas>
         <div class="lay-circle">
@@ -60,14 +61,14 @@
                 <input type="number" id="coins" placeholder="Coins..">
             </div>
             <div class="control-bar-inner">
-                <button class="control-bar-button" action="clear">CLEAR</button>
+                <button class="control-bar-button mobile-button" action="clear">CLEAR</button>
                 <button class="control-bar-button" action="1">+1</button>
                 <button class="control-bar-button" action="10">+10</button>
                 <button class="control-bar-button" action="100">+100</button>
                 <button class="control-bar-button" action="1000">+1000</button>
-                <button class="control-bar-button" action="half">1/2</button>
-                <button class="control-bar-button" action="double">X2</button>
-                <button class="control-bar-button" action="max">MAX</button>
+                <button class="control-bar-button mobile-button" action="half">1/2</button>
+                <button class="control-bar-button mobile-button" action="double">X2</button>
+                <button class="control-bar-button mobile-button" action="max">MAX</button>
             </div>
         </div>
         <div class="bets-bar">

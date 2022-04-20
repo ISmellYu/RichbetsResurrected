@@ -23,30 +23,32 @@
 <header>
     <!-- <h1 class="logo-text">RICH<span class="logo-text-color">BETS</span></h1> -->
     <a class="logo-text" asp-action="Index" asp-controller="Home">RICH<span class="logo-text-color">BETS</span></a>
-    <nav class="nav-list">
+    <div class="navbar-wrapper">
+        <div class="point-box">
+            <img class="rbc-logo" src="~/img/rbcoin30x30.png" alt="rbcoin">
+            <p id="odometer" class="odometer">0</p>
+            <p class="points-currency">RBC</p>
+        </div>
 
-            <div class="point-box">
-                <img class="rbc-logo" src="~/img/rbcoin30x30.png" alt="rbcoin">
-                <p id="odometer" class="odometer">0</p>
-                <p class="points-currency">RBC</p>
-            </div>
+        <nav class="nav-list">
 
-            <a class="-link" asp-action="Privacy" asp-controller="Dashboard" id="dashboard-link">Regulamin</a>
+                <a class="-link" asp-action="Privacy" asp-controller="Dashboard" id="dashboard-link">Regulamin</a>
 
-            <a class="-link" asp-action="Index" asp-controller="Itemshop" id="itemshop-link">Itemshop</a>
+                <a class="-link" asp-action="Index" asp-controller="Itemshop" id="itemshop-link">Itemshop</a>
 
 
-            <a class="-link" asp-action="Index" asp-controller="Home" id="home-link">Gry</a>
+                <a class="-link" asp-action="Index" asp-controller="Home" id="home-link">Gry</a>
 
-            @if (_signInManager.IsSignedIn(User))
-            {
-                <a class="-link logout-link btn" asp-action="Logout" asp-controller="Account">Wyloguj</a>
-            }
-            else
-            {
-                <a class="-link logout-link" asp-action="Login" asp-controller="Account">Zaloguj</a>
-            }
-    </nav>
+                @if (_signInManager.IsSignedIn(User))
+                {
+                    <a class="-link logout-link btn" asp-action="Logout" asp-controller="Account">Wyloguj</a>
+                }
+                else
+                {
+                    <a class="-link logout-link" asp-action="Login" asp-controller="Account">Zaloguj</a>
+                }
+        </nav>
+    </div>
     <div id="menu">
         <ul class="menu-nav">
             <li><a class="" asp-action="Privacy" asp-controller="Dashboard" id="dashboard-link">Regulamin</a></li>

@@ -2,15 +2,45 @@ let conn = new signalR.HubConnectionBuilder().withUrl("/rouletteHub").build(); /
 
 let firstImg = new Image();
 
+if ($("body").width() <= 590) {
+    $("#canvas").attr("width", '390px');
+    $("#canvas").attr("height", '390px');
+}
+else{
+    $("#canvas").attr("width", '550px');
+    $("#canvas").attr("height", '550px');
+}
+
 firstImg.onload = function () {
     firstWheel.wheelImage = firstImg;
     firstWheel.draw();
 }
 
-
 firstImg.src = "/img/roulette-body.png";
-firstImg.height = 500;
-firstImg.width = 500;
+
+if ($("body").width() <= 590) {
+    firstImg.height = 370;
+    firstImg.width = 370;
+}
+else{
+    firstImg.height = 500;
+    firstImg.width = 500;
+}
+
+window.addEventListener("resize", function () {
+    
+    if ($("body").width() <= 590) {
+
+        this.location.reload();
+    }
+    else {
+
+        this.location.reload();
+    }
+
+    firstWheel.wheelImage = firstImg;
+    firstWheel.draw();
+});
 
 
 let wheelPower = 3; // scope 1-3
@@ -25,7 +55,7 @@ jQuery.fx.off = true;
 
 
 let firstWheel = new Winwheel({
-    'responsive': true,
+    'responsive': false,
     'drawText': false,
     'drawMode': 'image', // drawMode must be set to image.
     'numSegments': 37, // The number of segments must be specified.
