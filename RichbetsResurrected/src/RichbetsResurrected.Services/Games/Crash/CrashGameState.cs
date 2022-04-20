@@ -234,7 +234,7 @@ public class CrashGameState : ICrashGameState
     }
     public CrashInfo GetCrashInfo()
     {
-        return new CrashInfo
+        var crashInfo = new CrashInfo
         {
             Players = Players.ToList(),
             Multipliers = Multipliers.ToList(),
@@ -248,5 +248,6 @@ public class CrashGameState : ICrashGameState
             Crashed = Crashed,
             GameStarted = GameStarted
         };
+        return crashInfo;
     }
 }
