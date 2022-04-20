@@ -238,7 +238,7 @@ public class CrashGameState : ICrashGameState
         {
             Players = Players.ToList(),
             Multipliers = Multipliers.ToList(),
-            Results = History,
+            Results = History.TakeLast(10).ToList(),
             Multiplier = Multiplier,
             OnlinePlayers = GetOnlinePlayers(),
             TimeLeft = TimeLeft,

@@ -1,7 +1,7 @@
 let conn = new signalR.HubConnectionBuilder().withUrl("/crashHub").build();
 
 conn.start().then(function () {
-    console.log("connected");
+    console.log("connected crash");
 
     conn.on("EndRoulette", function (history, current) {
         console.log(history);
@@ -13,7 +13,7 @@ conn.start().then(function () {
         console.log(data);
     });
 
-    conn.stream("StreamRouletteInfo").subscribe({
+    conn.stream("StreamCrashInfo").subscribe({
         next: function (data) {
             console.log(data);
         }
