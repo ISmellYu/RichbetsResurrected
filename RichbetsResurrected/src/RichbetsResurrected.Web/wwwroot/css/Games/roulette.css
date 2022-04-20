@@ -321,6 +321,7 @@
     align-items: center;
     border-radius: 10px 0 0 0;
     padding: 5px;
+    z-index: 9;
 }
 
 .onlinePlayersText {
@@ -376,5 +377,59 @@
 
     .control-body {
         width: 100%;
+    }
+}
+
+@media screen and (max-width: 590px) {
+    .lay-circle{
+        width: 350px;
+        height: 350px;
+    }
+    .inner-circle{
+        width: 325px;
+        height: 325px;
+    }
+    .timer-text{
+        font-size: 56px;
+    }
+    .pointer{
+        width: 200px;
+        height: 200px;
+    }
+    .roulette-body{
+        margin-top: -20%;
+    }
+    .control-panel{
+        display: none;
+    }
+    .control-bar{
+        justify-content: space-between;
+    }
+    .control-bar-inner button{
+        display: none;
+    }
+    .control-bar-inner{
+        display: flex;
+        flex-direction: row;
+    }
+    .mobile-button{
+        display: block !important;
+        margin-left: 5px;
+    }
+    .roulette-body img{
+        width: 380px;
+        height: 380px;
+    }
+    .bets-bar{
+        height: auto;
+        flex-direction: column;
+    }
+    .bet-container{
+        height: auto;
+        width: 100%;
+        margin-top: 20px;
+    }
+    .onlinePlayers{
+        opacity: 0.5;
     }
 }
