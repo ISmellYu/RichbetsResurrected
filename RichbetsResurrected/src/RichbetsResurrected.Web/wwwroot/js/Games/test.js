@@ -1,4 +1,4 @@
-let conn = new signalR.HubConnectionBuilder().withUrl("/rouletteHub").build();
+let conn = new signalR.HubConnectionBuilder().withUrl("/crashHub").build();
 
 conn.start().then(function () {
     console.log("connected");
