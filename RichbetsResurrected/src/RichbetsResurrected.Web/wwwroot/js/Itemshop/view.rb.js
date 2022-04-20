@@ -114,8 +114,8 @@ function showStyling() {
         div3
     ] = Array(3).fill(null).map(() => $("<div>").text(clientInfo.userName).addClass("present-text"));
 
-    div1.addClass("giraffe");
-    div2.addClass("anim-fire");
+    div1.addClass("giraffe").addClass("pre-anim");
+    div2.addClass("anim-fire").addClass("pre-anim");
     div3.addClass("strawberries");
 
     $(".sc-presentation-left").each(function() {
