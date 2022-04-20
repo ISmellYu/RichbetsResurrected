@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/lib/odometer/odometer-theme-default.css">
     <script src="~/lib/odometer/odometer.min.js"></script>
     <script src="~/lib/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/Shared/layout.rb.js"></script>
+    <script src="~/js/Shared/layout.rb.js" defer></script>
     <script
         src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
@@ -21,36 +21,54 @@
 </head>
 <body>
 <header>
-    <h1 class="logo-text">RICH<span class="logo-text-color">BETS</span></h1>
-    <nav>
-        <ul class="nav-list">
+    <!-- <h1 class="logo-text">RICH<span class="logo-text-color">BETS</span></h1> -->
+    <a class="logo-text" asp-action="Index" asp-controller="Home">RICH<span class="logo-text-color">BETS</span></a>
+    <nav class="nav-list">
+
             <div class="point-box">
                 <img class="rbc-logo" src="~/img/rbcoin30x30.png" alt="rbcoin">
                 <p id="odometer" class="odometer">0</p>
                 <p class="points-currency">RBC</p>
             </div>
-            <li>
-                <a class="-link" asp-action="Privacy" asp-controller="Dashboard">Regulamin</a>
-            </li>
-            <li>
-                <a class="-link" asp-action="Index" asp-controller="Itemshop">Itemshop</a>
-            </li>
-            <li class="-link-active">
-                <a class="-link" href="/home">Gry</a>
-            </li>
+
+            <a class="-link" asp-action="Privacy" asp-controller="Dashboard" id="dashboard-link">Regulamin</a>
+
+            <a class="-link" asp-action="Index" asp-controller="Itemshop" id="itemshop-link">Itemshop</a>
+
+
+            <a class="-link" asp-action="Index" asp-controller="Home" id="home-link">Gry</a>
+
+            @if (_signInManager.IsSignedIn(User))
+            {
+                <a class="-link logout-link btn" asp-action="Logout" asp-controller="Account">Wyloguj</a>
+            }
+            else
+            {
+                <a class="-link logout-link" asp-action="Login" asp-controller="Account">Zaloguj</a>
+            }
+    </nav>
+    <div id="menu">
+        <ul class="menu-nav">
+            <li><a class="" asp-action="Privacy" asp-controller="Dashboard" id="dashboard-link">Regulamin</a></li>
+            <li><a class="" asp-action="Index" asp-controller="Itemshop" id="itemshop-link">Itemshop</a></li>
+            <li><a class="" asp-action="Index" asp-controller="Home" id="home-link">Gry</a></li>
             <li>
                 @if (_signInManager.IsSignedIn(User))
                 {
-                    <a class="-link logout-link btn" asp-action="Logout" asp-controller="Account">Wyloguj</a>
+                    <a class="logout-link btn" asp-action="Logout" asp-controller="Account">Wyloguj</a>
                 }
                 else
                 {
-                    <a class="-link logout-link" asp-action="Login" asp-controller="Account">Zaloguj</a>
+                    <a class="logout-link" asp-action="Login" asp-controller="Account">Zaloguj</a>
                 }
-
             </li>
         </ul>
-    </nav>
+    </div>
+    <button class="hamburger">
+        <div id="bar1" class="bar"></div>
+        <div id="bar2" class="bar"></div>
+        <div id="bar3" class="bar"></div>
+    </button>
 </header>
 <div class="loading-wrapper">
     <img src="~/img/rbcoin.png" alt="Richbets Coin">

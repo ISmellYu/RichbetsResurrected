@@ -50,11 +50,16 @@
     display: flex;
     align-items: center;
     animation: sc-presentation 1s ease-in-out infinite alternate; 
+    width: 50%;
+    height: 100%;
 }
 
 .sc-presentation-left{
     display: flex;
     flex-direction: column;
+    width: 50%;
+    height: 100%;
+    justify-content: space-around;
 }
 
 .sc-presentation-left img:last-of-type{
@@ -65,6 +70,15 @@
 .sc-presentation-left img:first-of-type{
     animation: sc-presentation 1s ease-in-out infinite alternate; 
     animation-delay: 0.1s;
+}
+
+.pre-anim{
+    background-color: red !important;
+    animation: sc-presentation-left 1s ease-in-out infinite alternate;
+    min-height: 156px;
+}
+.pre-anim:last-of-type{
+    animation-delay: 0.4s;
 }
 
 @keyframes sc-presentation{
@@ -85,30 +99,24 @@
     }
 }
 
+@keyframes sc-presentation-left{
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(10px);
+    }
+}
+
 .sc-img{
     width: 100%;
-    height: 100%;
-    max-width: 256px;
-    max-height: 256px;
 }
 
 .present-text{
-    height: 256px;
-    width: 256px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 34px !important;
-}
-
-.sc-presentation-left div:last-of-type{
-    animation: sc-presentation 1s ease-in-out infinite alternate; 
-    animation-delay: 0.4s;
-}
-
-.sc-presentation-left div:first-of-type{
-    animation: sc-presentation 1s ease-in-out infinite alternate; 
-    animation-delay: 0.1s;
 }
 
 .sc-presentation-right div{
@@ -210,5 +218,14 @@
 @media screen and (max-width: 325px){
     .showcase-container{
         top: calc(50% - 20%);
+    }
+}
+@media screen and (max-width: 650px){
+    .showcase-container{
+        top: 20%;
+    }
+    .sc-text{
+        margin-top: 10%;
+        padding-bottom: 20%;
     }
 }
