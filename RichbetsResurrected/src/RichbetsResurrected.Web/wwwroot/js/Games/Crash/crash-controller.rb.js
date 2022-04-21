@@ -102,19 +102,14 @@ $(document).ready(async function() {
     }
 
     conn.start().then(function () {
-        let array = [];
         conn.stream("StreamCrashInfo").subscribe({
             next: function (data) {
-                if (data.crashed) {
                     console.log(data);
-                    array = [];
-                }
-                    array = array.filter(function (elem, index, self) {
-                        return index === self.indexOf(elem);
-                    });
-                    console.log(array);
-                    array.push(data.multiplier.toFixed(2));
-                    updateChart(array, data.multiplier);
+                    let labels = [];
+                    for (let i = 0; i < data.multipliers.length; i++) {
+                        labels.push(i);
+                    }
+                    updateChart(labels, data.multipliers);
                 }
         });
     
