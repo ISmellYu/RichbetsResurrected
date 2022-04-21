@@ -32,7 +32,8 @@ public class CrashWorker : ICrashWorker
                 var maxMultiplier = CrashHelper.RandomMultiplier();
                 _gameState.TurnOnGameStarted();
                 await StartCountingAsync(maxMultiplier);
-                await Task.Delay(2000);
+                // TODO: Change it later to normal value(wait after bets to show losers etc)
+                await Task.Delay(1000);
                 var result = GetResult();
                 _gameState.AddToHistory(result);
             }
@@ -47,7 +48,8 @@ public class CrashWorker : ICrashWorker
     private async Task WaitForPlayersAsync()
     {
         _gameState.TurnOnPlacingBets();
-        for (decimal i = CrashConfigs.TimeForUsersToBet; i >= 0; i -= 0.01m)
+        // TODO: Change it later to normal value
+        for (decimal i = 1; i >= 0; i -= 0.01m)
         {
             _gameState.SetTimeLeft(i);
             // await SendUpdateTimerToClientsAsync(i);
