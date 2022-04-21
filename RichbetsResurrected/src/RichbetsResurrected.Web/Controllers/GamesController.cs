@@ -20,6 +20,11 @@ public class GamesController : Controller
         return View();
     }
 
+    public IActionResult Crash()
+    {
+        return View();
+    }
+
     public IActionResult Test()
     {
         var x = _shopService.GetItems();
