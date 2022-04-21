@@ -10,24 +10,26 @@ $(document).ready(async function() {
     gradientStroke = ctx.createLinearGradient(0, 0, 800, 500);  // Linear gradient
     gradientStroke.addColorStop(0, 'rgb(94, 183, 110, .4)');
     gradientStroke.addColorStop(1, 'rgb(94, 183, 110, 0)');
-    
+    //
     gradientStrokeLose = ctx.createLinearGradient(0, 0, 800, 500);  // Linear gradient
     gradientStrokeLose.addColorStop(0, 'rgb(252, 25, 28, .4)');
     gradientStrokeLose.addColorStop(1, 'rgb(234, 47, 43, 0)');
+
+    let point = [];
+
+    var sun = new Image();
+    sun.src = 'https://i.imgur.com/yDYW1I7.png';
 
     let config = {
         type: 'line',
         data: {
             labels: [0],
             datasets: [{
-                borderDash: [10],
-                borderWidth: [4],
-                pointBackgroundColor: 'rgba(0, 0, 0, 0)',
-                pointColor: 'rgba(0, 0, 0, 0)',
-                pointRadius: 0,
-                pointBorderWidth: 0,
-                borderColor: 'rgb(94, 183, 110)',
-                backgroundColor: gradientStroke,
+                label: "Tokyo",
+                fill: true,
+                borderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointRadius: 5,
                 data: [0]
             }]
         },
@@ -42,17 +44,17 @@ $(document).ready(async function() {
             },
             scales: {
                 xAxes: [{
-                    display: false,
+                    display: true,
                     scaleLabel: {
                         display: true
                     },
                     gridLines: {
-                        display: false,
+                        display: true,
                     },
                     ticks: {
                         min: 1,
                         stepSize: 1,
-                        display: false,
+                        display: true,
                     }
                 }],
                 yAxes: [{
@@ -78,7 +80,17 @@ $(document).ready(async function() {
     {
         myChart.data.labels = labels
         myChart.data.datasets[0].data = data;
+        //console.log(data.length + " " + point.length);
         myChart.options.scales.yAxes[0].ticks.max = Math.max.apply(2, data) + 1;
+
+        //hide all points from chart and show only last one
+        for (let i = 0; i < point.length; i++)
+        {
+            point[i].hidden = true;
+        }
+        point[point.length - 1].hidden = false;
+
+
         myChart.update();
     }
 
@@ -104,12 +116,22 @@ $(document).ready(async function() {
     conn.start().then(function () {
         conn.stream("StreamCrashInfo").subscribe({
             next: function (data) {
-                    console.log(data);
+                   //console.log(data);
                     let labels = [];
-                    for (let i = 0; i < data.multipliers.length; i++) {
+                    point = [];
+                    for (let i = 1; i < data.multipliers.length; i++) {
                         labels.push(i);
+                        point.pop();
+                        point.push(0);
+                        point.push(25);
+                        //console.log(point.length + " " + labels.length);
                     }
+
                     updateChart(labels, data.multipliers);
+                    if (data.crashed) {
+                        point = [];
+                    }
+                    //console.log(point);
                 }
         });
     
