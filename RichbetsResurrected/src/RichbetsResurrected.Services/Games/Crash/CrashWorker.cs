@@ -70,7 +70,7 @@ public class CrashWorker : ICrashWorker
             _gameState.SetMultiplier(multiplier);
             _gameState.AddToMultipliers(multiplier);
 
-            multiplier += multiplier * step;
+            multiplier += (int) multiplier * step;
             await Task.Delay(100);
 
         }
