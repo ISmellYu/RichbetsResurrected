@@ -64,18 +64,24 @@ public class CrashWorker : ICrashWorker
         var multiplier = 1m;
         const decimal step = 0.01m;
 
-        while (multiplier <= maxMultiplier)
+        if (maxMultiplier != 1.0m)
         {
-            if (maxMultiplier == 1.0m || multiplier == maxMultiplier)
-                break;
+            _gameState.TurnOnRemovingBets();
+            while (multiplier <= maxMultiplier)
+            {
+                if (multiplier == maxMultiplier)
+                    break;
+                
+                _gameState.SetMultiplier(multiplier);
+                _gameState.AddToMultipliers(multiplier);
 
-            _gameState.SetMultiplier(multiplier);
-            _gameState.AddToMultipliers(multiplier);
-
-            multiplier += (int) multiplier * step;
-            await Task.Delay(100);
-
+                multiplier += (int) multiplier * step;
+                
+                await Task.Delay(100);
+            }
         }
+
+        
 
         _gameState.TurnOffRemovingBets();
         _gameState.TurnOnCrashed();
