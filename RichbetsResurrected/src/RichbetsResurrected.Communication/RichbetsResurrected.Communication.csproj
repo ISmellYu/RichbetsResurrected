@@ -4,23 +4,24 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <LangVersion>preview</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac" Version="6.3.0"/>
-        <PackageReference Include="MediatR" Version="10.0.1"/>
-        <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0"/>
-        <PackageReference Include="SignalRSwaggerGen" Version="3.2.0"/>
+        <PackageReference Include="Autofac" Version="6.3.0" />
+        <PackageReference Include="MediatR" Version="10.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
+        <PackageReference Include="SignalRSwaggerGen" Version="3.2.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\RichbetsResurrected.Entities\RichbetsResurrected.Entities.csproj"/>
-        <ProjectReference Include="..\RichbetsResurrected.Interfaces\RichbetsResurrected.Interfaces.csproj"/>
-        <ProjectReference Include="..\RichbetsResurrected.Utilities\RichbetsResurrected.Utilities.csproj"/>
+        <ProjectReference Include="..\RichbetsResurrected.Entities\RichbetsResurrected.Entities.csproj" />
+        <ProjectReference Include="..\RichbetsResurrected.Interfaces\RichbetsResurrected.Interfaces.csproj" />
+        <ProjectReference Include="..\RichbetsResurrected.Utilities\RichbetsResurrected.Utilities.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Crash\Events"/>
-        <Folder Include="Crash\Handlers"/>
+        <Folder Include="Crash\Events" />
+        <Folder Include="Crash\Handlers" />
     </ItemGroup>
 </Project>
