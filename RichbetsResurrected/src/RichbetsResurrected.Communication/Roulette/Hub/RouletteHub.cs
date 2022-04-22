@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using RichbetsResurrected.Entities.Client;
@@ -80,13 +81,14 @@ public class RouletteHub : Hub<IRouletteHub>
     }
 
     [SignalRMethod(summary: "Stream for clients to receive the actual roulette info")]
-    public async IAsyncEnumerable<RouletteInfo> StreamRouletteInfo()
+    public async IAsyncEnumerable<RouletteInfo> StreamRouletteInfo([EnumeratorCancellation] CancellationToken cancellationToken)
     {
         while (true)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             var rouletteInfo = _rouletteService.GameState.GetRouletteInfoAsync();
             yield return rouletteInfo;
-            await Task.Delay(10);
+            await Task.Delay(10, cancellationToken);
         }
     }
 }

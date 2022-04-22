@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using RichbetsResurrected.Entities.Client;
@@ -80,13 +81,14 @@ public class CrashHub : Hub<ICrashHub>
     }
 
     [SignalRMethod(summary: "Stream for clients to receive the actual crash info")]
-    public async IAsyncEnumerable<CrashInfo> StreamCrashInfo()
+    public async IAsyncEnumerable<CrashInfo> StreamCrashInfo([EnumeratorCancellation] CancellationToken cancellationToken)
     {
         while (true)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             var crashInfo = _crashService.GameState.GetCrashInfo();
             yield return crashInfo;
-            await Task.Delay(10);
+            await Task.Delay(10, cancellationToken);
         }
     }
 
