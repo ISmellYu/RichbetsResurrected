@@ -200,9 +200,9 @@ public class ShopRepository : IShopRepository
     {
         return Items.Where(x => x.SubCategoryId == subCategory.Id).ToList();
     }
-    public ActiveItem? GetActiveItemByIds(int richbetUserId, int itemId)
+    public ActiveItem? GetActiveItemByIds(int identityUserId, int itemId)
     {
-        return ActiveItems.FirstOrDefault(u => u.ItemId == itemId && u.RichetUserId == richbetUserId);
+        return ActiveItems.FirstOrDefault(u => u.ItemId == itemId && u.RichetUserId == identityUserId);
     }
     public Category? GetCategoryById(int categoryId)
     {
