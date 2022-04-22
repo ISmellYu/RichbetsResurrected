@@ -88,7 +88,6 @@ else
 app.UseRouting();
 
 
-
 app.UseStaticFiles();
 app.UseCookiePolicy();
 

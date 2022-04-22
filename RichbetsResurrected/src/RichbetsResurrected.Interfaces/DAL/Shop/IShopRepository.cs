@@ -38,12 +38,12 @@ public interface IShopRepository
     void UpdateItemType(ItemType itemType);
     List<SubCategory> GetSubCategoriesByCategory(Category category);
     List<Item> GetItemsBySubCategory(SubCategory subCategory);
-    ActiveItem? GetActiveItemByIds(int richbetUserId, int itemId);
+    ActiveItem? GetActiveItemByIds(int identityUserId, int itemId);
     Category? GetCategoryById(int categoryId);
     SubCategory? GetSubCategoryById(int subCategoryId);
     ConsumableItem? GetConsumableItemByItemId(int itemId);
     Discount? GetDiscountByItemId(int itemId);
     Item? GetItemById(int itemId);
-    UserItem? GetUserItemByIds(int richbetUserId, int itemId);
+    UserItem? GetUserItemByIds(int identityUserId, int itemId);
     ItemType? GetItemTypeByItemId(int itemId);
 }

@@ -12,7 +12,7 @@ public class RichbetAppUserConfiguration : IEntityTypeConfiguration<RichbetAppUs
     {
         builder.HasKey(u => new
         {
-            u.AppUserId, u.RichbetUserId, u.DiscordUserId
+            u.AppUserId, u.DiscordUserId
         });
         builder.ToTable("richbetAppUser");
     }

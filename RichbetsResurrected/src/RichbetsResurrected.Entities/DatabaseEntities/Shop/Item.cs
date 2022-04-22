@@ -7,7 +7,9 @@ public class Item
 {
     [Key]
     public int Id { get; set; }
+    [Column(TypeName = "VARCHAR(256)")]
     public string Name { get; set; }
+    [Column(TypeName = "VARCHAR(256)")]
     public string Description { get; set; }
     public string ImageUrl { get; set; }
     public int Price { get; set; }

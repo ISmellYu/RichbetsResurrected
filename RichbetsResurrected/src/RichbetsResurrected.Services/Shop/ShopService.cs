@@ -65,9 +65,9 @@ public class ShopService : IShopService
             .Aggregate(item.Price, (current, discount) => current - (current * discount.DiscountPercentage));
         return totalPrice;
     }
-    public ActiveItem? GetActiveItemByIds(int richbetUserId, int itemId)
+    public ActiveItem? GetActiveItemByIds(int identityUserId, int itemId)
     {
-        return _shopRepository.GetActiveItemByIds(richbetUserId, itemId);
+        return _shopRepository.GetActiveItemByIds(identityUserId, itemId);
     }
     public Category? GetCategoryById(int categoryId)
     {
@@ -89,9 +89,9 @@ public class ShopService : IShopService
     {
         return _shopRepository.GetItemById(itemId);
     }
-    public UserItem? GetUserItemByIds(int richbetUserId, int itemId)
+    public UserItem? GetUserItemByIds(int identityUserId, int itemId)
     {
-        return _shopRepository.GetUserItemByIds(richbetUserId, itemId);
+        return _shopRepository.GetUserItemByIds(identityUserId, itemId);
     }
     public ItemType? GetItemTypeByItemId(int itemId)
     {
@@ -134,7 +134,7 @@ public class ShopService : IShopService
         
         if (sale != null) UseDiscount(sale);
         
-        var boughtItem = BuyItem(richbetUser, item, totalPrice, identityUserId);
+        var boughtItem = BuyItem(item, totalPrice, identityUserId);
 
         return new BuyResult()
         {
@@ -168,7 +168,7 @@ public class ShopService : IShopService
             _shopRepository.RemoveDiscount(discount);
         }
     }
-    private Item BuyItem(RichbetUser richbetUser, Item item, int pointsToRemove, int identityUserId)
+    private Item BuyItem(Item item, int pointsToRemove, int identityUserId)
     {
         if (item.AvailableQuantity > 0)
         {
@@ -186,16 +186,16 @@ public class ShopService : IShopService
         
         _shopRepository.UpdateUserItem(new UserItem()
         {
-            RichbetUserId = richbetUser.Id,
+            RichbetUserId = identityUserId,
             ItemId = item.Id,
-            Quantity = HasItem(richbetUser.Id, item.Id) ? GetUserItemByIds(richbetUser.Id, item.Id).Quantity + 1 : 1
+            Quantity = HasItem(identityUserId, item.Id) ? GetUserItemByIds(identityUserId, item.Id).Quantity + 1 : 1
         });
 
         return item;
     }
     
-    private bool HasItem(int richbetUserId, int itemId)
+    private bool HasItem(int identityUserId, int itemId)
     {
-        return _shopRepository.GetUserItemByIds(richbetUserId, itemId) != null;
+        return _shopRepository.GetUserItemByIds(identityUserId, itemId) != null;
     }
 }
