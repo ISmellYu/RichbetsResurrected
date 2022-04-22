@@ -51,6 +51,9 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, int, AppUserClai
 
         modelBuilder.Entity<Item>().HasOne<Discount>(e => e.Discount)
             .WithOne(e => e.Item);
+
+        modelBuilder.Entity<AppUser>().HasOne<RichbetUser>(e => e.RichbetUser)
+            .WithOne(e => e.AppUser).IsRequired();
         
         
         modelBuilder.Entity<ActiveItem>().HasOne<RichbetUser>(e => e.RichetUser)

@@ -21,10 +21,10 @@ public class RichbetRepository : IRichbetRepository
     {
         var user = new RichbetUser
         {
-            Multiplier = 1.0f, Points = 0, DailyRedeemed = false
+            AppUserId = identityUserId, Multiplier = 1.0f, Points = 0, DailyRedeemed = false
         };
 
-        var exists = await RichbetAppUsers.AnyAsync(r => r.AppUserId == identityUserId);
+        var exists = await RichbetUsers.AnyAsync(r => r.AppUserId == identityUserId);
         if (exists)
             return;
 
@@ -32,82 +32,70 @@ public class RichbetRepository : IRichbetRepository
         await _context.SaveChangesAsync();
         await _context.RichbetAppUsers.AddAsync(new RichbetAppUser
         {
-            AppUserId = identityUserId, DiscordUserId = discordId, RichbetUserId = user.Id
+            AppUserId = identityUserId, DiscordUserId = discordId
         });
         await _context.SaveChangesAsync();
     }
 
     public async Task DeleteRichbetUserByIdentityIdAsync(int identityUserId)
     {
-        var richbetAppUser = await RichbetAppUsers.FirstOrDefaultAsync(r => r.AppUserId == identityUserId);
-        if (richbetAppUser == null)
-            return;
-
-
+        
         _context.RichbetUsers.Remove(new RichbetUser
         {
-            Id = richbetAppUser.RichbetUserId
+            AppUserId = identityUserId
         });
-        _context.RichbetAppUsers.Remove(richbetAppUser);
+        //_context.RichbetAppUsers.Remove(richbetAppUser);
 
     }
 
     public async Task AddPointsToUserAsync(int identityUserId, int points)
     {
-        var richbetAppUser = await RichbetAppUsers.FirstOrDefaultAsync(r => r.AppUserId == identityUserId);
-        if (richbetAppUser == null)
+        var richbetUser = await _context.RichbetUsers.FindAsync(identityUserId);
+        if (richbetUser == null)
             return;
-        var richbetUser = await _context.RichbetUsers.FindAsync(richbetAppUser.RichbetUserId);
         richbetUser.Points += points;
         await _context.SaveChangesAsync();
     }
 
     public async Task RemovePointsFromUserAsync(int identityUserId, int points)
     {
-        var richbetAppUser = await RichbetAppUsers.FirstOrDefaultAsync(r => r.AppUserId == identityUserId);
-        if (richbetAppUser == null)
+        var richbetUser = await _context.RichbetUsers.FindAsync(identityUserId);
+        if (richbetUser == null)
             return;
-        var richbetUser = await _context.RichbetUsers.FindAsync(richbetAppUser.RichbetUserId);
         richbetUser.Points -= points;
         await _context.SaveChangesAsync();
     }
 
     public async Task SetDailyToUserAsync(int identityUserId, bool isRedeemed)
     {
-        var richbetAppUser = await RichbetAppUsers.FirstOrDefaultAsync(r => r.AppUserId == identityUserId);
-        if (richbetAppUser == null)
+        var richbetUser = await _context.RichbetUsers.FindAsync(identityUserId);
+        if (richbetUser == null)
             return;
-        var richbetUser = await _context.RichbetUsers.FindAsync(richbetAppUser.RichbetUserId);
         richbetUser.DailyRedeemed = isRedeemed;
         await _context.SaveChangesAsync();
     }
 
     public async Task<float> GetMultiplierFromUserAsync(int identityUserId)
     {
-        var richbetAppUser = await RichbetAppUsers.FirstOrDefaultAsync(r => r.AppUserId == identityUserId);
-        if (richbetAppUser == null)
-            return -1;
-        var richbetUser = await _context.RichbetUsers.FirstOrDefaultAsync(r => r.Id == richbetAppUser.RichbetUserId);
+        var richbetUser = await _context.RichbetUsers.FindAsync(identityUserId);
+        if (richbetUser == null)
+            return 1.0f;
         var multiplier = richbetUser.Multiplier;
         return multiplier;
     }
 
     public async Task<int> GetPointsFromUserAsync(int identityUserId)
     {
-        var richbetAppUser = await RichbetAppUsers.FirstOrDefaultAsync(r => r.AppUserId == identityUserId);
-        if (richbetAppUser == null)
-            return -1;
-        var richbetUser = await _context.RichbetUsers.FirstOrDefaultAsync(r => r.Id == richbetAppUser.RichbetUserId);
+        var richbetUser = await _context.RichbetUsers.FindAsync(identityUserId);
+        if (richbetUser == null)
+            return 0;
         var points = richbetUser.Points;
         return points;
     }
 
     public async Task<RichbetUser> GetRichbetUserAsync(int identityUserId)
     {
-        var richbetAppUser = await RichbetAppUsers.FirstOrDefaultAsync(r => r.AppUserId == identityUserId);
-        if (richbetAppUser == null)
-            return null;
-        var richbetUser = await RichbetUsers.FirstOrDefaultAsync(r => r.Id == richbetAppUser.RichbetUserId);
+        var richbetUser = await RichbetUsers.FirstOrDefaultAsync(r => r.AppUserId == identityUserId);
         return richbetUser;
     }
 }
