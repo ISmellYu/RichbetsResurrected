@@ -3,6 +3,7 @@
 public class ItemType
 {
     public bool IsActivatable { get; set; }
+    public bool IsEquippable { get; set; }
     public bool IsConsumable { get; set; }
     public bool IsCraftingMaterial { get; set; }
     public bool IsNicknameBanner { get; set; }

@@ -81,7 +81,7 @@ if (app.Environment.IsDevelopment())
 else
 {
     // app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
+    //app.UseHsts();
     //app.UseHttpsRedirection();
 }
 
