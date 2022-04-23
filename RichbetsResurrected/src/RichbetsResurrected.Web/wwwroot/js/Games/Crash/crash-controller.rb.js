@@ -1,7 +1,6 @@
 let conn = new signalR.HubConnectionBuilder().withUrl("/crashHub").build(); // Create a new connection to the hub.
 
 $(document).ready(async function() {
-    let multText = $(".multiplier");
 
     let ctx = $("#myChart")[0].getContext('2d');    // Get context table
     let gradientStroke;
@@ -15,21 +14,16 @@ $(document).ready(async function() {
     gradientStrokeLose.addColorStop(0, 'rgb(252, 25, 28, .4)');
     gradientStrokeLose.addColorStop(1, 'rgb(234, 47, 43, 0)');
 
-    let point = [];
-
-    var sun = new Image();
-    sun.src = 'https://i.imgur.com/yDYW1I7.png';
-
     let config = {
         type: 'line',
         data: {
             labels: [0],
             datasets: [{
-                label: "Tokyo",
-                fill: true,
-                borderColor: "rgba(75,192,192,1)",
-                pointBackgroundColor: "#fff",
-                pointRadius: 5,
+                fill: false,
+                borderColor: "white",
+                backgroundColor: 'transparent',
+                pointRadius: 0,
+                color: 'red',
                 data: [0]
             }]
         },
@@ -49,7 +43,7 @@ $(document).ready(async function() {
                         display: true
                     },
                     gridLines: {
-                        display: true,
+                        display: false,
                     },
                     ticks: {
                         min: 1,
@@ -60,13 +54,20 @@ $(document).ready(async function() {
                 yAxes: [{
                     display: true,
                     scaleLabel: {
-                        display: true
+                        display: false
+                    },
+                    gridLines: {
+                        display: false,
                     },
                     ticks: {
                         beginAtZero: true,
+                        backdropColor: 'rgba(255,255,255,1)',
+                        fontColor: '#EE5353',
+                        fontSize: 14,
+                        fontFamily: 'Poppins',
+                        fontWeight: '200',
                         min: 1,
                         max: 2,
-
                     }
                 }]
             }
@@ -83,14 +84,6 @@ $(document).ready(async function() {
         //console.log(data.length + " " + point.length);
         myChart.options.scales.yAxes[0].ticks.max = Math.max.apply(2, data) + 1;
 
-        //hide all points from chart and show only last one
-        for (let i = 0; i < point.length; i++)
-        {
-            point[i].hidden = true;
-        }
-        point[point.length - 1].hidden = false;
-
-
         myChart.update();
     }
 
@@ -99,7 +92,7 @@ $(document).ready(async function() {
         myChart.data.labels = [0];
         myChart.data.datasets[0].data = [0];
         myChart.options.scales.yAxes[0].ticks.max = 2;
-        myChart.data.datasets[0].backgroundColor = gradientStroke;
+        myChart.data.datasets[0].backgroundColor = "white";
         myChart.data.datasets[0].borderColor = 'rgb(94, 183, 110)';
         myChart.update();
     }
@@ -108,30 +101,26 @@ $(document).ready(async function() {
     {
         myChart.data.datasets[0].backgroundColor = gradientStrokeLose;
         myChart.data.datasets[0].borderColor = '#E1675A';
+        console.log("crash");
         myChart.update();
-        document.getElementById("placeButton").innerHTML = "Przegrałeś";
-        document.getElementById("wave").style.fill = "#A84D4D";
     }
 
     conn.start().then(function () {
         conn.stream("StreamCrashInfo").subscribe({
             next: function (data) {
-                   //console.log(data);
+                   
                     let labels = [];
-                    point = [];
+
+                    if (data.crashed) {
+                        crashChart();
+                        return
+                    }
+
                     for (let i = 1; i < data.multipliers.length; i++) {
                         labels.push(i);
-                        point.pop();
-                        point.push(0);
-                        point.push(25);
-                        //console.log(point.length + " " + labels.length);
                     }
 
                     updateChart(labels, data.multipliers);
-                    if (data.crashed) {
-                        point = [];
-                    }
-                    //console.log(point);
                 }
         });
     
