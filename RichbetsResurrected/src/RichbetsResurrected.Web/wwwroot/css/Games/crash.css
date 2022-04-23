@@ -9,6 +9,7 @@
     min-height: 400px;
     max-height: 500px;
     position: relative;
+    color: red;
 }
 
 #timer-container{
@@ -21,6 +22,7 @@
     transition: height 0.2s;
     bottom: 0;
     margin-bottom: 0px;
+    color: red;
 }
 
 .multiplier{
@@ -35,11 +37,11 @@
     justify-content: center;
     margin: -20px;
     font-family: 'Teko', sans-serif;
-    color: rgb(175, 175, 175);
+    color: white;
     font-size: 3vw;
 }
 
 #myChart{
     z-index: 2;
-    margin-left:-15px;
+    color: white;
 }
