@@ -135,9 +135,41 @@ public static class SeedData
             
             
             // Seed items
-            dbContext.Items.AddRange(tiger, giraffe, poland, fade, marbleFade, strawberries, cash, polishFlag, fastfood, redline, 
+            dbContext.Items.AddRange(pinkLeopard, tiger, giraffe, poland, fade, marbleFade, strawberries, cash, polishFlag, fastfood, redline, 
                 fire, epilepsy, colorWave);
             dbContext.SaveChanges();
+            
+            var patternItemTypes = new List<ItemType>()
+            {
+                new() { ItemId = pinkLeopard.Id, IsEquippable = true, IsNicknamePattern = true, IsUnique = true },
+                new() { ItemId = tiger.Id, IsEquippable = true, IsNicknamePattern = true, IsUnique = true },
+                new() { ItemId = giraffe.Id, IsEquippable = true, IsNicknamePattern = true, IsUnique = true },
+                new() { ItemId = poland.Id, IsEquippable = true, IsNicknamePattern = true, IsUnique = true },
+                new() { ItemId = fade.Id, IsEquippable = true, IsNicknamePattern = true, IsUnique = true },
+                new() { ItemId = marbleFade.Id, IsEquippable = true, IsNicknamePattern = true, IsUnique = true },
+            };
+            
+            var banerItemTypes = new List<ItemType>()
+            {
+                new() { ItemId = strawberries.Id, IsEquippable = true, IsNicknameBanner = true, IsUnique = true },
+                new() { ItemId = cash.Id, IsEquippable = true, IsNicknameBanner = true, IsUnique = true },
+                new() { ItemId = polishFlag.Id, IsEquippable = true, IsNicknameBanner = true, IsUnique = true },
+                new() { ItemId = fastfood.Id, IsEquippable = true, IsNicknameBanner = true, IsUnique = true },
+                new() { ItemId = redline.Id, IsEquippable = true, IsNicknameBanner = true, IsUnique = true },
+            };
+            
+            var animatedItemTypes = new List<ItemType>()
+            {
+                new() { ItemId = fire.Id, IsEquippable = true, IsNicknameAnimation = true, IsUnique = true },
+                new() { ItemId = epilepsy.Id, IsEquippable = true, IsNicknameAnimation = true, IsUnique = true },
+                new() { ItemId = colorWave.Id, IsEquippable = true, IsNicknameAnimation = true, IsUnique = true },
+            };
+            
+            dbContext.ItemTypes.AddRange(patternItemTypes);
+            dbContext.ItemTypes.AddRange(banerItemTypes);
+            dbContext.ItemTypes.AddRange(animatedItemTypes);
+            dbContext.SaveChanges();
+            
         }
     }
 }
