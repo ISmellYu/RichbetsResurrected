@@ -87,17 +87,25 @@ else
 
 app.UseRouting();
 app.UseStaticFiles();
-app.UseCookiePolicy();
 app.UseStaticFiles(new StaticFileOptions()
 {
-    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory())),
+    FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "UnityFiles")),
+    RequestPath = "/unity",
     ServeUnknownFileTypes = true
+});
 
-});
-app.UseDirectoryBrowser(new DirectoryBrowserOptions()
-{
-    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory())),
-});
+app.UseCookiePolicy();
+
+// app.UseStaticFiles(new StaticFileOptions()
+// {
+//     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory())),
+//     ServeUnknownFileTypes = true
+//
+// });
+// app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+// {
+//     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory())),
+// });
 
 app.UseAuthentication();
 app.UseAuthorization();
