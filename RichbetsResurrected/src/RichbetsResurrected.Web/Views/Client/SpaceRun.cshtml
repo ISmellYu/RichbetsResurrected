@@ -1,0 +1,45 @@
+@{
+    ViewData["Title"] = "RocketRun";
+    Layout = "";
+}
+
+@section Head{
+
+}
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | WebTest4</title>
+
+
+    <script src="/wwwroot/spacerun/Build/UnityLoader.js"></script>
+
+    <script src="/lib/signalr/dist/browser/signalr.js"></script>
+        <script src="/js/Client/space-run.rb.js" defer></script>
+
+    <script>
+      @* var unityInstance = UnityLoader.instantiate("unityContainer", "/wwwroot/spacerun/Build/WebGL.json", {onProgress: UnityProgress}); *@
+      var unityInstance = UnityLoader.instantiate("unityContainer", "/wwwroot/spacerun/Build/WebGL.json");
+      var wakeup = false;
+    </script>
+
+  </head>
+  <body>
+    <style>
+      html,body{
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+
+      @* <button onclick="unityInstance.SendMessage('Canvas', 'SetText', 'Hello ASP')">Send</button>
+      <button onclick="preCheck = true">start</button>
+      <button onclick="unityInstance.SendMessage('Canvas', 'ShowData', `'dailyRedeemed':false`)">SendJson</button> *@
+
+    <div id="unityContainer" style="width: 384px; height: 642px; margin: auto;"></div>
+  </body>
+</html>
+
