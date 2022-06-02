@@ -11,12 +11,13 @@ using RichbetsResurrected.Identity.Contexts;
 using RichbetsResurrected.Services;
 using RichbetsResurrected.Web;
 using Westwind.AspNetCore.LiveReload;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseSetting("https_port", "57680");
 builder.WebHost.UseSetting("http_port", "57681");
 
-// builder.WebHost.UseUrls("https://*:57680");
+//builder.WebHost.UseUrls("https://*:57680");
 builder.WebHost.UseUrls("http://*:57681");
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -27,7 +28,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.CheckConsentNeeded = context => true;
     options.MinimumSameSitePolicy = SameSiteMode.None;
 });
-
+builder.Services.AddDirectoryBrowser();
 
 builder.Services.AddAuthStuff(builder.Configuration);
 
@@ -55,7 +56,6 @@ builder.Services.Configure<ServiceConfig>(config =>
     // optional - default path to view services is /listallservices - recommended to choose your own path
     config.Path = "/listservices";
 });
-
 
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
@@ -86,10 +86,18 @@ else
 }
 
 app.UseRouting();
-
-
 app.UseStaticFiles();
 app.UseCookiePolicy();
+app.UseStaticFiles(new StaticFileOptions()
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory())),
+    ServeUnknownFileTypes = true
+
+});
+app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory())),
+});
 
 app.UseAuthentication();
 app.UseAuthorization();
