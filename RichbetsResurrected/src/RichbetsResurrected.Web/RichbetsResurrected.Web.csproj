@@ -41,6 +41,25 @@
         <ProjectReference Include="..\RichbetsResurrected.Services\RichbetsResurrected.Services.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="UnityFiles\spacerun\Build\UnityLoader.js">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+      <Content Include="UnityFiles\spacerun\Build\WebGL.data.unityweb">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+      <Content Include="UnityFiles\spacerun\Build\WebGL.wasm.code.unityweb">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+      <Content Include="UnityFiles\spacerun\Build\WebGL.wasm.framework.unityweb">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
+
     <PropertyGroup Condition=" '$(Configuration)' == '' Or '$(Configuration)' == 'Debug'">
         <EnvironmentName>Development</EnvironmentName>
     </PropertyGroup>
