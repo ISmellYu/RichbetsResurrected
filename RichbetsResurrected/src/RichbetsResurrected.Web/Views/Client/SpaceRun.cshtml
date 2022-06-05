@@ -15,14 +15,14 @@
     <title>Unity WebGL Player | WebTest4</title>
 
 
-    <script src="/wwwroot/spacerun/Build/UnityLoader.js"></script>
+    <script src="~/Unity/spacerun/Build/UnityLoader.js"></script>
 
-    <script src="/lib/signalr/dist/browser/signalr.js"></script>
-        <script src="/js/Client/space-run.rb.js" defer></script>
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/Client/space-run.rb.js" defer></script>
 
     <script>
-      @* var unityInstance = UnityLoader.instantiate("unityContainer", "/wwwroot/spacerun/Build/WebGL.json", {onProgress: UnityProgress}); *@
-      var unityInstance = UnityLoader.instantiate("unityContainer", "/wwwroot/spacerun/Build/WebGL.json");
+      @* var unityInstance = UnityLoader.instantiate("unityContainer", "/Unity/spacerun/Build/WebGL.json", {onProgress: UnityProgress}); *@
+      var unityInstance = UnityLoader.instantiate("unityContainer", "/Unity/spacerun/Build/WebGL.json");
       var wakeup = false;
     </script>
 
