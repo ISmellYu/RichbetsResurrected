@@ -20,7 +20,7 @@ public class GamesController : Controller
         return View();
     }
 
-    public IActionResult Crash()
+    public IActionResult Spacerun()
     {
         return View();
     }
