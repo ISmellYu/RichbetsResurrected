@@ -1,0 +1,71 @@
+@{
+    ViewData["Title"] = "Spacerun";
+    Layout = "_MainLayout";
+}
+
+@section Head{
+    <link rel="stylesheet" href="~/css/Games/spacerun.css">
+    <script src="~/js/Games/Spacerun/spacerun-controller.rb.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.18/chance.min.js"></script>
+}
+
+
+
+@* <div class="chart-container">
+    <div id="timer-container"></div>
+    <p class="multiplier" id="multiplierid"></p>
+    <canvas id="myChart"></canvas>
+</div> *@
+
+<div class="main-container">
+
+    <iframe src="/client/spacerun" frameborder="0" width="384" height="642" scrolling="no"></iframe>
+
+    <div class="sub-container">
+
+        <div class="control-panel">
+
+            <div class="panel-active">
+                <div class="panel-type panel-type-active" id="manual-button">Manual</div>
+                <div class="panel-type" id="auto-button">Auto</div>
+            </div>
+
+            <div class="panel-container manual-container" id="manual-panel">
+
+                <img src="~/img/rbcoin30x30.png" alt="rbcoin">
+                <input type="number" class="manual-input">
+
+                <div class="manual-buttons">
+
+                    <div class="value-buttons-manual">
+
+                        <button class="control-bar-button" action="clear">CLEAR</button>
+                        <button class="control-bar-button" action="1">+1</button>
+                        <button class="control-bar-button" action="10">+10</button>
+                        <button class="control-bar-button" action="100">+100</button>
+                        <button class="control-bar-button" action="1000">+1000</button>
+                        <button class="control-bar-button" action="half">1/2</button>
+                        <button class="control-bar-button" action="double">X2</button>
+                        <button class="control-bar-button" action="max">MAX</button>
+
+                    </div>
+
+                    <button class="bet-button-manual">BET</button>
+
+                </div>
+
+            </div>
+
+            <div class="panel-container auto-container" id="auto-panel" style="display: none;">
+
+            </div>
+
+        </div>
+
+        <div class="active-players">
+
+        </div>
+
+    </div>
+</div>

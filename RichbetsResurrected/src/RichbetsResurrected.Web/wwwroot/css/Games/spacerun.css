@@ -1,0 +1,166 @@
+.chart-container{
+    width: 49.5%;
+    float: left;
+    background-color: #161616;
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 30px;
+    height: 100%;
+    min-height: 400px;
+    max-height: 500px;
+    position: relative;
+    color: red;
+}
+
+#timer-container{
+    background-color: #3030306e;
+    margin: -20px;
+    width: 100%;
+    height: 0%;
+    position: absolute;
+    border-radius: 20px;
+    transition: height 0.2s;
+    bottom: 0;
+    margin-bottom: 0px;
+    color: red;
+}
+
+.multiplier{
+    width: 100%;
+    height: 100%;
+    display: block;
+    top: 50;
+    text-align: center;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -20px;
+    font-family: 'Teko', sans-serif;
+    color: white;
+    font-size: 3vw;
+}
+
+#myChart{
+    z-index: 2;
+    color: white;
+}
+
+/* NEW */
+
+.main-container{
+    width: 90%;
+    height: 700px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+iframe{
+    overflow:hidden;
+    border-radius: 14px;
+}
+
+.sub-container{
+    width: 60%;
+    height: 90%;
+    min-height: 642px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+}
+
+.control-panel{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px 6px 0 0;
+    height: fit-content;
+    min-height: 25%;
+}
+
+.panel-active{
+    width: 100%;
+    display: flex;
+}
+
+.panel-type{
+    width: 50%;
+    background-color: #191919;
+    text-align: center;
+    font-size: 15px;
+    padding: 3px;
+    cursor: pointer;
+    border-radius: 6px 0 0 0;
+    height: fit-content;
+}
+
+.panel-type:last-of-type{
+    border-radius: 0 6px 0 0;
+}
+
+.panel-type-active{
+    background-color: #252525;
+}
+
+.panel-container{
+    width: 100%;
+    background-color: #252525;
+    padding: 10px 0 10px 0;
+    height: 100%;
+}
+
+.manual-container{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.manual-input{
+    width: 30%;
+    height: 43px;
+    background-color: #191919;
+    outline: 0;
+    border: none;
+    border-radius: 6px;
+}
+
+.manual-buttons{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+}
+
+.control-bar-button{
+    height: 34px;
+    min-width: 60px;
+    background-color: #191919;
+    border: none;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.bet-button-manual{
+    margin-top: 10px;
+    height: 43px;
+    width: 100%;
+    background-color: #191919;
+    border-radius: 3px;
+    border: none;
+}
+
+.value-buttons-manual{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.active-players{
+    height: fit-content;
+    min-height: 75%;
+    background-color: black;
+    border-radius: 0 0 6px 6px;
+}
