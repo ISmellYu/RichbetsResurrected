@@ -8,7 +8,7 @@ using SignalRSwaggerGen.Attributes;
 
 namespace RichbetsResurrected.Communication.Client.Hub;
 
-[SignalRHub("/rouletteHub")]
+[SignalRHub("/clientHub")]
 [Authorize]
 [SuppressMessage("ReSharper", "AsyncApostle.AsyncMethodNamingHighlighting")]
 public class ClientHub : Microsoft.AspNetCore.SignalR.Hub
