@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RichbetsResurrected.Entities.DatabaseEntities.Shop;
+using RichbetsResurrected.Entities.Identity.Models;
 using RichbetsResurrected.Interfaces.Shop;
 using RichbetsResurrected.Web.ViewModels;
 
@@ -10,10 +12,12 @@ namespace RichbetsResurrected.Web.Controllers;
 public class ItemshopController : Controller
 {
     private readonly IShopService _shopService;
+    private readonly UserManager<AppUser> _userManager;
 
-    public ItemshopController(IShopService shopService)
+    public ItemshopController(IShopService shopService, UserManager<AppUser> userManager)
     {
         _shopService = shopService;
+        _userManager = userManager;
     }
     
     public IActionResult Index()
@@ -52,9 +56,10 @@ public class ItemshopController : Controller
     }
     
     [Authorize]
-    [HttpPost]
-    public IActionResult BuyItem(int itemId)
+    public async Task<IActionResult> BuyItem(int itemId)
     {
-        return Json(1);
+        var id = Convert.ToInt32(_userManager.GetUserId(User));
+        var result = await _shopService.BuyItemAsync(id, itemId);
+        return Json(result);
     }
 }
