@@ -7,7 +7,6 @@ namespace RichbetsResurrected.Web.Controllers;
 [ApiExplorerSettings(IgnoreApi = true)]
 public class DashboardController : Controller
 {
-
     [Authorize]
     public IActionResult Privacy()
     {

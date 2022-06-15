@@ -14,6 +14,7 @@ public class GamesController : Controller
     {
         _shopService = shopService;
     }
+    
     [Authorize]
     public IActionResult Roulette()
     {

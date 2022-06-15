@@ -9,8 +9,6 @@ namespace RichbetsResurrected.Web.Controllers;
 [ApiExplorerSettings(IgnoreApi = true)]
 public class ClientController : Controller
 {
-    
-
     public IActionResult SpaceRun()
     {
         return View();

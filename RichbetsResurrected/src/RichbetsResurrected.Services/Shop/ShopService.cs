@@ -123,7 +123,7 @@ public class ShopService : IShopService
             };
         }
 
-        if (IsAvailableForPurchase(item))
+        if (!IsAvailableForPurchase(item))
         {
             return new BuyResult()
             {
@@ -131,6 +131,19 @@ public class ShopService : IShopService
                 Error = new ShopError()
                 {
                     Message = "This item is not available for purchase"
+                },
+                Item = item
+            };
+        }
+
+        if (!IsEligibleForPurchase(item, identityUserId))
+        {
+            return new BuyResult()
+            {
+                IsSuccess = false,
+                Error = new ShopError()
+                {
+                    Message = "You are not eligible for purchase this item"
                 },
                 Item = item
             };
@@ -179,6 +192,20 @@ public class ShopService : IShopService
         }
     }
     
+    public bool IsEligibleForPurchase(Item item, int identityUserId)
+    {
+        var itemType = _shopRepository.GetItemTypeByItemId(item.Id);
+        if (itemType == null) return false;
+        
+        if (itemType.IsUnique)
+        {
+            var hasitem = HasItem(identityUserId, item.Id);
+            return !hasitem;
+        }
+        
+        return true;
+    }
+
     public void UseDiscount(Discount discount)
     {
         if (discount.Quantity != -1 && discount.Quantity > 1)
@@ -207,13 +234,25 @@ public class ShopService : IShopService
         _shopRepository.UpdateItem(item);
         
         _richbetRepository.RemovePointsFromUserAsync(identityUserId, pointsToRemove);
-        
-        _shopRepository.UpdateUserItem(new UserItem()
+        if (HasItem(identityUserId, item.Id))
         {
-            RichbetUserId = identityUserId,
-            ItemId = item.Id,
-            Quantity = HasItem(identityUserId, item.Id) ? GetUserItemByIds(identityUserId, item.Id).Quantity + 1 : 1
-        });
+            _shopRepository.UpdateUserItem(new UserItem()
+            {
+                RichbetUserId = identityUserId,
+                ItemId = item.Id,
+                Quantity = GetUserItemByIds(identityUserId, item.Id).Quantity + 1
+            });
+        }
+        else
+        {
+            _shopRepository.AddUserItem(new UserItem()
+            {
+                RichbetUserId = identityUserId,
+                ItemId = item.Id,
+                Quantity = 1
+            });
+        }
+        
 
         return item;
     }
