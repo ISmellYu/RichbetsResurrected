@@ -69,40 +69,60 @@ public class ShopService : IShopService
     {
         return _shopRepository.GetActiveItemByIds(identityUserId, itemId);
     }
+    
     public Category? GetCategoryById(int categoryId)
     {
         return _shopRepository.GetCategoryById(categoryId);
     }
+    
     public SubCategory? GetSubCategoryById(int subCategoryId)
     {
         return _shopRepository.GetSubCategoryById(subCategoryId);
     }
+    
     public ConsumableItem? GetConsumableItemByItemId(int itemId)
     {
         return _shopRepository.GetConsumableItemByItemId(itemId);
     }
+    
     public Discount? GetDiscountByItemId(int itemId)
     {
         return _shopRepository.GetDiscountByItemId(itemId);
     }
+    
     public Item? GetItemById(int itemId)
     {
         return _shopRepository.GetItemById(itemId);
     }
+    
     public UserItem? GetUserItemByIds(int identityUserId, int itemId)
     {
         return _shopRepository.GetUserItemByIds(identityUserId, itemId);
     }
+    
     public ItemType? GetItemTypeByItemId(int itemId)
     {
         return _shopRepository.GetItemTypeByItemId(itemId);
     }
+    
     public async Task<BuyResult> BuyItemAsync(int identityUserId, int itemId)
     {
         var richbetUser = await _richbetRepository.GetRichbetUserAsync(identityUserId);
         var item = _shopRepository.GetItemById(itemId);
-        var sale = GetDiscountByItemId(itemId);
-        
+
+        if (item == null)
+        {
+            return new BuyResult()
+            {
+                IsSuccess = false,
+                Error = new ShopError()
+                {
+                    Message = "Item with id " + itemId + " does not exist"
+                },
+                Item = item
+            };
+        }
+
         if (IsAvailableForPurchase(item))
         {
             return new BuyResult()
@@ -131,7 +151,7 @@ public class ShopService : IShopService
             };
         }
 
-        
+        var sale = GetDiscountByItemId(itemId);
         if (sale != null) UseDiscount(sale);
         
         var boughtItem = BuyItem(item, totalPrice, identityUserId);
@@ -141,10 +161,12 @@ public class ShopService : IShopService
             IsSuccess = true, Error = null, Item = boughtItem
         };
     }
+    
     public bool IsOnSale(int itemId)
     {
         return _shopRepository.GetDiscountByItemId(itemId) != null;
     }
+    
     public bool IsAvailableForPurchase(Item item)
     {
         switch (item.IsAvailable)
@@ -156,6 +178,7 @@ public class ShopService : IShopService
                 return false;
         }
     }
+    
     public void UseDiscount(Discount discount)
     {
         if (discount.Quantity != -1 && discount.Quantity > 1)
@@ -168,6 +191,7 @@ public class ShopService : IShopService
             _shopRepository.RemoveDiscount(discount);
         }
     }
+    
     private Item BuyItem(Item item, int pointsToRemove, int identityUserId)
     {
         if (item.AvailableQuantity > 0)
