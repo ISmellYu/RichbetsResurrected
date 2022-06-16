@@ -220,7 +220,9 @@ public class CrashGameState : ICrashGameState
 
     public bool CheckIfCanBet()
     {
-        return IsRunning() && IsPlacingBetsAllowed() && !IsRemovingBetsAllowed();
+        if (!IsRunning())
+            return false;
+        return IsPlacingBetsAllowed() && !IsRemovingBetsAllowed();
     }
 
     public void AddToMultipliers(decimal multiplier)

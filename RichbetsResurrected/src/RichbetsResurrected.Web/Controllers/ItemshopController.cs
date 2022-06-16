@@ -37,7 +37,10 @@ public class ItemshopController : Controller
                 .Where(p => p.SubCategoryId == subCategory.Id);
         }
         
-        return View(new CustomStylingViewModel(){SubCategories = subCategories.ToList()});
+        return View(new CustomStylingViewModel
+        {
+            SubCategories = subCategories.ToList()
+        });
     }
 
     public IActionResult LureModules()
@@ -56,6 +59,7 @@ public class ItemshopController : Controller
     }
     
     [Authorize]
+    [HttpPost]
     public async Task<IActionResult> BuyItem(int itemId)
     {
         var id = Convert.ToInt32(_userManager.GetUserId(User));
