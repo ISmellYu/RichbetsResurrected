@@ -158,7 +158,7 @@ public class ShopService : IShopService
                 IsSuccess = false,
                 Error = new ShopError()
                 {
-                    Message = "You don't have enough points to buy this item"
+                    Message = "You do not have enough points to buy this item"
                 },
                 Item = item
             };

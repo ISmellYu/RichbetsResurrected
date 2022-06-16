@@ -17,7 +17,7 @@ public class CrashService : ICrashService
 
     public async Task<CrashJoinResult> JoinCrashAsync(CrashPlayer crashPlayer)
     {
-        if (GameState.CheckIfCanBet())
+        if (!GameState.CheckIfCanBet())
             return new CrashJoinResult
             {
                 IsSuccess = false,

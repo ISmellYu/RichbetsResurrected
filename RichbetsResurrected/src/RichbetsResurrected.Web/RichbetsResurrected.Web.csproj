@@ -60,6 +60,10 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Filters" />
+    </ItemGroup>
+
     <PropertyGroup Condition=" '$(Configuration)' == '' Or '$(Configuration)' == 'Debug'">
         <EnvironmentName>Development</EnvironmentName>
     </PropertyGroup>
