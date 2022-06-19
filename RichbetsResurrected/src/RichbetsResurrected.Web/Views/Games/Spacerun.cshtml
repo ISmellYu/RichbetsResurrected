@@ -6,66 +6,140 @@
 @section Head{
     <link rel="stylesheet" href="~/css/Games/spacerun.css">
     <script src="~/js/Games/Spacerun/spacerun-controller.rb.js" defer></script>
+    <script src="~/js/Games/Spacerun/spacerun-betController.rb.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.18/chance.min.js"></script>
 }
 
+<div class="align-container">
 
+    <div class="iframe-overlay">
+        <iframe src="/client/spacerun" frameborder="0" width="384" height="642" scrolling="no"></iframe>
+    </div>
 
-@* <div class="chart-container">
-    <div id="timer-container"></div>
-    <p class="multiplier" id="multiplierid"></p>
-    <canvas id="myChart"></canvas>
-</div> *@
+    <div class="side-container">
+        
+        <div class="betting-container">
 
-<div class="main-container">
+            <div class="betting-option-container">
 
-    <iframe src="/client/spacerun" frameborder="0" width="384" height="642" scrolling="no"></iframe>
+                <div class="option-container option-container-active" action="manual" unselectable="on" onselectstart="return false;" onmousedown="return false;">
+                    Manual
+                </div>
 
-    <div class="sub-container">
-
-        <div class="control-panel">
-
-            <div class="panel-active">
-                <div class="panel-type panel-type-active" id="manual-button">Manual</div>
-                <div class="panel-type" id="auto-button">Auto</div>
-            </div>
-
-            <div class="panel-container manual-container" id="manual-panel">
-
-                <img src="~/img/rbcoin30x30.png" alt="rbcoin">
-                <input type="number" class="manual-input">
-
-                <div class="manual-buttons">
-
-                    <div class="value-buttons-manual">
-
-                        <button class="control-bar-button" action="clear">CLEAR</button>
-                        <button class="control-bar-button" action="1">+1</button>
-                        <button class="control-bar-button" action="10">+10</button>
-                        <button class="control-bar-button" action="100">+100</button>
-                        <button class="control-bar-button" action="1000">+1000</button>
-                        <button class="control-bar-button" action="half">1/2</button>
-                        <button class="control-bar-button" action="double">X2</button>
-                        <button class="control-bar-button" action="max">MAX</button>
-
-                    </div>
-
-                    <button class="bet-button-manual">BET</button>
-
+                <div class="option-container" action="auto" unselectable="on" onselectstart="return false;" onmousedown="return false;">
+                    Auto
                 </div>
 
             </div>
 
-            <div class="panel-container auto-container" id="auto-panel" style="display: none;">
+            <div class="betting-controller" id="manual">
 
+                <div class="input-container">
+
+                    <div class="input-subcontainer">
+                        <p class="input-subtext">Bet Amount</p>
+                        <div class="input-hold">
+                            <img src="~/img/rbcoin30x30.png" alt="rbcoin">
+                            <input type="number" class="amount-input" placeholder="0" step="1" min="0" id="manual_coins">
+                        </div>
+                    </div>
+
+                    <div class="amount-controller">
+                        <button class="input-button" action="half">1/2</button>
+                        <button class="input-button" action="double">2x</button>
+                        <button class="input-button" action="max">Max</button>
+                    </div>
+                </div>
+
+                <div class="input-container input-container-cashout">
+                    <div class="input-subcontainer">
+                        <p class="input-subtext">Auto Cashout</p>
+                        <div class="input-hold">
+                            <input type="number" class="amount-input" placeholder="0.00" step="0.01" min="0" id="manual_cashout">
+                        </div>
+                    </div>
+
+                    <button class="autocashout-button del-aco">✕</button>
+                </div>
+
+                <button class="place-bet-button" id="manual-place-bet">Place Bet</button>
             </div>
 
+            <div class="betting-controller" id="auto" style="display: none;">
+
+                <div class="input-container">
+
+                    <div class="input-subcontainer">
+                        <p class="input-subtext">Bet Amount</p>
+                        <div class="input-hold">
+                            <img src="~/img/rbcoin30x30.png" alt="rbcoin">
+                            <input type="number" class="amount-input" placeholder="0" step="1" min="0" id="auto_coins">
+                        </div>
+                    </div>
+
+                    <div class="amount-controller">
+                        <button class="input-button" action="half">1/2</button>
+                        <button class="input-button" action="double">2x</button>
+                        <button class="input-button" action="max">Max</button>
+                    </div>
+                </div>
+
+                <div class="bet-settings">   
+
+                    <div class="input-body" style="width: 48%;">
+                        <div class="auto-left">
+                            <p class="input-subtext">Auto Cashout</p>
+                            <input type="number" class="amount-input auto-input" placeholder="0.00" step="0.01" min="0" id="auto_cashout">
+                        </div>
+                        <button class="aco-button del-aco">✕</button>
+                    </div>
+                    
+                    <div class="input-body" style="width: 48%;">
+                        <div class="auto-left">
+                            <p class="input-subtext">Total Bets</p>
+                            <input type="number" class="amount-input auto-input" placeholder="0" step="1" min="0" id="auto_total-bets">
+                        </div>
+                    </div>
+                </div>
+                <button class="place-bet-button" id="auto-place-bet">Start Autobet</button>
+            </div>
         </div>
 
-        <div class="active-players">
+        <div class="players-container">
 
+            <table class="static-table">
+                <tr>
+                    <td id="player-count">0 Players</td>
+                    <td id="bets-total">0 RBC</td>
+                </tr>
+            </table>
+
+            <table class="players-table">
+                <tr class="winner">
+                    <td>Drairaaaaaaaaaaaaaaan</td>
+                    <td>???</td>
+                    <td>+7890</td>
+                </tr>
+                <tr>
+                    <td>RGH</td>
+                    <td>1.5x</td>
+                    <td>+3400000000 RBC</td>
+                </tr>
+            </table>
         </div>
 
     </div>
+
 </div>
+
+<footer class="online-players">
+    <p class="online-players-header">Online players 👀</p>
+    <ul class="onlinePlayersList">
+        <li class="onlinePlayersElement">Mer1</li>
+        <li class="onlinePlayersElement">Member2</li>
+        <li class="onlinePlayersElement">Member3</li>
+        <li class="onlinePlayersElement">Member4</li>
+        <li class="onlinePlayersElement">Member5</li>
+    </ul>
+</footer>

@@ -1,133 +1,161 @@
-let conn = new signalR.HubConnectionBuilder().withUrl("/crashHub").build(); // Create a new connection to the hub.
+let crashConn = new signalR.HubConnectionBuilder().withUrl("/crashHub").build();
 
-$(document).ready(async function() {
+var _dataPlayersOld;
+var _oldCrashed;
+var _oldStart;
+var _playerData;
+var _gameStatus;
+var _isUserBetting = false;
+var _checkedMultiplayer = false;
 
-    let ctx = $("#myChart")[0].getContext('2d');    // Get context table
-    let gradientStroke;
-    let gradientStrokeLose;
+crashConn.start().then(function () {
     
-    gradientStroke = ctx.createLinearGradient(0, 0, 800, 500);  // Linear gradient
-    gradientStroke.addColorStop(0, 'rgb(94, 183, 110, .4)');
-    gradientStroke.addColorStop(1, 'rgb(94, 183, 110, 0)');
-    //
-    gradientStrokeLose = ctx.createLinearGradient(0, 0, 800, 500);  // Linear gradient
-    gradientStrokeLose.addColorStop(0, 'rgb(252, 25, 28, .4)');
-    gradientStrokeLose.addColorStop(1, 'rgb(234, 47, 43, 0)');
-
-    let config = {
-        type: 'line',
-        data: {
-            labels: [0],
-            datasets: [{
-                fill: false,
-                borderColor: "white",
-                backgroundColor: 'transparent',
-                pointRadius: 0,
-                color: 'red',
-                data: [0]
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            tooltips: {
-                enabled: false
-            },
-            legend: {
-                display: false
-            },
-            scales: {
-                xAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true
-                    },
-                    gridLines: {
-                        display: false,
-                    },
-                    ticks: {
-                        min: 1,
-                        stepSize: 1,
-                        display: true,
-                    }
-                }],
-                yAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: false
-                    },
-                    gridLines: {
-                        display: false,
-                    },
-                    ticks: {
-                        beginAtZero: true,
-                        backdropColor: 'rgba(255,255,255,1)',
-                        fontColor: '#EE5353',
-                        fontSize: 14,
-                        fontFamily: 'Poppins',
-                        fontWeight: '200',
-                        min: 1,
-                        max: 2,
-                    }
-                }]
-            }
+    getUserData().then(function (data) {
+        _playerData = data;
+        if (isPlayerBetting(data, _dataPlayersOld)) {
+            $("#manual-place-bet").text("Cashout");
+            _isUserBetting = true;
         }
-    };  // Config for chart
-
-
-    let myChart = new Chart(ctx, config);   // Creating chart
-
-    function updateChart(labels, data)  // Update chart( CAUTION! U MUST PROVIDE EXACTLY THE SAME NUMBERS OF TABLES AS DATA)
-    {
-        myChart.data.labels = labels
-        myChart.data.datasets[0].data = data;
-        //console.log(data.length + " " + point.length);
-        myChart.options.scales.yAxes[0].ticks.max = Math.max.apply(2, data) + 1;
-
-        myChart.update();
-    }
-
-    function restoreChart() // Restoring chart to its original state
-    {
-        myChart.data.labels = [0];
-        myChart.data.datasets[0].data = [0];
-        myChart.options.scales.yAxes[0].ticks.max = 2;
-        myChart.data.datasets[0].backgroundColor = "white";
-        myChart.data.datasets[0].borderColor = 'rgb(94, 183, 110)';
-        myChart.update();
-    }
-    
-    function crashChart()   // Invoked when server sent crashmsg to client, changes line to color red and background color
-    {
-        myChart.data.datasets[0].backgroundColor = gradientStrokeLose;
-        myChart.data.datasets[0].borderColor = '#E1675A';
-        console.log("crash");
-        myChart.update();
-    }
-
-    conn.start().then(function () {
-        conn.stream("StreamCrashInfo").subscribe({
-            next: function (data) {
-                   
-                    let labels = [];
-
-                    if (data.crashed) {
-                        crashChart();
-                        return
-                    }
-
-                    for (let i = 1; i < data.multipliers.length; i++) {
-                        labels.push(i);
-                    }
-
-                    updateChart(labels, data.multipliers);
-                }
-        });
-    
     });
 
-},
-function(){
-    ErrorConnectingToServer();
+    crashConn.stream("StreamCrashInfo").subscribe({
+        next: function (data) {
+            _gameStatus = data.allowPlacingBets;
+
+            if (JSON.stringify(data.players) !== JSON.stringify(_dataPlayersOld)) {
+                _dataPlayersOld = data.players;
+                renderPlayersList(data.players);
+            }
+
+            if (_oldCrashed != data.crashed) {
+                if (data.crashed == true) {
+                  console.log("crashed");
+                  RestoreBetting();
+                }
+                _oldCrashed = data.crashed;
+            }
+
+            if (_oldStart != data.allowPlacingBets) {
+                if (data.timeLeft == 0 && !_isUserBetting) {
+                    DisableBetting();
+                }
+                _oldStart = data.allowPlacingBets;
+            }
+
+            checkStartMultiplayer(data.allowPlacingBets);
+        }
+    });
+
+    $("#manual-place-bet").click(function () {
+        if (_gameStatus == false) {
+            cashout();
+        }else{
+            placeBet(10000);
+        }
+    });
+
+    $("#auto-place-bet").click(function () {
+        console.log("Auto Place Bet");
+    });
+
+    async function placeBet(amount) {
+        let result = await crashConn.invoke("JoinCrash", amount).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        if (result.isSuccess == true) {
+
+            _isUserBetting = true;
+            $("#manual-place-bet").text("Cashout");
+        }
+    }
+
+    async function cashout() {
+        let result = await crashConn.invoke("Cashout").catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        if (result.isSuccess == true) {
+
+            _isUserBetting = false;
+            return true;
+        }
+    }
+
+    function checkStartMultiplayer(allowBetting) {
+        if (!_checkedMultiplayer && !allowBetting) {
+            DisableBetting();
+            _checkedMultiplayer = true;
+        }
+    }
+    
+    
+    function renderPlayersList(data) {
+        let _total = 0;
+
+        clearPlayersList();
+
+        data.forEach(element => {
+            let cashout;
+            
+            if (element.whenCashouted == 0) {
+                cashout = `<td>Pending..</td>`;
+            }else{
+                cashout = `<td style="color: #00C74D">${element.whenCashouted}</td>`; 
+            }
+
+            let tr = document.createElement("tr");
+            tr.innerHTML = `<td style="background-image: url(${element.avatarUrl});">${element.userName}</td>${cashout}<td>${element.amount}</td>`;
+            $(".players-table").append(tr);
+            _total += element.amount;
+
+            
+        });
+
+        $("#player-count").text(data.length + " Players");
+        $("#bets-total").text(_total + " RBC");
+    }
+
+    function clearPlayersList() {
+        $(".players-table").empty();
+    }
+
+    function isPlayerBetting(playerData, gamePlayersData) {
+        for (let i = 0; i < gamePlayersData.length; i++) {
+            if (playerData.discordUserId == gamePlayersData[i].discordUserId) {
+                console.log(gamePlayersData[i]);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function getPlayerBetAmount(playerData, gamePlayersData) {
+        for (let i = 0; i < gamePlayersData.length; i++) {
+            if (playerData.discordUserId == gamePlayersData[i].discordUserId) {
+                return gamePlayersData[i].amount;
+            }
+        }
+        return false;
+    }
+
+    function RestoreBetting() {
+        $("#manual-place-bet").removeClass("bet-button-disabled");
+        $("#auto-place-bet").removeClass("bet-button-disabled");
+
+    }
+
+    function DisableBetting() {
+        $("#manual-place-bet").addClass("bet-button-disabled");
+        $("#auto-place-bet").addClass("bet-button-disabled");
+    }
+});
+
+async function getUserData() {
+    let result = await connection.invoke("GetClientInfo").catch(function (err) {
+
+        return console.error(err.toString());
+
+    });
+    return result;
 }
-);

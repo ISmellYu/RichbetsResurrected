@@ -33,8 +33,23 @@
         margin: 0;
         padding: 0;
       }
+      .spacerun-multiplier{
+        color: white;
+        font-family: 'Poppins', sans-serif;
+        font-size: 39px;
+        pointer-events: none;
+        font-weight: 800;
+        width: 384px;
+        margin: 0;
+        height: 198px;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+      } 
     </style>
-
+      <p class="spacerun-multiplier" id="space-multiplier"></p>
       @* <button onclick="unityInstance.SendMessage('Canvas', 'SetText', 'Hello ASP')">Send</button>
       <button onclick="preCheck = true">start</button>
       <button onclick="unityInstance.SendMessage('Canvas', 'ShowData', `'dailyRedeemed':false`)">SendJson</button> *@
