@@ -9,7 +9,7 @@ conn.start().then(function () {
         next: function (data) {
 
           if (wakeup == true) {
-
+            document.getElementById("space-multiplier").textContent = data.multiplier + "X";
             if (oldData != data) {
 
               let object = constructObj(data);
@@ -22,6 +22,7 @@ conn.start().then(function () {
             if (oldCrashed != data.crashed) {
               if (data.crashed == true) {
                 unityInstance.SendMessage('Main Camera', 'CrashRocket')
+                document.getElementById("space-multiplier").style.color = "#EE5353";
               }
               oldCrashed = data.crashed;
             }
@@ -29,6 +30,7 @@ conn.start().then(function () {
             if (oldMulti != data.multiplier) {
               if (data.multiplier == 1) {
                 unityInstance.SendMessage('Main Camera', 'ResetRocket')
+                document.getElementById("space-multiplier").style.color = "white";
               }
               oldMulti = data.multiplier;
             }
