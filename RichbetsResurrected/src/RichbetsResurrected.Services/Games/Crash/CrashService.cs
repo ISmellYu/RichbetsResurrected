@@ -62,6 +62,7 @@ public class CrashService : ICrashService
             IsSuccess = true, Error = null, Player = crashPlayer
         };
     }
+    
     public async Task<CrashCashoutResult> CashoutAsync(int identityUserId)
     {
         if (GameState.IsCrashed() || !GameState.IsGameStarted() || !GameState.IsRunning() || !GameState.IsRemovingBetsAllowed())
@@ -78,8 +79,11 @@ public class CrashService : ICrashService
         }
 
         var result = GameState.Cashout(identityUserId);
+
+        if (result.IsSuccess && result.Player != null)
+            await _richbetRepository.AddPointsToUserAsync(result.Player.IdentityUserId, result.Player.Amount);
+        
         return result;
     }
-
-    // TODO: Add cashout method
+    
 }

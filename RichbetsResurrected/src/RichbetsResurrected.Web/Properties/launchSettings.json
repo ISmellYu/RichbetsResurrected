@@ -37,7 +37,7 @@
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:57680/",
+      "applicationUrl": "http://localhost:57681/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "DB_SCHEMA": "richbets_beta"

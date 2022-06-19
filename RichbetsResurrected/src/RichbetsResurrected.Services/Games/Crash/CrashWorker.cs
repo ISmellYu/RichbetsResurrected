@@ -49,7 +49,7 @@ public class CrashWorker : ICrashWorker
     {
         _gameState.TurnOnPlacingBets();
         // TODO: Change it later to normal value
-        for (decimal i = 1; i >= 0; i -= 0.01m)
+        for (decimal i = CrashConfigs.TimeForUsersToBet; i >= 0; i -= 0.01m)
         {
             _gameState.SetTimeLeft(i);
             // await SendUpdateTimerToClientsAsync(i);
@@ -80,9 +80,7 @@ public class CrashWorker : ICrashWorker
                 await Task.Delay(100);
             }
         }
-
         
-
         _gameState.TurnOffRemovingBets();
         _gameState.TurnOnCrashed();
         _gameState.SetMultiplier(multiplier);
