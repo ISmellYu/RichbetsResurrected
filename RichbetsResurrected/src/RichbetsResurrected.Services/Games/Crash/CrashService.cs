@@ -81,7 +81,7 @@ public class CrashService : ICrashService
         var result = GameState.Cashout(identityUserId);
 
         if (result.IsSuccess && result.Player != null)
-            await _richbetRepository.AddPointsToUserAsync(result.Player.IdentityUserId, result.Player.Amount);
+            await _richbetRepository.AddPointsToUserAsync(result.Player.IdentityUserId, (int)(result.Player.Amount * result.Player.WhenCashouted));
         
         return result;
     }
