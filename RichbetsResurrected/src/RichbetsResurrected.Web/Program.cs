@@ -17,7 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseSetting("https_port", "57680");
 builder.WebHost.UseSetting("http_port", "57681");
 
-//builder.WebHost.UseUrls("https://*:57680");
+// builder.WebHost.UseUrls("https://*:57680");
 builder.WebHost.UseUrls("http://*:57681");
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
