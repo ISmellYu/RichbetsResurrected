@@ -7,6 +7,7 @@ using RichbetsResurrected.Services.Shop;
 namespace RichbetsResurrected.Web.Controllers;
 
 [ApiExplorerSettings(IgnoreApi = true)]
+[Authorize]
 public class GamesController : Controller
 {
     private readonly IShopService _shopService;
@@ -15,7 +16,6 @@ public class GamesController : Controller
         _shopService = shopService;
     }
     
-    [Authorize]
     public IActionResult Roulette()
     {
         return View();
@@ -23,12 +23,6 @@ public class GamesController : Controller
 
     public IActionResult Spacerun()
     {
-        return View();
-    }
-
-    public IActionResult Test()
-    {
-        var x = _shopService.GetItems();
         return View();
     }
 }

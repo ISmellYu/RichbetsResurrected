@@ -9,6 +9,7 @@ using RichbetsResurrected.Web.ViewModels;
 namespace RichbetsResurrected.Web.Controllers;
 
 [ApiExplorerSettings(IgnoreApi = true)]
+[Authorize]
 public class ItemshopController : Controller
 {
     private readonly IShopService _shopService;
