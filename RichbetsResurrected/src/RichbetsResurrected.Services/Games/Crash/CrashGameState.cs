@@ -216,6 +216,7 @@ public class CrashGameState : ICrashGameState
         ClearPlayers();
         TurnOffCrashed();
         SetMultiplier(1);
+        TurnOffGameStarted();
     }
 
     public bool CheckIfCanBet()
