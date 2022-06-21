@@ -7,15 +7,13 @@ let oldStart;
 conn.start().then(function () {
     conn.stream("StreamCrashInfo").subscribe({
         next: function (data) {
-
+          console.log(data);
           if (wakeup == true) {
             document.getElementById("space-multiplier").textContent = data.multiplier + "X";
+            
             if (oldData != data) {
-
               let object = constructObj(data);
-
               sendDataToWebGL(JSON.stringify(object));
-
               oldData = data;
             }
 
@@ -28,7 +26,7 @@ conn.start().then(function () {
             }
 
             if (oldMulti != data.multiplier) {
-              if (data.multiplier == 1) {
+              if (!data.allowRemovingBets && data.timeLeft > 0) {
                 unityInstance.SendMessage('Main Camera', 'ResetRocket')
                 document.getElementById("space-multiplier").style.color = "white";
               }
