@@ -33,7 +33,7 @@ public class CrashWorker : ICrashWorker
                 _gameState.TurnOnGameStarted();
                 await StartCountingAsync(maxMultiplier);
                 // TODO: Change it later to normal value(wait after bets to show losers etc)
-                await Task.Delay(1000);
+                await Task.Delay(1000); // Time to show losers/winners
                 var result = GetResult();
                 _gameState.AddToHistory(result);
             }
