@@ -483,7 +483,7 @@ background-color: #191919;
 @media screen and (min-width: 800px) {
     .align-container{
         flex-direction: row;
-        width: 100%;
+        width: 80%;
         align-items: normal;
         margin-top: 15px;
     }
