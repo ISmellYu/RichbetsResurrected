@@ -7,6 +7,7 @@ using RichbetsResurrected.Services.Shop;
 namespace RichbetsResurrected.Web.Controllers;
 
 [ApiExplorerSettings(IgnoreApi = true)]
+[Authorize]
 public class ClientController : Controller
 {
     public IActionResult SpaceRun()

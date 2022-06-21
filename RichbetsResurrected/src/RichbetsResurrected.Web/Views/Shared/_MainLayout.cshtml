@@ -1,7 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using RichbetsResurrected.Entities.Identity.Models
-<!DOCTYPE html>
+@using RichbetsResurrected.Interfaces.DAL
 @inject SignInManager<AppUser> _signInManager
+@inject UserManager<AppUser> _userManager
+@inject IRichbetRepository _richbetRepository
+<!DOCTYPE html>
+
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -17,7 +21,7 @@
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
         crossorigin="anonymous">
     </script>
-    @RenderSection("Head", false)
+    @await RenderSectionAsync("Head", false)
 </head>
 <body>
 <header>
@@ -26,7 +30,7 @@
     <div class="navbar-wrapper">
         <div class="point-box">
             <img class="rbc-logo" src="~/img/rbcoin30x30.png" alt="rbcoin">
-            <p id="odometer" class="odometer">0</p>
+            <p id="odometer" class="odometer">@await _richbetRepository.GetPointsFromUserAsync(Convert.ToInt32(_userManager.GetUserId(User)))</p>
             <p class="points-currency">RBC</p>
         </div>
 
