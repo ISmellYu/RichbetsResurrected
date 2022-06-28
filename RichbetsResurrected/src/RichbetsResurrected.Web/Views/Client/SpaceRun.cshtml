@@ -44,8 +44,49 @@
         align-items: center;
         z-index: 999;
       } 
+      .multiplier-holder{
+        font-family: 'Poppins', sans-serif;
+        font-size: 39px;
+        pointer-events: none;
+        font-weight: 800;
+        width: 384px;
+        margin: 0;
+        height: 198px;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+      }
+      .number-contianer{
+        width: 24px;
+        height: 46px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     </style>
-      <p class="spacerun-multiplier" id="space-multiplier"></p>
+      @* <p class="spacerun-multiplier" id="space-multiplier"></p> *@
+      <div class="multiplier-holder" style="opacity: 1;">
+        <div id="multiplier" style="display: flex; color: white;">
+          <div class="number-contianer" style="width: fit-content;" id="n0">
+            0
+          </div>
+          <div class="number-contianer" style="width: 12px;">
+            .
+          </div>
+          <div class="number-contianer" id="n1">
+            0
+          </div>
+          <div class="number-contianer" id="n2">
+            0
+          </div>
+          <div class="number-contianer">
+            x
+          </div>
+        </div>
+      </div>
+
       @* <button onclick="unityInstance.SendMessage('Canvas', 'SetText', 'Hello ASP')">Send</button>
       <button onclick="preCheck = true">start</button>
       <button onclick="unityInstance.SendMessage('Canvas', 'ShowData', `'dailyRedeemed':false`)">SendJson</button> *@
