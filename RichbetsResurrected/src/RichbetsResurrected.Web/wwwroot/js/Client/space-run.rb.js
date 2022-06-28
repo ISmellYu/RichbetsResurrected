@@ -11,7 +11,8 @@ conn.start().then(function () {
         next: function (data) {
 
           if (wakeup == true) {
-            document.getElementById("space-multiplier").textContent = data.multiplier + "X";
+            // document.getElementById("space-multiplier").textContent = data.multiplier + "X";
+            setMultiplier(data.multiplier);
 
             if (oldData != data) {
               let object = constructObj(data);
@@ -23,7 +24,7 @@ conn.start().then(function () {
               if (data.crashed == true) {
                 console.log("Crashed");
                 unityInstance.SendMessage('Main Camera', 'CrashRocket')
-                document.getElementById("space-multiplier").style.color = "#EE5353";
+                document.getElementById("multiplier").style.color = "#EE5353";
               }
               oldCrashed = data.crashed;
             }
@@ -31,14 +32,16 @@ conn.start().then(function () {
             if (data.timeLeft == 10) {
               console.log("reset rocket")
               unityInstance.SendMessage('Main Camera', 'ResetRocket')
-              document.getElementById("space-multiplier").style.color = "white";
+              document.getElementById("multiplier").style.color = "#fff";
             }
 
             if (data.timeLeft > 0) {
-              document.getElementById("space-multiplier").textContent = data.timeLeft;
+              unityInstance.SendMessage('Main Camera', 'ResetRocket')
+              document.getElementById("multiplier").style.color = "#fff";
 
               if (_checkAppStart) {
                 unityInstance.SendMessage('Main Camera', 'ResetRocket')
+                document.getElementById("multiplier").style.color = "#fff";
                 _checkAppStart = false;
               }
             }
@@ -46,6 +49,7 @@ conn.start().then(function () {
             if (oldStart != data.allowPlacingBets) {
               if (data.timeLeft == 0) {
                 console.log("Start rocket");
+                document.getElementById("multiplier").style.color = "#fff";
                 unityInstance.SendMessage('Main Camera', 'StartRocket')
               }
               oldStart = data.allowPlacingBets;
@@ -57,6 +61,24 @@ conn.start().then(function () {
 
   function sendDataToWebGL(obj) {
     unityInstance.SendMessage('Main Camera', 'UpdateData', obj)
+  }
+
+  function setMultiplier(data) {
+    let firstPart = (data+"").split(".")[0];
+    let secondArray = Array.from(String(data), Number);
+    console.log(secondArray[2] + " . " + secondArray[3])
+
+    if (isNaN(secondArray[2])) {
+      secondArray[2] = 0;
+    }
+
+    if (isNaN(secondArray[3])) {
+      secondArray[3] = 0;
+    }
+
+    document.getElementById("n0").textContent = firstPart;
+    document.getElementById("n1").textContent = secondArray[2];
+    document.getElementById("n2").textContent = secondArray[3];
   }
 
   function constructObj(data) {
