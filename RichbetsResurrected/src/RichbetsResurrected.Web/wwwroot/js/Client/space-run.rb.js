@@ -11,7 +11,6 @@ conn.start().then(function () {
         next: function (data) {
 
           if (wakeup == true) {
-            // document.getElementById("space-multiplier").textContent = data.multiplier + "X";
             setMultiplier(data.multiplier);
 
             if (oldData != data) {
@@ -22,7 +21,6 @@ conn.start().then(function () {
 
             if (oldCrashed != data.crashed) {
               if (data.crashed == true) {
-                console.log("Crashed");
                 unityInstance.SendMessage('Main Camera', 'CrashRocket')
                 document.getElementById("multiplier").style.color = "#EE5353";
               }
@@ -30,7 +28,6 @@ conn.start().then(function () {
             }
 
             if (data.timeLeft == 10) {
-              console.log("reset rocket")
               unityInstance.SendMessage('Main Camera', 'ResetRocket')
               document.getElementById("multiplier").style.color = "#fff";
             }
@@ -48,7 +45,6 @@ conn.start().then(function () {
 
             if (oldStart != data.allowPlacingBets) {
               if (data.timeLeft == 0) {
-                console.log("Start rocket");
                 document.getElementById("multiplier").style.color = "#fff";
                 unityInstance.SendMessage('Main Camera', 'StartRocket')
               }
@@ -66,7 +62,6 @@ conn.start().then(function () {
   function setMultiplier(data) {
     let firstPart = (data+"").split(".")[0];
     let secondArray = Array.from(String(data), Number);
-    console.log(secondArray[2] + " . " + secondArray[3])
 
     if (isNaN(secondArray[2])) {
       secondArray[2] = 0;
