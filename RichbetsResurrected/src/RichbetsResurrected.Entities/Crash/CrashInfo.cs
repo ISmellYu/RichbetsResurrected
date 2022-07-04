@@ -6,8 +6,8 @@ public class CrashInfo
 {
     public List<CrashPlayer> Players { get; set; }
     public List<ClientInfo> OnlinePlayers { get; set; }
-    public List<decimal> Multipliers { get; set; }
     public List<CrashResult> Results { get; set; }
+    public List<decimal> Multipliers { get; set; }
     public decimal Multiplier { get; set; }
     public decimal TimeLeft { get; set; }
 
