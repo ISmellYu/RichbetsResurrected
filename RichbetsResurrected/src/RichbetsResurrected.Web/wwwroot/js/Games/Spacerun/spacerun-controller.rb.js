@@ -136,20 +136,54 @@ crashConn.start().then(function () {
 
     async function placeBet(amount) {
         let result = await crashConn.invoke("JoinCrash", amount).catch(function (err) {
+            new Snack(
+                {
+                    message: `Error: ${err.toString()}`,
+                    duration: 3000,
+                    type: `error`
+                }
+            );
             return console.error(err.toString());
         });
+        let verb = '';
+        if (amount > 1) {
+            verb = "'s"
+        }
         if (result.isSuccess == true) {
             playerData.isBetting = true;
             playerData.amount += amount;
+            new Snack(
+                {
+                    message: `${amount} RBC${verb} successfully placed.`,
+                    duration: 3000,
+                }
+            );
         }
     }
 
     async function cashout() {
         let result = await crashConn.invoke("Cashout").catch(function (err) {
+            new Snack(
+                {
+                    message: `Error: ${err.toString()}`,
+                    duration: 3000,
+                    type: `error`
+                }
+            );
             return console.error(err.toString());
         });
+        let verb = '';
+        if (playerData.amount > 1) {
+            verb = "'s"
+        }
         if (result.isSuccess == true) {
             updatePlayerData();
+            new Snack(
+                {
+                    message: `Successfully paid out.`,
+                    duration: 3000,
+                }
+            );
         }
     }
 
