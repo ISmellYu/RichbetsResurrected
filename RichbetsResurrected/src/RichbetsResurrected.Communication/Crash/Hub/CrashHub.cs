@@ -74,7 +74,7 @@ public class CrashHub : Hub<ICrashHub>
     }
     
     [SignalRMethod(summary: "Invoked when client want to cashout")]
-    public async Task<CrashCashoutResult> Cashout(decimal? desiredMultiplier = null)
+    public async Task<CrashCashoutResult> Cashout(decimal? desiredMultiplier)
     {
         var appUserId = Convert.ToInt32(Context.UserIdentifier);
         var result = await _crashService.CashoutAsync(appUserId, desiredMultiplier);
