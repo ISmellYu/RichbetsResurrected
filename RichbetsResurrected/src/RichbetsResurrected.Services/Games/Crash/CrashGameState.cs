@@ -7,7 +7,7 @@ namespace RichbetsResurrected.Services.Games.Crash;
 
 public class CrashGameState : ICrashGameState
 {
-    private readonly ConcurrentDictionary<string, ClientInfo> OnlinePlayers = new();
+    private readonly ConcurrentDictionary<string, ClientInfo> _onlinePlayers = new();
     private BlockingCollection<CrashPlayer> Players { get; } = new();
     private List<CrashResult> History { get; } = new();
     private BlockingCollection<decimal> Multipliers { get; } = new();
@@ -123,7 +123,7 @@ public class CrashGameState : ICrashGameState
 
     public List<ClientInfo> GetOnlinePlayers()
     {
-        return OnlinePlayers.Values.DistinctBy(p => p.IdentityUserId).ToList();
+        return _onlinePlayers.Values.DistinctBy(p => p.IdentityUserId).ToList();
     }
 
     public List<CrashResult> GetResults(int amount)
@@ -149,45 +149,51 @@ public class CrashGameState : ICrashGameState
         Players.TryAdd(player);
     }
     
-    public CrashCashoutResult Cashout(int identityUserId)
+    public CrashCashoutResult Cashout(int identityUserId, decimal? desiredMultiplier = null)
     {
         if (!IsInGame(identityUserId))
-        {
             return new CrashCashoutResult(){IsSuccess = false, Error = new CrashError(){Message = "You are not in game"}};
-        }
 
         if (AlreadyCashouted(identityUserId))
-        {
             return new CrashCashoutResult(){IsSuccess = false, Error = new CrashError(){Message = "You already cashouted"}};
-        }
 
         CrashPlayer player = null;
         foreach (var crashPlayer in Players)
         {
-            if (crashPlayer.IdentityUserId != identityUserId) continue;
+            if (crashPlayer.IdentityUserId != identityUserId) 
+                continue;
+            
             crashPlayer.Cashouted = true;
             crashPlayer.WhenCashouted = Multiplier;
+            if (desiredMultiplier != null && CheckMultiplierCorrectness(desiredMultiplier.Value))
+                crashPlayer.WhenCashouted = desiredMultiplier.Value;
             player = crashPlayer;
             break;
         }
         
-        var result = new CrashCashoutResult()
+        return new CrashCashoutResult()
         {
             IsSuccess = true,
             Error = null,
             Player = player
-        };
-        return result;
+        };;
+    }
+    
+    private bool CheckMultiplierCorrectness(decimal multiplier)
+    {
+        var lastMultiplier = Multipliers.LastOrDefault();
+        var secondLastMultiplier = Multipliers.ElementAtOrDefault(Multipliers.Count - 2);
+        return secondLastMultiplier <= multiplier && lastMultiplier >= multiplier;
     }
 
     public void AddOnlinePlayer(string connId, ClientInfo clientInfo)
     {
-        OnlinePlayers.TryAdd(connId, clientInfo);
+        _onlinePlayers.TryAdd(connId, clientInfo);
     }
 
     public void RemoveOnlinePlayer(string connId)
     {
-        OnlinePlayers.TryRemove(connId, out _);
+        _onlinePlayers.TryRemove(connId, out _);
     }
 
     public bool IsInGame(CrashPlayer crashPlayer)
@@ -242,8 +248,8 @@ public class CrashGameState : ICrashGameState
         var crashInfo = new CrashInfo
         {
             Players = Players.ToList(),
-            Multipliers = Multipliers.ToList(),
             Results = History.TakeLast(10).ToList(),
+            Multipliers = Multipliers.ToList(),
             Multiplier = Multiplier,
             OnlinePlayers = GetOnlinePlayers(),
             TimeLeft = TimeLeft,

@@ -63,7 +63,7 @@ public class CrashService : ICrashService
         };
     }
     
-    public async Task<CrashCashoutResult> CashoutAsync(int identityUserId)
+    public async Task<CrashCashoutResult> CashoutAsync(int identityUserId, decimal? desiredMultiplier = null)
     {
         if (GameState.IsCrashed() || !GameState.IsGameStarted() || !GameState.IsRunning() || !GameState.IsRemovingBetsAllowed())
         {
@@ -78,7 +78,7 @@ public class CrashService : ICrashService
             };
         }
 
-        var result = GameState.Cashout(identityUserId);
+        var result = GameState.Cashout(identityUserId, desiredMultiplier);
 
         if (result.IsSuccess && result.Player != null)
             await _richbetRepository.AddPointsToUserAsync(result.Player.IdentityUserId, (int)(result.Player.Amount * result.Player.WhenCashouted));

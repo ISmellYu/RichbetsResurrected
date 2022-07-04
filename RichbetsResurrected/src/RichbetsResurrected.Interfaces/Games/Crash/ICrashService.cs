@@ -6,5 +6,5 @@ public interface ICrashService
 {
     ICrashGameState GameState { get; }
     Task<CrashJoinResult> JoinCrashAsync(CrashPlayer crashPlayer);
-    Task<CrashCashoutResult> CashoutAsync(int identityUserId);
+    Task<CrashCashoutResult> CashoutAsync(int identityUserId, decimal? desiredMultiplier = null);
 }
