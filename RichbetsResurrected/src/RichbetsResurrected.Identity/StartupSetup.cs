@@ -13,18 +13,9 @@ public static class StartupSetup
 
     public static void AddAuthStuff(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("MysqlConnection"); //Configuration.GetConnectionString("DefaultConnection");
-        services.AddDbContext(connectionString);
         services.ConfigureCookies();
         services.AddIdentity();
         services.ConfigureAuthentication("***REMOVED***", "***REMOVED***");
-    }
-
-    public static void AddDbContext(this IServiceCollection services, string connectionString)
-    {
-        // services.AddDbContext<AppDbContext>(options =>
-        //     options.UseSqlite(connectionString));
-        // will be created in web project root
     }
 
     public static void AddIdentity(this IServiceCollection services)
