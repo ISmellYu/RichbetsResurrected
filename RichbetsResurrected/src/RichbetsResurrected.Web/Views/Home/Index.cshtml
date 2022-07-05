@@ -4,7 +4,37 @@
 }
 
 @section Head{
-    @* <link rel="stylesheet" href="~/css/login.layout.css"> *@
+    <link rel="stylesheet" href="~/css/Home/home.css">
 }
 
-<button>Guzik</button>
+<div class="main-body">
+
+    <div class="card-body rocketrun-card">
+        <a asp-action="Spacerun" asp-controller="Games"class="card-redir">SPACERUN</a>
+        <div class="theme-bucket">
+            <img src="~/img/Home/rocket.png" alt="" class="rocket-img">
+
+            <img src="~/img/Home/planet-saturn.png" alt="" class="planet saturn">
+            <img src="~/img/Home/planet-mars.png" alt="" class="planet mars">
+            <img src="~/img/Home/planet-mars2.png" alt="" class="planet mars2">
+        </div>
+    </div>
+
+    <div class="card-body">
+                <a asp-action="Roulette" asp-controller="Games" id="dashboard-link" class="card-redir">ROULETTE</a>
+        <div class="theme-bucket">
+            
+        </div>
+    </div>
+
+    <div class="card-body">
+                <a asp-action="Privacy" asp-controller="Dashboard" id="dashboard-link" class="card-redir">SLOTS CLASSIC</a>
+        <div class="theme-bucket">
+            
+        </div>
+    </div>
+
+    <div class="card-body">
+
+    </div>
+</div>
