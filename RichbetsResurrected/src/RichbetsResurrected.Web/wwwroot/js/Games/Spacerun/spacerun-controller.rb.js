@@ -16,8 +16,7 @@ crashConn.start().then(function () {
         autoCashout: false,
         whenAutoCashout: 0,
         autoBetting: false,
-        autoBetsTotal: 0,
-        autoCashoutApproved: false
+        autoBetsTotal: 0
     };
 
     var manualButton = document.getElementById("manual-place-bet");
@@ -63,7 +62,6 @@ crashConn.start().then(function () {
                 if (data.crashed == true) {
                     clearPlayerData();
                     renderPlayersLostList(data.players);
-                    playerData.autoCashoutApproved = false;
                 }
                 oldCrashed = data.crashed;
             }
@@ -106,9 +104,8 @@ crashConn.start().then(function () {
             }
 
             if (playerData.isBetting && playerData.autoCashout) {
-                if (!playerData.autoCashoutApproved && data.gameStarted) {
-                    cashout(playerData.whenAutoCashout);
-                    playerData.autoCashoutApproved = true;
+                if (data.multiplier >= playerData.whenAutoCashout) {
+                    cashout(parseFloat(playerData.whenAutoCashout));
                 }
             }
 
