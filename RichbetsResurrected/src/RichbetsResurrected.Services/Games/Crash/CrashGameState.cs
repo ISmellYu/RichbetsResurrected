@@ -166,7 +166,11 @@ public class CrashGameState : ICrashGameState
             crashPlayer.Cashouted = true;
             crashPlayer.WhenCashouted = Multiplier;
             if (desiredMultiplier != null && CheckMultiplierCorrectness(desiredMultiplier.Value))
+            {
                 crashPlayer.WhenCashouted = desiredMultiplier.Value;
+                Console.WriteLine($"Desired multiplier is correct {desiredMultiplier.Value}");
+            }
+            
             player = crashPlayer;
             break;
         }
@@ -183,6 +187,9 @@ public class CrashGameState : ICrashGameState
     {
         var lastMultiplier = Multipliers.LastOrDefault();
         var secondLastMultiplier = Multipliers.ElementAtOrDefault(Multipliers.Count - 2);
+        if (secondLastMultiplier == 0)
+            secondLastMultiplier = lastMultiplier;
+        
         return secondLastMultiplier <= multiplier && lastMultiplier >= multiplier;
     }
 

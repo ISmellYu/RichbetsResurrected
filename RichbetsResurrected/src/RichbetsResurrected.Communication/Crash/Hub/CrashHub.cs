@@ -77,6 +77,10 @@ public class CrashHub : Hub<ICrashHub>
     public async Task<CrashCashoutResult> Cashout(decimal? desiredMultiplier)
     {
         var appUserId = Convert.ToInt32(Context.UserIdentifier);
+        if (desiredMultiplier != null)
+        {
+            desiredMultiplier = Math.Round(desiredMultiplier.Value, 2);
+        }
         var result = await _crashService.CashoutAsync(appUserId, desiredMultiplier);
         return result;
     }

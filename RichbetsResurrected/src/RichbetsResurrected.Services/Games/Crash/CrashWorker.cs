@@ -72,8 +72,9 @@ public class CrashWorker : ICrashWorker
                 if (multiplier == maxMultiplier)
                     break;
                 
-                _gameState.SetMultiplier(multiplier);
                 _gameState.AddToMultipliers(multiplier);
+                _gameState.SetMultiplier(multiplier);
+                
 
                 multiplier += (int) multiplier * step;
                 
@@ -83,9 +84,8 @@ public class CrashWorker : ICrashWorker
         
         _gameState.TurnOffRemovingBets();
         _gameState.TurnOnCrashed();
-        _gameState.SetMultiplier(multiplier);
         _gameState.AddToMultipliers(multiplier);
-
+        _gameState.SetMultiplier(multiplier);
     }
 
     private CrashResult GetResult()
