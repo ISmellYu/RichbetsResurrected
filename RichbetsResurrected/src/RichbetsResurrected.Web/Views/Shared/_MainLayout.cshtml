@@ -36,20 +36,19 @@
 
         <nav class="nav-list">
 
-                <a class="-link" asp-action="Privacy" asp-controller="Dashboard" id="dashboard-link">Regulamin</a>
+                <a class="-link" asp-action="Index" asp-controller="Home" id="home-link">Games</a>
 
                 <a class="-link" asp-action="Index" asp-controller="Itemshop" id="itemshop-link">Itemshop</a>
 
-
-                <a class="-link" asp-action="Index" asp-controller="Home" id="home-link">Gry</a>
+                <a class="-link" asp-action="Privacy" asp-controller="Dashboard" id="dashboard-link">TOS</a>
 
                 @if (_signInManager.IsSignedIn(User))
                 {
-                    <a class="-link logout-link btn" asp-action="Logout" asp-controller="Account">Wyloguj</a>
+                    <a class="-link logout-link btn" asp-action="Logout" asp-controller="Account">Sign Out</a>
                 }
                 else
                 {
-                    <a class="-link logout-link" asp-action="Login" asp-controller="Account">Zaloguj</a>
+                    <a class="-link logout-link" asp-action="Login" asp-controller="Account">Sign In</a>
                 }
         </nav>
     </div>
