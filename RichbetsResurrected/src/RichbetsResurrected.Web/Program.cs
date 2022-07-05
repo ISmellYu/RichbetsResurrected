@@ -33,7 +33,9 @@ builder.Services.AddDirectoryBrowser();
 builder.Services.AddAuthStuff(builder.Configuration);
 
 builder.Services.AddLiveReload();
-builder.Services.AddSignalR();
+builder.Services.AddSignalR(
+    options => 
+        options.EnableDetailedErrors = true);
 
 builder.Services.AddControllersWithViews().AddNewtonsoftJson().AddRazorRuntimeCompilation();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
