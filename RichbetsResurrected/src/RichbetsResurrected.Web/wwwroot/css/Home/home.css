@@ -26,8 +26,6 @@
     z-index: 2;
     border-radius: 7px;
     display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .card-redir:hover + .theme-bucket{
@@ -263,7 +261,96 @@
     100%{
         opacity: 0.25;
     }
-  }
+}
+
+.roulette-img-body{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    left: 1%;
+    margin-top: -4%;
+}
+
+.roulette-img{
+    width: 100%;
+}
+
+.roulette-chip{
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    opacity: 0.9;
+    filter: saturate(2)
+    brightness(0.9)
+}
+
+.chip-red{
+    right: 20%;
+    bottom: 0;
+}
+
+.chip-green{
+    right: 4%;
+    bottom: 13%;
+    width: 55px;
+    height: 55px;
+}
+
+.chip-blue{
+    right: 0;
+    top: 24%;
+}
+
+.card-redir:hover ~ .theme-bucket > .roulette-img-body > .roulette-img{
+    animation: roulette-spin 2s ease-in-out infinite;
+}
+
+.card-redir:hover ~ .theme-bucket > .chip-green{
+    animation: roulette-chip 2s ease-in-out infinite;
+}
+
+.card-redir:hover ~ .theme-bucket > .chip-red{
+    animation: roulette-chip 2s ease-in-out infinite .5s;
+}
+
+.card-redir:hover ~ .theme-bucket > .chip-blue{
+    animation: roulette-chip 2s ease-in-out infinite .3s;
+}
+
+.roulette-card{
+    background: radial-gradient(circle at -1% 57.5%, rgb(19, 170, 82) 0%, rgb(0, 102, 43) 90%);
+    border: 1px rgba(255, 255, 255, 0.5) solid;
+}
+
+.roulette-redir{
+    text-shadow: -1px -1px 10px rgba(0, 0, 0, 0.8);
+}
+
+@keyframes roulette-spin {
+    0%{
+        transform: rotateZ(0deg);
+    }
+    100%{
+        transform: rotateZ(360deg);
+    }
+}
+
+@keyframes roulette-chip {
+    0%{
+        transform:translateY(0px)
+    }
+    50%{
+        transform:translateY(5px)
+    }
+    100%{
+        transform:translateY(0px)
+    }
+}
+
+
 
 @media screen and (min-width: 550px) {
     .main-body{
