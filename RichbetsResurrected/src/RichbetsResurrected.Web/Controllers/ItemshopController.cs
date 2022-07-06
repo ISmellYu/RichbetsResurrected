@@ -60,7 +60,8 @@ public class ItemshopController : Controller
     }
     
     [Authorize]
-    [HttpPost]
+    [HttpPost("[controller]/[action]/{itemId:int}")]
+    [ApiExplorerSettings(IgnoreApi = false)]
     public async Task<IActionResult> BuyItem(int itemId)
     {
         var id = Convert.ToInt32(_userManager.GetUserId(User));
