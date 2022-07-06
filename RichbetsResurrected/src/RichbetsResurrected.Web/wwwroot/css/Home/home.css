@@ -350,6 +350,139 @@
     }
 }
 
+.slots-classic-card{
+    background-image: linear-gradient(11deg, #8e805c, #c61d5c);
+    border: 1px rgba(255, 255, 255, 0.8) solid;
+}
+
+.slots-classic-card::after{
+    background-image: url("https://wallpaperaccess.com/full/181362.jpg");
+    background-size: contain;
+    opacity: 0.1;
+    width: 100%;
+    height: 100%;
+    content: " ";
+    position: absolute;
+}
+
+.slots-classic-icon{
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    opacity: 0.8;
+    filter: saturate(0.7);
+}
+
+.card-redir:hover ~ .theme-bucket > .slots-classic-cherry{
+    animation: slots-classic-cherry 2s ease-in-out infinite;
+}
+.card-redir:hover ~ .theme-bucket > .slots-classic-citrus{
+    animation: slots-classic-citrus 2s ease-in-out infinite .2s;
+}
+.card-redir:hover ~ .theme-bucket > .slots-classic-gem{
+    animation: slots-classic-gem 2s ease-in-out infinite .3s;
+}
+.card-redir:hover ~ .theme-bucket > .slots-classic-seven{
+    animation: slots-classic-seven 2s ease-in-out infinite .5s;
+}
+
+.slots-classic-cherry{
+    transform: scale(1.1)
+    rotateZ(20deg);
+    right: 2%;
+    top: 2%;
+}
+
+.slots-classic-citrus{
+    transform: scale(0.9)
+    rotateZ(-30deg);
+    bottom: 2%;
+    left: 15%;
+}
+
+.slots-classic-gem{
+    transform: scale(1.2)
+    rotateZ(-15deg);
+    left: 5%;
+    top: 5%;
+}
+
+.slots-classic-seven{
+    transform: scale(0.7)
+    rotateZ(10deg);
+    bottom: 2%;
+    left: 55%;
+    opacity: 1 !important;
+}
+
+@keyframes slots-classic-cherry {
+    0%{
+        transform: rotateZ(20deg)
+        scale(1.1)
+        translateY(0);
+    }
+    50%{
+        transform: rotateZ(17deg)
+        scale(1.1)
+        translateY(5px);
+    }
+    100%{
+        transform: rotateZ(20deg)
+        scale(1.1)
+        translateY(0);
+    }
+}
+@keyframes slots-classic-citrus {
+    0%{
+        transform: rotateZ(-30deg)
+        scale(0.9)
+        translateY(0);
+    }
+    50%{
+        transform: rotateZ(-27deg)
+        scale(0.9)
+        translateY(5px);
+    }
+    100%{
+        transform: rotateZ(-30deg)
+        scale(0.9)
+        translateY(0);
+    }
+}
+@keyframes slots-classic-gem {
+    0%{
+        transform: rotateZ(-15deg)
+        scale(1.2)
+        translateY(0);
+    }
+    50%{
+        transform: rotateZ(-18deg)
+        scale(1.2)
+        translateY(3px);
+    }
+    100%{
+        transform: rotateZ(-15deg)
+        scale(1.2)
+        translateY(0);
+    }
+}
+@keyframes slots-classic-seven {
+    0%{
+        transform: rotateZ(10deg)
+        scale(0.7)
+        translateY(0);
+    }
+    50%{
+        transform: rotateZ(13deg)
+        scale(0.7)
+        translateY(4px);
+    }
+    100%{
+        transform: rotateZ(10deg)
+        scale(0.7)
+        translateY(0);
+    }
+}
 
 
 @media screen and (min-width: 550px) {
