@@ -5,6 +5,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 500;
+    margin: 0;
 }
 
 .giraffe {

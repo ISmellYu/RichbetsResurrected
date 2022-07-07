@@ -2,6 +2,8 @@ let conn = new signalR.HubConnectionBuilder().withUrl("/rouletteHub").build(); /
 
 let firstImg = new Image();
 
+var playersStyling = new Map();
+
 if ($("body").width() <= 590) {
     $("#canvas").attr("width", '390px');
     $("#canvas").attr("height", '390px');
@@ -365,6 +367,7 @@ conn.start().then(function () {
     function renderPlayersList(data) {
 
         clearPlayersList();
+        console.log(data);
 
         data.forEach(player => { // Prepare list for each player.
 
@@ -373,9 +376,17 @@ conn.start().then(function () {
 
             let memberElement = document.createElement("li");
             let coinsElement = document.createElement("li");
+            let paragraph = document.createElement("p");
+            
+            if (playersStyling.has(player.discordUserId)) {
+                paragraph.classList.add(playersStyling.get(player.discordUserId));
+            }
 
-            memberElement.textContent = player.userName;
+            //memberElement.textContent = player.userName;
+            paragraph.textContent = player.userName;
+            memberElement.appendChild(paragraph);
             coinsElement.textContent = player.amount;
+            console.log(player);
 
             memberElement.style.backgroundImage = `url(${player.avatarUrl})`;
 
@@ -393,10 +404,25 @@ conn.start().then(function () {
         }
 
         data.forEach(player => {
+            console.log(playersStyling);
+            console.log(player);
 
             let memberElement = document.createElement("li");
+            let paragraph = document.createElement("p");
 
-            memberElement.textContent = player.userName;
+            (player.equippedItems).forEach(element => {
+                if (element.itemType.isNicknameAnimation || element.itemType.isNicknameBanner || element.itemType.isNicknameEffect || element.itemType.isNicknamePattern) {
+                    paragraph.classList.add(element.description);
+                    if (!playersStyling.has(player.discordUserId)) {
+                        playersStyling.set(player.discordUserId, element.description);
+                    }
+                }
+            });
+
+            paragraph.textContent = player.userName;
+            paragraph.style.fontSize = "15px";
+
+            memberElement.appendChild(paragraph);
             memberElement.style.backgroundImage = `url(${player.avatarUrl})`;
             memberElement.classList.add('onlinePlayersElement');
 
@@ -414,12 +440,10 @@ conn.start().then(function () {
             let coinsList = document.querySelector(`.coins-${color}`);
 
             while (playersList.firstChild) {
-
                 playersList.removeChild(playersList.firstChild);
             }
 
             while (coinsList.firstChild) {
-
                 coinsList.removeChild(coinsList.firstChild);
             }
 
