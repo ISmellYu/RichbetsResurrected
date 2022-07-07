@@ -6,9 +6,9 @@ using RichbetsResurrected.Entities.Client;
 using RichbetsResurrected.Entities.Crash;
 using RichbetsResurrected.Interfaces.Client;
 using RichbetsResurrected.Interfaces.DAL;
-using RichbetsResurrected.Interfaces.DAL.Inventory;
 using RichbetsResurrected.Interfaces.Games.Crash;
 using RichbetsResurrected.Interfaces.Identity;
+using RichbetsResurrected.Interfaces.Inventory;
 using RichbetsResurrected.Utilities.Constants;
 using SignalRSwaggerGen.Attributes;
 

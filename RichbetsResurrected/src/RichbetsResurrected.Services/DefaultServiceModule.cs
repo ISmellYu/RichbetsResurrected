@@ -1,10 +1,10 @@
 ﻿using Autofac;
 using Autofac.Core;
 using RichbetsResurrected.Interfaces.Client;
-using RichbetsResurrected.Interfaces.DAL.Inventory;
 using RichbetsResurrected.Interfaces.Games;
 using RichbetsResurrected.Interfaces.Games.Crash;
 using RichbetsResurrected.Interfaces.Games.Roulette;
+using RichbetsResurrected.Interfaces.Inventory;
 using RichbetsResurrected.Interfaces.Shop;
 using RichbetsResurrected.Services.Client;
 using RichbetsResurrected.Services.Games.Crash;
