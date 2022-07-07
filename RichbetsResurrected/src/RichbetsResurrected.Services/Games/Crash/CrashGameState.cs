@@ -11,8 +11,9 @@ public class CrashGameState : ICrashGameState
     private BlockingCollection<CrashPlayer> Players { get; } = new();
     private List<CrashResult> History { get; } = new();
     private BlockingCollection<decimal> Multipliers { get; } = new();
-
+    
     private decimal Multiplier { get; set; }
+    private decimal MaxMultiplier { get; set; }
     private decimal TimeLeft { get; set; }
 
     private bool AllowPlacingBets { get; set; }
@@ -100,7 +101,11 @@ public class CrashGameState : ICrashGameState
     {
         Multiplier = multiplier;
     }
-
+    public void SetMaxMultiplier(decimal maxMultiplier)
+    {
+        MaxMultiplier = maxMultiplier;
+    }
+    
     public void SetTimeLeft(decimal timeLeft)
     {
         TimeLeft = timeLeft;
@@ -114,6 +119,11 @@ public class CrashGameState : ICrashGameState
     public decimal GetMultiplier()
     {
         return Multiplier;
+    }
+    
+    public decimal GetMaxMultiplier()
+    {
+        return MaxMultiplier;
     }
 
     public List<CrashPlayer> GetPlayers()

@@ -12,6 +12,7 @@ using RichbetsResurrected.Services;
 using RichbetsResurrected.Web;
 using Westwind.AspNetCore.LiveReload;
 using Microsoft.Extensions.FileProviders;
+using RichbetsResurrected.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
@@ -68,6 +69,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     containerBuilder.RegisterModule(new DefaultIdentityModule(builder.Configuration));
     containerBuilder.RegisterModule(new DefaultCommunicationModule());
     containerBuilder.RegisterModule(new DefaultServiceModule());
+    containerBuilder.RegisterModule(new DefaultEntityModule());
 });
 
 builder.Logging.ClearProviders();
