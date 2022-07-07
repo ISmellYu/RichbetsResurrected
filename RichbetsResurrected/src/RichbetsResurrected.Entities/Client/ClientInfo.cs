@@ -1,5 +1,6 @@
 ﻿using RichbetsResurrected.Entities.DatabaseEntities;
 using RichbetsResurrected.Entities.DatabaseEntities.BaseRichbet;
+using RichbetsResurrected.Entities.DatabaseEntities.Shop;
 
 namespace RichbetsResurrected.Entities.Client;
 
@@ -10,4 +11,5 @@ public class ClientInfo
     public string UserName { get; set; }
     public string AvatarUrl { get; set; }
     public RichbetUser RichbetUser { get; set; }
+    public List<Item> EquippedItems { get; set; }
 }

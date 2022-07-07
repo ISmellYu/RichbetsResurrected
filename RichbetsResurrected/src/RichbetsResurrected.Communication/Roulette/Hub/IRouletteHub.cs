@@ -4,7 +4,7 @@ using SignalRSwaggerGen.Attributes;
 
 namespace RichbetsResurrected.Communication.Roulette.Hub;
 
-[SignalRHub("/rouletteHub")]
+
 [SuppressMessage("ReSharper", "AsyncApostle.AsyncMethodNamingHighlighting")]
 public interface IRouletteHub
 {

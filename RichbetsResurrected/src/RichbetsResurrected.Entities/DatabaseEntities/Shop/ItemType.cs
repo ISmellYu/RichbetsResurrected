@@ -1,4 +1,6 @@
-﻿namespace RichbetsResurrected.Entities.DatabaseEntities.Shop;
+﻿using System.Text.Json.Serialization;
+
+namespace RichbetsResurrected.Entities.DatabaseEntities.Shop;
 
 public class ItemType
 {
@@ -12,6 +14,9 @@ public class ItemType
     public bool IsNicknameAnimation { get; set; }
     public bool IsUnique { get; set; }
     
+    
+    [JsonIgnore]
     public int ItemId { get; set; }
+    [JsonIgnore]
     public Item Item { get; set; }
 }

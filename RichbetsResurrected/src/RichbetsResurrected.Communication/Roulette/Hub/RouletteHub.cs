@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using RichbetsResurrected.Entities.Client;
 using RichbetsResurrected.Entities.Roulette;
+using RichbetsResurrected.Interfaces.Client;
 using RichbetsResurrected.Interfaces.DAL;
+using RichbetsResurrected.Interfaces.DAL.Inventory;
 using RichbetsResurrected.Interfaces.Games.Roulette;
 using RichbetsResurrected.Interfaces.Identity;
+using RichbetsResurrected.Interfaces.Shop;
 using RichbetsResurrected.Utilities.Constants;
 using SignalRSwaggerGen.Attributes;
 
@@ -20,32 +23,38 @@ public class RouletteHub : Hub<IRouletteHub>
     private readonly IAccountRepository _accountRepository;
     private readonly IRichbetRepository _richbetRepository;
     private readonly IRouletteService _rouletteService;
-    public RouletteHub(IRouletteService rouletteService, IAccountRepository accountRepository, IRichbetRepository richbetRepository)
+    private readonly IInventoryService _inventoryService;
+    public RouletteHub(IRouletteService rouletteService, IAccountRepository accountRepository, IRichbetRepository richbetRepository, IInventoryService inventoryService)
     {
         _rouletteService = rouletteService;
         _accountRepository = accountRepository;
         _richbetRepository = richbetRepository;
+        _inventoryService = inventoryService;
     }
 
+    [SignalRHidden]
     public override async Task OnConnectedAsync()
     {
         var appUserId = Convert.ToInt32(Context.UserIdentifier);
         var discordId = Context.User.Claims.FirstOrDefault(c => c.Type == OAuthConstants.DiscordId).Value;
         var avatarUrl = _accountRepository.GetDiscordAvatarUrl(Context.User);
         var richbetUser = await _richbetRepository.GetRichbetUserAsync(appUserId);
+        var inv = _inventoryService.GetInventory(appUserId);
         var clientInfo = new ClientInfo
         {
             UserName = Context.User?.Identity.Name,
             DiscordUserId = discordId,
             IdentityUserId = appUserId,
             AvatarUrl = avatarUrl,
-            RichbetUser = richbetUser
+            RichbetUser = richbetUser,
+            EquippedItems = inv.EquippedItems
         };
         _rouletteService.GameState.AddOnlinePlayer(Context.ConnectionId, clientInfo);
         Console.WriteLine("Connected to roulette hub");
         await base.OnConnectedAsync();
     }
 
+    [SignalRHidden]
     public override Task OnDisconnectedAsync(Exception? exception)
     {
         _rouletteService.GameState.RemoveOnlinePlayer(Context.ConnectionId);
@@ -81,7 +90,7 @@ public class RouletteHub : Hub<IRouletteHub>
     }
 
     [SignalRMethod(summary: "Stream for clients to receive the actual roulette info")]
-    public async IAsyncEnumerable<RouletteInfo> StreamRouletteInfo([EnumeratorCancellation] CancellationToken cancellationToken)
+    public async IAsyncEnumerable<RouletteInfo> StreamRouletteInfo([EnumeratorCancellation][SignalRHidden] CancellationToken cancellationToken)
     {
         while (true)
         {

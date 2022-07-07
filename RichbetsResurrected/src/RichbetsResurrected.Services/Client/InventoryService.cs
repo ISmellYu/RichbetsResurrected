@@ -1,11 +1,13 @@
 ﻿using RichbetsResurrected.Entities.Client;
 using RichbetsResurrected.Entities.DatabaseEntities.Shop;
+using RichbetsResurrected.Interfaces.Client;
 using RichbetsResurrected.Interfaces.DAL;
+using RichbetsResurrected.Interfaces.DAL.Inventory;
 using RichbetsResurrected.Interfaces.DAL.Shop;
 
 namespace RichbetsResurrected.Services.Client;
 
-public class InventoryService
+public class InventoryService : IInventoryService
 {
     private readonly IShopRepository _shopRepository;
     private readonly IRichbetRepository _richbetRepository;
@@ -23,7 +25,7 @@ public class InventoryService
         
         var userItems = _shopRepository.GetUserItems();
         var equippedItems = userItems
-            .Where(p => p.RichbetUserId == identityUserId && p.State == ItemState.Active)
+            .Where(p => p.RichbetUserId == identityUserId && p.State == ItemState.Equipped)
             .Select(p => _shopRepository.GetItemById(p.ItemId))
             .ToList();
         
