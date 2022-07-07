@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RichbetsResurrected.Entities.DatabaseEntities.Shop;
 using RichbetsResurrected.Entities.Identity.Models;
+using RichbetsResurrected.Entities.Shop;
 using RichbetsResurrected.Interfaces.Shop;
 using RichbetsResurrected.Web.ViewModels;
 
@@ -59,13 +60,5 @@ public class ItemshopController : Controller
         return View();
     }
     
-    [Authorize]
-    [HttpPost("[controller]/[action]/{itemId:int}")]
-    [ApiExplorerSettings(IgnoreApi = false)]
-    public async Task<IActionResult> BuyItem(int itemId)
-    {
-        var id = Convert.ToInt32(_userManager.GetUserId(User));
-        var result = await _shopService.BuyItemAsync(id, itemId);
-        return Json(result);
-    }
+    
 }

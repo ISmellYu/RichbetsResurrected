@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using RichbetsResurrected.Entities.Client;
 using RichbetsResurrected.Entities.Crash;
+using RichbetsResurrected.Interfaces.Client;
 using RichbetsResurrected.Interfaces.DAL;
+using RichbetsResurrected.Interfaces.DAL.Inventory;
 using RichbetsResurrected.Interfaces.Games.Crash;
 using RichbetsResurrected.Interfaces.Identity;
 using RichbetsResurrected.Utilities.Constants;
@@ -20,33 +22,39 @@ public class CrashHub : Hub<ICrashHub>
     private readonly IAccountRepository _accountRepository;
     private readonly ICrashService _crashService;
     private readonly IRichbetRepository _richbetRepository;
-    public CrashHub(IAccountRepository accountRepository, IRichbetRepository richbetRepository, ICrashService crashService)
+    private readonly IInventoryService _inventoryService;
+    public CrashHub(IAccountRepository accountRepository, IRichbetRepository richbetRepository, ICrashService crashService, IInventoryService inventoryService)
     {
         _accountRepository = accountRepository;
         _richbetRepository = richbetRepository;
         _crashService = crashService;
+        _inventoryService = inventoryService;
 
     }
 
+    [SignalRHidden]
     public override async Task OnConnectedAsync()
     {
         var appUserId = Convert.ToInt32(Context.UserIdentifier);
         var discordId = Context.User.Claims.FirstOrDefault(c => c.Type == OAuthConstants.DiscordId).Value;
         var avatarUrl = _accountRepository.GetDiscordAvatarUrl(Context.User);
         var richbetUser = await _richbetRepository.GetRichbetUserAsync(appUserId);
+        var inv = _inventoryService.GetInventory(appUserId);
         var clientInfo = new ClientInfo
         {
             UserName = Context.User?.Identity.Name,
             DiscordUserId = discordId,
             IdentityUserId = appUserId,
             AvatarUrl = avatarUrl,
-            RichbetUser = richbetUser
+            RichbetUser = richbetUser,
+            EquippedItems = inv.EquippedItems
         };
         _crashService.GameState.AddOnlinePlayer(Context.ConnectionId, clientInfo);
         Console.WriteLine("Connected to crash hub");
         await base.OnConnectedAsync();
     }
 
+    [SignalRHidden]
     public override Task OnDisconnectedAsync(Exception? exception)
     {
         _crashService.GameState.RemoveOnlinePlayer(Context.ConnectionId);
@@ -86,7 +94,7 @@ public class CrashHub : Hub<ICrashHub>
     }
 
     [SignalRMethod(summary: "Stream for clients to receive the actual crash info")]
-    public async IAsyncEnumerable<CrashInfo> StreamCrashInfo([EnumeratorCancellation] CancellationToken cancellationToken)
+    public async IAsyncEnumerable<CrashInfo> StreamCrashInfo([EnumeratorCancellation][SignalRHidden] CancellationToken cancellationToken)
     {
         while (true)
         {

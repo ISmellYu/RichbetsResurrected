@@ -30,6 +30,7 @@ public class CrashWorker : ICrashWorker
                 _gameState.ResetGame();
                 await WaitForPlayersAsync();
                 var maxMultiplier = CrashHelper.RandomMultiplier();
+                maxMultiplier = 100m;
                 _gameState.TurnOnGameStarted();
                 await StartCountingAsync(maxMultiplier);
                 // TODO: Change it later to normal value(wait after bets to show losers etc)

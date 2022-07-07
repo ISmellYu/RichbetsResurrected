@@ -14,6 +14,7 @@ using Westwind.AspNetCore.LiveReload;
 using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
+HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
 builder.WebHost.UseSetting("https_port", "57680");
 builder.WebHost.UseSetting("http_port", "57681");
 
@@ -28,7 +29,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.CheckConsentNeeded = context => true;
     options.MinimumSameSitePolicy = SameSiteMode.None;
 });
-builder.Services.AddDirectoryBrowser();
+// builder.Services.AddDirectoryBrowser();
 
 builder.Services.AddAuthStuff(builder.Configuration);
 
@@ -37,7 +38,10 @@ builder.Services.AddSignalR(
     options => 
         options.EnableDetailedErrors = true);
 
-builder.Services.AddControllersWithViews().AddNewtonsoftJson().AddRazorRuntimeCompilation();
+builder.Services.AddControllersWithViews().AddNewtonsoftJson(x =>
+{
+    x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+}).AddRazorRuntimeCompilation();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 builder.Services.AddSwaggerGen(c =>
@@ -122,7 +126,9 @@ app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1")
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapDefaultControllerRoute();
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
     endpoints.MapRazorPages();
     endpoints.MapHub<RouletteHub>("/rouletteHub");
     endpoints.MapHub<ClientHub>("/clientHub");
