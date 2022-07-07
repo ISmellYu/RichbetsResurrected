@@ -2,43 +2,25 @@
 using RichbetsResurrected.Entities.DatabaseEntities.Shop;
 using RichbetsResurrected.Interfaces.Client;
 using RichbetsResurrected.Interfaces.DAL;
-using RichbetsResurrected.Interfaces.DAL.Inventory;
 using RichbetsResurrected.Interfaces.DAL.Shop;
+using RichbetsResurrected.Interfaces.Inventory;
+using RichbetsResurrected.Interfaces.Shop;
 
 namespace RichbetsResurrected.Services.Client;
 
 public class InventoryService : IInventoryService
 {
     private readonly IShopRepository _shopRepository;
-    private readonly IRichbetRepository _richbetRepository;
-    public InventoryService(IShopRepository shopRepository, IRichbetRepository richbetRepository)
+    public InventoryService(IShopRepository shopRepository)
     {
         _shopRepository = shopRepository;
-        _richbetRepository = richbetRepository;
     }
 
     public Inventory GetInventory(int identityUserId)
     {
-        var activeItems = _shopRepository.GetActiveItems()
-            .Where(p => p.RichetUserId == identityUserId)
-            .ToList();
-        
-        var userItems = _shopRepository.GetUserItems();
-        var equippedItems = userItems
-            .Where(p => p.RichbetUserId == identityUserId && p.State == ItemState.Equipped)
-            .Select(p => _shopRepository.GetItemById(p.ItemId))
-            .ToList();
-        
-        var allItems = userItems
-            .Where(p => p.RichbetUserId == identityUserId)
-            .ToList();
-        foreach (var userItem in allItems)
-        {
-            userItem.Item = _shopRepository.GetItemById(userItem.ItemId);
-        }
         var inv = new Inventory()
         {
-            ActiveItems = activeItems, EquippedItems = equippedItems, Items = allItems
+            ActiveItems = GetActiveItems(identityUserId), EquippedItems = GetEquippedItems(identityUserId), Items = GetUserItemsWithAll(identityUserId)
         };
         return inv;
     }
@@ -71,5 +53,45 @@ public class InventoryService : IInventoryService
     {
         var userItem = _shopRepository.GetUserItemByIds(identityUserId, itemId);
         return userItem != null;
+    }
+    
+    public List<Item> GetEquippedItems(int identityUserId)
+    {
+        var userItems = _shopRepository.GetUserItems();
+        var equippedItems = userItems
+            .Where(p => p.RichbetUserId == identityUserId && p.State == ItemState.Equipped)
+            .Select(p => _shopRepository.GetItemById(p.ItemId))
+            .ToList();
+        foreach (var item in equippedItems)
+        {
+            item.ItemType = _shopRepository.GetItemTypeByItemId(item.Id);
+        }
+        return equippedItems;
+    }
+    
+    public List<ActiveItem> GetActiveItems(int identityUserId)
+    {
+        var activeItems = _shopRepository.GetActiveItems()
+            .Where(p => p.RichetUserId == identityUserId)
+            .ToList();
+        foreach (var item in activeItems)
+        {
+            item.Item = _shopRepository.GetItemById(item.ItemId);
+            if (item.Item != null) item.Item.ItemType = _shopRepository.GetItemTypeByItemId(item.ItemId);
+        }
+        return activeItems;
+    }
+    
+    public List<UserItem> GetUserItemsWithAll(int identityUserId)
+    {
+        var userItems = _shopRepository.GetUserItems()
+            .Where(p => p.RichbetUserId == identityUserId)
+            .ToList();
+        foreach (var item in userItems)
+        {
+            item.Item = _shopRepository.GetItemById(item.ItemId);
+            if (item.Item != null) item.Item.ItemType = _shopRepository.GetItemTypeByItemId(item.ItemId);
+        }
+        return userItems;
     }
 }
