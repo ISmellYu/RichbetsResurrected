@@ -62,18 +62,19 @@ conn.start().then(function () {
   function setMultiplier(data) {
     let firstPart = (data+"").split(".")[0];
     let secondArray = Array.from(String(data), Number);
+    secondArray = secondArray.slice(-2);
 
-    if (isNaN(secondArray[2])) {
-      secondArray[2] = 0;
+    if (isNaN(secondArray[0])) {
+      secondArray[0] = 0;
     }
 
-    if (isNaN(secondArray[3])) {
-      secondArray[3] = 0;
+    if (isNaN(secondArray[1])) {
+      secondArray[1] = 0;
     }
 
     document.getElementById("n0").textContent = firstPart;
-    document.getElementById("n1").textContent = secondArray[2];
-    document.getElementById("n2").textContent = secondArray[3];
+    document.getElementById("n1").textContent = secondArray[0];
+    document.getElementById("n2").textContent = secondArray[1];
   }
 
   function constructObj(data) {
