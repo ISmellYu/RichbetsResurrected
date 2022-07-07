@@ -21,9 +21,11 @@ public interface ICrashGameState
     bool IsRemovingBetsAllowed();
     bool IsPlacingBetsAllowed();
     void SetMultiplier(decimal multiplier);
+    void SetMaxMultiplier(decimal maxMultiplier);
     void SetTimeLeft(decimal timeLeft);
     decimal GetTimeLeft();
     decimal GetMultiplier();
+    decimal GetMaxMultiplier();
     List<CrashPlayer> GetPlayers();
     List<ClientInfo> GetOnlinePlayers();
     List<CrashResult> GetResults(int amount);
