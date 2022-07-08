@@ -33,7 +33,6 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.CheckConsentNeeded = context => true;
     options.MinimumSameSitePolicy = SameSiteMode.None;
 });
-// builder.Services.AddDirectoryBrowser();
 
 builder.Services.AddAuthStuff(builder.Configuration);
 
@@ -84,11 +83,9 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
-//builder.Logging.AddAzureWebAppDiagnostics(); add this if deploying to Azure
 
 var app = builder.Build();
 
-// GlobalHost.DependencyResolver = new AutofacDependencyResolver(app.Services.GetAutofacRoot());
 
 if (app.Environment.IsDevelopment())
 {
@@ -114,16 +111,6 @@ app.UseStaticFiles(new StaticFileOptions()
 
 app.UseCookiePolicy();
 
-// app.UseStaticFiles(new StaticFileOptions()
-// {
-//     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory())),
-//     ServeUnknownFileTypes = true
-//
-// });
-// app.UseDirectoryBrowser(new DirectoryBrowserOptions()
-// {
-//     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory())),
-// });
 
 app.UseAuthentication();
 app.UseAuthorization();

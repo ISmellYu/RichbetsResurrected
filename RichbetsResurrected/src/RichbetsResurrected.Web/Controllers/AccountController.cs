@@ -52,6 +52,13 @@ public class AccountController : Controller
             return LocalRedirect(returnUrl);
         }
 
+        if (!info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
+        {
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            if (string.IsNullOrEmpty(email))
+                return RedirectToAction("Login");
+        }
+        
         var (createResult, user) = await _accountRepository.CreateUserFromExternalLoginAsync(info);
         if (!createResult.Succeeded) return RedirectToAction("Login");
 
