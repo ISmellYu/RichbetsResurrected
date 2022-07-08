@@ -1,8 +1,10 @@
-﻿using Autofac;
+﻿using AspNet.Security.OAuth.Discord;
+using Autofac;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RichbetsResurrected.Identity.BaseRichbet;
 using RichbetsResurrected.Identity.Contexts;
+using RichbetsResurrected.Identity.OAuth2Discord;
 using RichbetsResurrected.Identity.Repositories;
 using RichbetsResurrected.Interfaces.DAL;
 using RichbetsResurrected.Interfaces.DAL.Shop;
@@ -28,6 +30,8 @@ public class DefaultIdentityModule : Module
 
         RegisterStores(builder);
         RegisterRepositories(builder);
+
+        builder.RegisterType<DiscordAuthenticationHandlerNew>().As<DiscordAuthenticationHandler>();
     }
 
     private void RegisterStores(ContainerBuilder builder)
