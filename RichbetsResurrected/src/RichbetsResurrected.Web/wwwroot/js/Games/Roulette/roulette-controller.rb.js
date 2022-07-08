@@ -388,7 +388,7 @@ conn.start().then(function () {
             coinsElement.textContent = player.amount;
             console.log(player);
 
-            memberElement.style.backgroundImage = `url(${player.avatarUrl})`;
+            //memberElement.style.backgroundImage = `url(${player.avatarUrl})`;
 
             memberList.appendChild(memberElement);
             coinsList.appendChild(coinsElement);
