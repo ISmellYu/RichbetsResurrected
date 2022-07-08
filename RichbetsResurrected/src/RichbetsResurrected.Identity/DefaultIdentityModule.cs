@@ -31,7 +31,8 @@ public class DefaultIdentityModule : Module
         RegisterStores(builder);
         RegisterRepositories(builder);
 
-        builder.RegisterType<DiscordAuthenticationHandlerNew>().As<DiscordAuthenticationHandler>();
+        builder.RegisterType<DiscordAuthenticationHandlerNew>().As<DiscordAuthenticationHandler>(); // Replace with your own handler to handle
+                                                                                                    // Discord authentication prevent wrong users to enter site
     }
 
     private void RegisterStores(ContainerBuilder builder)
