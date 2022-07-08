@@ -377,6 +377,7 @@ conn.start().then(function () {
             let memberElement = document.createElement("li");
             let coinsElement = document.createElement("li");
             let paragraph = document.createElement("p");
+            paragraph.style.margin = 0;
             
             if (playersStyling.has(player.discordUserId)) {
                 paragraph.classList.add(playersStyling.get(player.discordUserId));
@@ -388,7 +389,7 @@ conn.start().then(function () {
             coinsElement.textContent = player.amount;
             console.log(player);
 
-            //memberElement.style.backgroundImage = `url(${player.avatarUrl})`;
+            memberElement.style.backgroundImage = `url(${player.avatarUrl})`;
 
             memberList.appendChild(memberElement);
             coinsList.appendChild(coinsElement);

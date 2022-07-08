@@ -38,9 +38,9 @@
                     <p class="product-name product-text">@item.Name</p>
                     <p class="product-price product-text">Cost: <span style="color: #EE5353;">@item.Price</span></p>
                 </div>
-                <a asp-controller="Itemshop" asp-action="BuyItem" asp-route-itemId="@item.Id">
-                    <button class="buy-button">Buy</button>
-                </a>
+                @* <a asp-controller="Itemshop" asp-action="BuyItem" asp-route-itemId="@item.Id"> *@
+                    <button class="buy-button" data-item-id="@item.Id">Buy</button>
+                @* </a> *@
             </div>
 
             <div class="product-presentation">
