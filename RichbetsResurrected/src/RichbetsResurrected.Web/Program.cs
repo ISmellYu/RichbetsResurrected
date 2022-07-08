@@ -1,6 +1,9 @@
 ﻿using Ardalis.ListStartupServices;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 using RichbetsResurrected.Communication;
 using RichbetsResurrected.Communication.Client.Hub;
@@ -54,6 +57,13 @@ builder.Services.AddSwaggerGen(c =>
     c.EnableAnnotations();
     c.AddSignalRSwaggerGen(o => o.ScanAssembly(typeof(RouletteHub).Assembly));
 });
+
+builder.Services.AddHealthChecks()
+    .AddMySql(builder.Configuration.GetConnectionString("MysqlConnection"), name: "MySql db")
+    .AddSignalRHub("http://127.0.0.1:57681/rouletteHub", "RouletteHub")
+    .AddSignalRHub("http://127.0.0.1:57681/crashHub", "CrashHub")
+    .AddSignalRHub("http://127.0.0.1:57681/clientHub", "ClientHub");
+builder.Services.AddHealthChecksUI().AddInMemoryStorage();
 
 // add list services for diagnostic purposes - see https://github.com/ardalis/AspNetCoreStartupServices
 builder.Services.Configure<ServiceConfig>(config =>
@@ -135,6 +145,12 @@ app.UseEndpoints(endpoints =>
     endpoints.MapHub<RouletteHub>("/rouletteHub");
     endpoints.MapHub<ClientHub>("/clientHub");
     endpoints.MapHub<CrashHub>("crashHub");
+    app.MapHealthChecks("/healthchecks", new HealthCheckOptions()
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+        Predicate = _ => true,
+    });
+    endpoints.MapHealthChecksUI().RequireAuthorization(new AuthorizeAttribute(){Roles = "Admin"});
 });
 
 app.UseStatusCodePagesWithRedirects("/errors/{0}");
