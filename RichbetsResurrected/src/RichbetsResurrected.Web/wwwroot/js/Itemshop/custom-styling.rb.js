@@ -2,7 +2,7 @@ $(".buy-button").click(function() {
     console.log(this.getAttribute("data-item-id"));
     $.ajax({
         type: "POST",
-        url: `http://localhost:57681/Itemshop/BuyItem?itemId=${this.getAttribute("data-item-id")}`,
+        url: `/Itemshop/BuyItem?itemId=${this.getAttribute("data-item-id")}`,
         dataType: "html",
         success: function(data) {
             data = JSON.parse(data);
