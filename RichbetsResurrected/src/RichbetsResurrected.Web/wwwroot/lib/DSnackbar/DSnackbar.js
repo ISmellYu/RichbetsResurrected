@@ -194,11 +194,12 @@ const _defaultSnackStyle = `
 
     .snack-body-container{
         margin: auto;
-        width: 90%;
+        width: 100%;
         height: 100%;
         display: flex;
         justify-content: left;
         align-items: center;
+        padding: 0 30px 0 10px;
     }
 
     .snack-kill-button{
