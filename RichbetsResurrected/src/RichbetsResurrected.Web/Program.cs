@@ -15,7 +15,7 @@ using Microsoft.Extensions.FileProviders;
 using RichbetsResurrected.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
-HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
+// HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
 builder.WebHost.UseSetting("https_port", "57680");
 builder.WebHost.UseSetting("http_port", "57681");
 
