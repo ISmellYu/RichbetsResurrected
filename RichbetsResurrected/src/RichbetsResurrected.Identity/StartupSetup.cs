@@ -42,8 +42,14 @@ public static class StartupSetup
             options.Events.OnCreatingTicket = DiscordEvents.OnCreatingTicketAsync;
 
             options.Events.OnTicketReceived = DiscordEvents.OnTicketReceivedAsync;
+
+            options.Events.OnRemoteFailure = (context) =>
+            {
+                context.Response.Redirect("/errors/403");
+                context.HandleResponse();
+                return Task.CompletedTask;
+            };
         });
-        ;
     }
 
     public static void ConfigureCookies(this IServiceCollection services)
