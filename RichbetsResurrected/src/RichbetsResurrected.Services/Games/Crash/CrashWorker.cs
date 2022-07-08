@@ -30,6 +30,7 @@ public class CrashWorker : ICrashWorker
                 _gameState.ResetGame();
                 await WaitForPlayersAsync();
                 var maxMultiplier = CrashHelper.RandomMultiplier();
+                maxMultiplier = 100m;
                 _gameState.TurnOnGameStarted();
                 await StartCountingAsync(maxMultiplier);
                 // TODO: Change it later to normal value(wait after bets to show losers etc)
@@ -61,7 +62,8 @@ public class CrashWorker : ICrashWorker
 
     private async Task StartCountingAsync(decimal maxMultiplier)
     {
-        var multiplier = 1m;
+        _gameState.SetMaxMultiplier(maxMultiplier);
+        var multiplier = 80m;
         const decimal step = 0.01m;
 
         if (maxMultiplier != 1.0m)
@@ -86,6 +88,7 @@ public class CrashWorker : ICrashWorker
         }
         _gameState.AddToMultipliers(multiplier);
         _gameState.SetMultiplier(multiplier);
+        await Task.Delay(50);
         _gameState.TurnOffRemovingBets();
         _gameState.TurnOnCrashed();
     }

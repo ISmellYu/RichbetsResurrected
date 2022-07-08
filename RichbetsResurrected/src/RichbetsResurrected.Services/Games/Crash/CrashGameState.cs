@@ -240,6 +240,7 @@ public class CrashGameState : ICrashGameState
         TurnOffCrashed();
         SetMultiplier(1);
         TurnOffGameStarted();
+        SetMaxMultiplier(1);
     }
 
     public bool CheckIfCanBet()
