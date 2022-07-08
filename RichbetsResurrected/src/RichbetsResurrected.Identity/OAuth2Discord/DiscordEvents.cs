@@ -10,12 +10,24 @@ public static class DiscordEvents
 {
     public static readonly string GuildId = "***REMOVED***";
     public static readonly string RoleId = "***REMOVED***";
+    
+    public static readonly string[] WhitelistedIds = {
+        "***REMOVED***",
+        "***REMOVED***",
+        "***REMOVED***"
+    };
     public static async Task OnCreatingTicketAsync(OAuthCreatingTicketContext context)
     {
         var guilds = await GetGuildsAsync(context).ConfigureAwait(false);
         if (!IsGuildMember(guilds, GuildId))
         {
             context.Fail($"User is not a member of the guild with id {GuildId}.");
+            return;
+        }
+
+        if (!IsWhitelisted(context.Identity?.Claims.FirstOrDefault().Value))
+        {
+            context.Fail($"User is not whitelisted.");
             return;
         }
 
@@ -73,6 +85,11 @@ public static class DiscordEvents
     private static bool IsInRole(IEnumerable<DiscordRole> discordRoles, string roleId)
     {
         return discordRoles.Any(x => x.Id == roleId);
+    }
+    
+    private static bool IsWhitelisted(string userId)
+    {
+        return WhitelistedIds.Contains(userId);
     }
 
     private static async Task<IEnumerable<DiscordRole>> GetDiscordRolesAsync(OAuthCreatingTicketContext context)

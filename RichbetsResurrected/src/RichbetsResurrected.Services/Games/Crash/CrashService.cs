@@ -65,7 +65,9 @@ public class CrashService : ICrashService
     
     public async Task<CrashCashoutResult> CashoutAsync(int identityUserId, decimal? desiredMultiplier = null)
     {
-        if (GameState.IsCrashed() || !GameState.IsGameStarted() || !GameState.IsRunning() || !GameState.IsRemovingBetsAllowed())
+        Console.WriteLine("Max multiplier: " + GameState.GetMaxMultiplier());
+        if (GameState.IsCrashed() || !GameState.IsGameStarted() || !GameState.IsRunning() || !GameState.IsRemovingBetsAllowed() || 
+            desiredMultiplier >= GameState.GetMaxMultiplier())
         {
             return new CrashCashoutResult()
             {
