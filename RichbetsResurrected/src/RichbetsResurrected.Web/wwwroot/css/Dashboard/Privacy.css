@@ -12,10 +12,12 @@ body {
     position: sticky;
     top: 50%;
     overflow: auto;
+    background-color: red;
+    display: none;
 }
 
 .container {
-    width: 70%;
+    width: 90%;
 }
 
 .content-form {
@@ -26,15 +28,15 @@ body {
 
 .title {
     font-weight: 400;
-    font-size: 28px;
+    font-size: 31px;
     margin: 0;
-    padding: 71px;
+    padding: 50px 0 20px 0;
 }
 
 .content-text {
-    font-size: 20px;
+    font-size: 18px;
     margin: 0;
-    margin: 25px;
+    margin: 15px;
 }
 
 .content-text-bold {
@@ -49,17 +51,29 @@ body {
 .authors-list {
     list-style: none;
     font-size: 19px;
-    padding: 0 0 0 60px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 0 15%;
+}
+
+.authors-item{
+    width: 55%;
+    max-width: 230px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .authors-item-sub {
     color: #EE5353;
-    margin: 0 0 0 80px;
 }
 
 .numeric-decimals {
     width: 100%;
-    font-size: 19px;
+    font-size: 17px;
+    padding: 0;
+    margin: 0;
 }
 
 ul.numeric-decimals {
@@ -69,7 +83,7 @@ ul.numeric-decimals {
 
 ul.numeric-decimals li {
     list-style-type: none;
-    margin: 20px;
+    margin: 15px;
 }
 
 ul.numeric-decimals li ul {
@@ -80,12 +94,27 @@ ul.numeric-decimals li:before {
     counter-increment: section;
     content: counter(section) ". ";
     color: #EE5353;
-    font-size: 21px;
+    font-size: 19px;
     font-weight: 500;
-    margin: 0 20px 0 0;
+    margin: 0 10px 0 0;
 }
 
 ul.numeric-decimals li ul li:before {
     counter-increment: subsection;
     content: counter(section) "." counter(subsection) " ";
+}
+
+@media screen and (max-width: 715px) {
+    .container {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 1111px) {
+    .container {
+        width: 80%;
+    }
+    .authors-list{
+        padding: 0 0 0 5%;
+    }
 }
