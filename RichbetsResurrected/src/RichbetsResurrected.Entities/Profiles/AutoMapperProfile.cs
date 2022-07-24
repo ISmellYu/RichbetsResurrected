@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using RichbetsResurrected.Entities.Identity.Models;
 using RichbetsResurrected.Entities.ViewModels;
+using RichbetsResurrected.Entities.ViewModels.Identity;
 
 namespace RichbetsResurrected.Entities.Profiles;
 
