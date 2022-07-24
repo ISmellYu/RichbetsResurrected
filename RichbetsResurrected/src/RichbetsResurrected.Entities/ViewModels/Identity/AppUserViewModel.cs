@@ -1,4 +1,4 @@
-﻿namespace RichbetsResurrected.Entities.ViewModels;
+﻿namespace RichbetsResurrected.Entities.ViewModels.Identity;
 
 public class AppUserViewModel
 {
