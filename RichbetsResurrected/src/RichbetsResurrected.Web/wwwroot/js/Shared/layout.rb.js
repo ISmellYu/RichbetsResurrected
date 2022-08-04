@@ -27,18 +27,6 @@ $(".hamburger").click(function() {
     $("body").css("overflow", "hidden");
 });
 
-// #bar1{
-//     transform: matrix(0.7071, 0.7071, -0.7071, 0.7071, 0, 4);
-// }
-
-// #bar2{
-//     width: 0%; transform: matrix(1, 0, 0, 1, 8, 0);
-// }
-
-// #bar3{
-//     transform: matrix(0.7071, -0.7071, 0.7071, 0.7071, 0, -4);
-// }
-
 function hamburgerClose() {
     $("#bar1").css("transform", "matrix(0.7071, 0.7071, -0.7071, 0.7071, 0, 4)");
     $("#bar2").css("width", "0%");
@@ -61,7 +49,9 @@ connection.start().then(async function () {
 
         });
 
-        document.querySelector('.odometer').textContent = result;
+        document.querySelectorAll('.odometer').forEach(element => {
+            element.textContent = result;
+        })
 
     }, 1000);
 

@@ -1,0 +1,412 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
+
+body{
+    --wrapper-color: #EE5353;
+}
+
+.slot-container{
+    width: 760px;
+    height: 480px;
+    background-color: #191919;
+    margin: 10vh auto;
+    border-radius: 13px;
+    box-shadow: 0 0 15px #101010;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 5px #f1c40f solid;
+}
+
+.roll-wrapper{
+    background-color: black;
+    width: calc(160px * 3);
+    height: 160px;
+    margin-bottom: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 6px;
+    position: relative;
+    z-index: 2;
+}
+
+.roll-wrapper::before{
+    content: ' ';
+    position: absolute;
+    width: calc((160px * 3 ) + 7px);
+    height: 167px;
+    background: #f1c40f;
+    border-radius: 4px;
+    z-index: -1;
+}
+
+.roll-wrapper img{
+    width: 150px;
+    height: 150px;
+    border: 2px #EE5353 solid;
+    border-radius: 4px;
+}
+
+.controls-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    z-index: 2;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    flex-grow: 3;
+    flex-basis: 0;
+    flex-shrink: 0;
+}
+
+.title{
+    margin-top: -60px;
+    padding: 0;
+    font-family: 'Dancing Script', cursive;
+    font-size: 56px;
+}
+
+.spin-button{
+    width: 110px;
+    height: 50px;
+    border-radius: 4px;
+    background-image: linear-gradient(#22f14f,80%, #0ecc37);
+    font-size: 18px;
+    font-weight: 500;
+    position: relative;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 0px 1px rgba(0, 0, 0);
+}
+
+.spin-button:hover{
+    background-color: #20d147;
+}
+
+.spin-button:active{
+    margin-top: 4px;
+}
+
+.spin-button:active::before{
+    animation: button-hide .2s ease-in-out;
+    top: 0px;
+}
+
+@keyframes button-hide {
+    0%{
+        top: 4px;
+    }
+    100%{
+        top: 0px;
+    }
+}
+@keyframes button-show {
+    0%{
+        top: 0px;
+    }
+    100%{
+        top: 4px;
+    }
+}
+
+.spin-button::before{
+    background-color: #1bb83d;
+    width: 100%;
+    height: 100%;
+    content: ' ';
+    display: block;
+    position: absolute;
+    border-radius: 4px;
+    top: 4px;
+    left: 0;
+    z-index: -1;
+    animation: button-show .2s ease-in-out;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8);
+}
+
+.win-wrapper{
+    width: 147px;
+    height: 62px;
+    border-radius: 4px;
+    padding: 2px;
+    margin: 0 5px;
+    /* background: 
+        radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
+        radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%); */
+    background-color: var(--wrapper-color);
+}
+
+.win-amount{
+    height: calc(100% - 20px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #0ecc37;
+    border-radius: 4px;
+    font-weight: 500;
+    background-color: #252525;
+}
+
+.output-text{
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.8);
+}
+
+.rules-button{
+    width: 64px;
+    height: 64px;
+}
+
+ /* BET AMOUNT */
+.bet-wrapper{
+    width: 147px;
+    height: 52px;
+    border-radius: 4px;
+    padding: 2px;
+    /* background: 
+        radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
+        radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%); */
+    background-color: var(--wrapper-color);
+}
+
+.output-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.bet-control-container{
+    background-color: #252525;
+    width: 100%;
+    height: calc(100% - 20px);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: row;
+}
+
+.bet-controls{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 53px;
+    margin: 0 5px;
+}
+
+.bet-controls button{
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 0;
+    border-color: #c0392b;
+    color: #c0392b;
+    border-style: solid;
+}
+
+.bet-controls button:hover{
+    border-color: #ac3326;
+    color: #ac3326;
+}
+
+.bet-controls button:first-of-type{
+    border-color: #27ae60;
+    color: #27ae60;
+}
+
+.bet-controls button:first-of-type:hover{
+    border-color: #239c55;
+    color: #239c55;
+}
+
+.bet-input{
+    width: calc(100% - 67px);
+    padding: 0;
+    border: 0;
+    margin-left: 5px;
+    background-color: transparent;
+    font-size: 15px;
+}
+
+.bet-input:focus{
+    outline: none;
+}
+
+/* BALANCE */
+.balance-wrapper{
+    width: 147px;
+    height: 52px;
+    border-radius: 4px;
+    padding: 2px;
+    /* background: 
+        radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
+        radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%); */
+    background-color: var(--wrapper-color);
+}
+
+.balance-amount{
+    width: 100%;
+    height: calc(100% - 20px);
+    padding: 0;
+    border: 0;
+    background-color: #252525;
+    border-radius: 4px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    margin: 0 !important;
+}
+
+.balance-amount::after{
+    content: ' RBC';
+    margin: 0 0 2px 5px;
+    font-family: 'Poppins';
+}
+
+/* RULES */
+
+.rules-button{
+    background-color: #f39c12;
+    border: none;
+    border-radius: 4px;
+    width: 52px;
+    height: 52px;
+    cursor: pointer;
+    position: relative;
+}
+
+.rules-button::before{
+    content: ' ';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    background-color: #c07c10;
+    top: 4px;
+    left: 0;
+    z-index: -1;
+}
+
+.rules-info{
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 60px;
+    z-index: 9;
+    transition: width 1s;
+}
+
+.rules-button:hover > .rules-info{
+    width: 100px;
+    height: 100px;
+    animation: fade-in-rules .1s ease-in-out;
+}
+
+@keyframes fade-in-rules {
+    0%{
+        width: 0;
+        height: 0;
+    }
+    100%{
+        width: 100px;
+        height: 100px;
+    }
+}
+
+
+    /* INPUT ARROWS REMOVER */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+/*  */
+
+.controls-wrapper-min{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 130px;
+}
+
+.buttons-wrapper-min{
+    display: flex;
+    flex-direction: row;
+}
+
+@media screen and (max-width: 770px) {
+    .slot-container{
+        width: 90%;
+        height: 500px;
+    }
+    .controls-wrapper{
+        display: none;
+    }
+    .controls-wrapper-min{
+        display: flex;
+        position: absolute;
+        bottom: 10px;
+    }
+}
+
+@media screen and (max-width: 548px) {
+    .roll-wrapper img{
+        width: 120px;
+        height: 120px;
+    }
+    .roll-wrapper{
+        width: calc(120px * 3);
+        height: 120px;
+    }
+    .roll-wrapper::before{
+        width: calc((120px * 3) + 25px);
+        height: 137px;
+    }
+}
+
+@media screen and (max-width: 515px) {
+    .slot-container{
+        width: 98%;
+        height: 650px;
+    }
+    .controls-wrapper-min{
+        position: relative;
+    }
+    .buttons-wrapper-min{
+        width: 170px;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 10px 0;
+    }
+    .button-dummy{
+        width: min-content !important;
+    }
+    .output-wrapper{
+        flex-direction: column;
+    }
+    .win-wrapper{
+        margin: 10px 0;
+    }
+    .spin-button{
+        height: auto;
+    }
+}
