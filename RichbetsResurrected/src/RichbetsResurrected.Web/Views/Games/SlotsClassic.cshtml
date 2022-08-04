@@ -6,14 +6,15 @@
 @section Head{
     <link rel="stylesheet" href="~/css/Games/slots-classic.css">
     <script src="~/js/Games/SlotsClassic/slots-controller.rb.js" defer></script>
+    <script src="~/js/Games/SlotsClassic/dummy-server.js" defer></script>
 }
 
 <div class="slot-container">
     <h1 class="title">Slots Classic</h1>
     <div class="roll-wrapper">
-        <img src="/img/Slots_Classic/animation-one.gif" alt="Slots 1 slot">
-        <img src="/img/Slots_Classic/animation-two.gif" alt="Slots 2 slot">
-        <img src="/img/Slots_Classic/animation-three.gif" alt="Slots 3 slot">
+        <img src="/img/Slots_Classic/1.png" alt="Slots 1 slot" data-slot="0" class="spin-slot">
+        <img src="/img/Slots_Classic/2.png" alt="Slots 2 slot" data-slot="1" class="spin-slot">
+        <img src="/img/Slots_Classic/3.png" alt="Slots 3 slot" data-slot="2" class="spin-slot">
     </div>
     <div class="controls-wrapper">
 
@@ -32,7 +33,7 @@
                 <span class="output-text">BALANCE</span>
             </div>
             <div class="win-wrapper">
-                <div class="win-amount">+409000 RBC</div>
+                <div class="win-amount">RICHBETS</div>
                 <span class="output-text">WIN</span>
             </div>
             <div class="bet-wrapper">
@@ -71,7 +72,7 @@
                 <span class="output-text">BALANCE</span>
             </div>
             <div class="win-wrapper">
-                <div class="win-amount">+409000 RBC</div>
+                <div class="win-amount">RICHBETS</div>
                 <span class="output-text">WIN</span>
             </div>
             <div class="bet-wrapper">
