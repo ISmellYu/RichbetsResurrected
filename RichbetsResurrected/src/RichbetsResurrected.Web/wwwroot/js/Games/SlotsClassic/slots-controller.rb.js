@@ -1,8 +1,14 @@
 const IMG_PATH = '/img/Slots_Classic/'
 
+var gambleSound = new Audio('/sounds/Slots_Classic/gambleSound.mp3')
+var modalOn = new Audio('/sounds/Slots_Classic/modalOn.mp3')
+var slotScrollAndStop = new Audio('/sounds/Slots_Classic/slotScrollAndStop.mp3')
+
 var rollSlots = document.querySelectorAll('.spin-slot')
 
 $('.spin-button').click(function() {
+    modalOn.play()
+    gambleSound.play()
     $('.win-amount').text('RICHBETS')
 
     let serverResult = serverSpin($('.bet-input').val(), 1)
@@ -12,6 +18,7 @@ $('.spin-button').click(function() {
     })
 
     let i = 0;
+    slotScrollAndStop.play()
     let showResultsInterval = setInterval(() => {
         document.querySelector(`[data-slot='${i}']`).setAttribute('src', `${IMG_PATH}${serverResult.result[i]}.png`)
         i++
