@@ -21,13 +21,13 @@ public class SlotsHub : Hub<ISlotsHub>
     }
     
     [SignalRMethod(summary: "Invokable by clients to start a spin")]
-    public async Task<SlotsSpinResult> Spin(int bet, int delayAmountToWithdraw)
+    public async Task<SlotsSpinResult> Spin(int betAmount, int delayAmountToWithdraw)
     {
         var userId = Convert.ToInt32(Context.UserIdentifier);
         var request = new SlotsSpinRequest
         {
             UserId = userId,
-            Amount = bet,
+            Amount = betAmount,
             DelayAmountToWithdraw = delayAmountToWithdraw
         };
         var result = await _slotsService.SpinAsync(request, Context.ConnectionId);
