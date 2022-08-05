@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using RichbetsResurrected.Entities.Roulette;
+using RichbetsResurrected.Entities.Games.Roulette;
 
 namespace RichbetsResurrected.Communication.Roulette.Events;
 

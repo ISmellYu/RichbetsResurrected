@@ -4,11 +4,13 @@ using RichbetsResurrected.Interfaces.Client;
 using RichbetsResurrected.Interfaces.Games;
 using RichbetsResurrected.Interfaces.Games.Crash;
 using RichbetsResurrected.Interfaces.Games.Roulette;
+using RichbetsResurrected.Interfaces.Games.Slots;
 using RichbetsResurrected.Interfaces.Inventory;
 using RichbetsResurrected.Interfaces.Shop;
 using RichbetsResurrected.Services.Client;
 using RichbetsResurrected.Services.Games.Crash;
 using RichbetsResurrected.Services.Games.Roulette;
+using RichbetsResurrected.Services.Games.Slots;
 using RichbetsResurrected.Services.Shop;
 
 namespace RichbetsResurrected.Services;
@@ -25,6 +27,7 @@ public class DefaultServiceModule : Module
     {
         RegisterRoulette(builder);
         RegisterCrash(builder);
+        RegisterSlots(builder);
     }
 
     private void RegisterRoulette(ContainerBuilder builder)
@@ -44,8 +47,8 @@ public class DefaultServiceModule : Module
         builder.RegisterType<CrashService>().As<ICrashService>().InstancePerLifetimeScope();
 
         builder.RegisterType<CrashWorker>().As<ICrashWorker>()
-            .SingleInstance()
-            .AutoActivate() // Same instance for everything// Resolve the service before anything else once to create the instance
+            .SingleInstance()   // Same instance for everything
+            .AutoActivate() // Resolve the service before anything else once to create the instance
             .OnActivated(StartGame); // Run a function at service creation
     }
     
@@ -53,6 +56,11 @@ public class DefaultServiceModule : Module
     {
         builder.RegisterType<ShopService>().As<IShopService>().InstancePerLifetimeScope();
         builder.RegisterType<InventoryService>().As<IInventoryService>().InstancePerLifetimeScope();
+    }
+    
+    private void RegisterSlots(ContainerBuilder builder)
+    {
+        builder.RegisterType<SlotsService>().As<ISlotsService>().InstancePerLifetimeScope();
     }
 
 

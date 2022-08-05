@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using RichbetsResurrected.Entities.Client;
-using RichbetsResurrected.Entities.Roulette;
+using RichbetsResurrected.Entities.Games.Roulette;
 using RichbetsResurrected.Interfaces.Games.Roulette;
 
 namespace RichbetsResurrected.Services.Games.Roulette;

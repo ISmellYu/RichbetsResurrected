@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using RichbetsResurrected.Entities.Client;
-using RichbetsResurrected.Entities.Crash;
+using RichbetsResurrected.Entities.Games.Crash;
 using RichbetsResurrected.Interfaces.Client;
 using RichbetsResurrected.Interfaces.DAL;
 using RichbetsResurrected.Interfaces.Games.Crash;

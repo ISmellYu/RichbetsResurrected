@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using RichbetsResurrected.Entities.Identity.Models;
+using RichbetsResurrected.Entities.DatabaseEntities.Identity.Models;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace RichbetsResurrected.Interfaces.Identity;

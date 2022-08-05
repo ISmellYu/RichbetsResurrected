@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using RichbetsResurrected.Entities.Roulette;
+using RichbetsResurrected.Entities.Games.Roulette;
 using SignalRSwaggerGen.Attributes;
 
 namespace RichbetsResurrected.Communication.Roulette.Hub;
