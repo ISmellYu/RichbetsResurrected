@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using RichbetsResurrected.Entities.Crash;
+using RichbetsResurrected.Entities.Games.Crash;
 using RichbetsResurrected.Interfaces.Games.Crash;
 using RichbetsResurrected.Utilities.Constants;
 using RichbetsResurrected.Utilities.Helpers;

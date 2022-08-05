@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using RichbetsResurrected.Entities.Client;
-using RichbetsResurrected.Entities.Crash;
+using RichbetsResurrected.Entities.Games.Crash;
 using RichbetsResurrected.Interfaces.Games.Crash;
 
 namespace RichbetsResurrected.Services.Games.Crash;

@@ -1,4 +1,4 @@
-﻿namespace RichbetsResurrected.Entities.Roulette;
+﻿namespace RichbetsResurrected.Entities.Games.Roulette;
 
 public class RoulettePlayer
 {

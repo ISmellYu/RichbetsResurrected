@@ -12,6 +12,7 @@ using RichbetsResurrected.Services;
 using RichbetsResurrected.Web;
 using Westwind.AspNetCore.LiveReload;
 using Microsoft.Extensions.FileProviders;
+using RichbetsResurrected.Communication.Slots.Hub;
 using RichbetsResurrected.Entities;
 using Serilog;
 
@@ -125,6 +126,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapHub<RouletteHub>("/rouletteHub");
     endpoints.MapHub<ClientHub>("/clientHub");
     endpoints.MapHub<CrashHub>("crashHub");
+    endpoints.MapHub<SlotsHub>("slotsHub");
 });
 
 app.UseStatusCodePagesWithRedirects("/errors/{0}");

@@ -1,5 +1,5 @@
 ﻿using RichbetsResurrected.Entities.Client;
-using RichbetsResurrected.Entities.Crash;
+using RichbetsResurrected.Entities.Games.Crash;
 
 namespace RichbetsResurrected.Interfaces.Games.Crash;
 

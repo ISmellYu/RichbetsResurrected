@@ -1,6 +1,6 @@
 ﻿using RichbetsResurrected.Entities.Client;
 
-namespace RichbetsResurrected.Entities.Crash;
+namespace RichbetsResurrected.Entities.Games.Crash;
 
 public class CrashInfo
 {
