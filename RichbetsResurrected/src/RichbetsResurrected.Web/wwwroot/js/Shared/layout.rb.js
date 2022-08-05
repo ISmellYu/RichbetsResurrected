@@ -49,7 +49,7 @@ connection.start().then(async function () {
 
         });
 
-        document.querySelectorAll('.odometer').forEach(element => {
+        document.querySelectorAll('.walletmeter').forEach(element => {
             element.textContent = result;
         })
 

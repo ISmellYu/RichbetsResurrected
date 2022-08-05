@@ -32,7 +32,7 @@
     <div class="navbar-wrapper">
         <div class="point-box">
             <img class="rbc-logo" src="~/img/rbcoin30x30.png" alt="rbcoin">
-            <p id="odometer" class="odometer">@await _richbetRepository.GetPointsFromUserAsync(Convert.ToInt32(_userManager.GetUserId(User)))</p>
+            <p id="odometer" class="odometer walletmeter">@await _richbetRepository.GetPointsFromUserAsync(Convert.ToInt32(_userManager.GetUserId(User)))</p>
             <p class="points-currency">RBC</p>
         </div>
 
