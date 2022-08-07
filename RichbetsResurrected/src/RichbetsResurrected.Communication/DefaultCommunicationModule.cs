@@ -5,6 +5,7 @@ using MediatR.Pipeline;
 using RichbetsResurrected.Communication.Client.Hub;
 using RichbetsResurrected.Communication.Crash.Hub;
 using RichbetsResurrected.Communication.Roulette.Hub;
+using RichbetsResurrected.Communication.Slots.Hub;
 using Module = Autofac.Module;
 
 namespace RichbetsResurrected.Communication;
@@ -40,5 +41,6 @@ public class DefaultCommunicationModule : Module
         builder.RegisterType<RouletteHub>().ExternallyOwned();
         builder.RegisterType<CrashHub>().ExternallyOwned();
         builder.RegisterType<ClientHub>().ExternallyOwned();
+        builder.RegisterType<SlotsHub>().ExternallyOwned();
     }
 }

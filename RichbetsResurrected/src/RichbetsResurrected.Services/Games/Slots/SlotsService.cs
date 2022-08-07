@@ -4,6 +4,8 @@ using RichbetsResurrected.Communication.Slots.Events;
 using RichbetsResurrected.Entities.Games.Slots;
 using RichbetsResurrected.Interfaces.DAL;
 using RichbetsResurrected.Interfaces.Games.Slots;
+using RichbetsResurrected.Interfaces.Utils;
+using RichbetsResurrected.Services.Utils;
 using RichbetsResurrected.Utilities.Constants;
 
 namespace RichbetsResurrected.Services.Games.Slots;
@@ -12,13 +14,13 @@ public class SlotsService : ISlotsService
 {
     private readonly ILifetimeScope _lifetimeScope;
     private readonly IRichbetRepository _richbetRepository;
-    private readonly IMediator _mediator;
+    private readonly IBackgroundTasks _backgroundTasks;
     
-    public SlotsService(ILifetimeScope lifetimeScope, IRichbetRepository richbetRepository, IMediator mediator)
+    public SlotsService(ILifetimeScope lifetimeScope, IRichbetRepository richbetRepository, IBackgroundTasks backgroundTasks)
     {
         _lifetimeScope = lifetimeScope;
         _richbetRepository = richbetRepository;
-        _mediator = mediator;
+        _backgroundTasks = backgroundTasks;
     }
     
     public async Task<SlotsSpinResult> SpinAsync(SlotsSpinRequest request, string connectionId)
@@ -68,31 +70,20 @@ public class SlotsService : ISlotsService
         };
 
         var withdrawResult = GetWithdrawResult(generatedSymbols, request.Amount);
-        
+
+        _backgroundTasks.DelayWithdrawalAsync(withdrawResult, Convert.ToInt32(1000 * request.DelayAmountToWithdraw), request.UserId,
+            connectionId);
+        // _asyncRunner.Run<>(DelayWithdrawalAsync(withdrawResult, Convert.ToInt32(1000 * request.DelayAmountToWithdraw), request.UserId, connectionId));
         // Run another thread with delay to simulate spinning
-        Task.Run(async () =>
-        {
-            await DelayWithdrawalAsync(withdrawResult, Convert.ToInt32(1000 * request.DelayAmountToWithdraw), request.UserId, connectionId);
-        });
+        // Task.Run(async () =>
+        // {
+        //     await DelayWithdrawalAsync(withdrawResult, Convert.ToInt32(1000 * request.DelayAmountToWithdraw), request.UserId, connectionId);
+        // });
         
 
         return slotSpinResult;
     }
     
-    private async Task DelayWithdrawalAsync(SlotsWithdrawResult result, int delay, int userId, string connectionId)
-    {
-        await Task.Delay(delay);
-        await _mediator.Publish(new SlotsWithdrawNotification(result, connectionId));
-        if (!result.IsWin || result.WinAmount is null)
-            return;
-        using (var scope = _lifetimeScope.BeginLifetimeScope())
-        {
-            var richbetRepository = scope.Resolve<IRichbetRepository>();
-            await richbetRepository.AddPointsToUserAsync(userId, result.WinAmount.Value);
-        }
-        
-    }
-
     private SymbolEnum[] GetRandomRoll(int amount)
     {
         var numbers = new SymbolEnum[amount];

@@ -7,11 +7,13 @@ using RichbetsResurrected.Interfaces.Games.Roulette;
 using RichbetsResurrected.Interfaces.Games.Slots;
 using RichbetsResurrected.Interfaces.Inventory;
 using RichbetsResurrected.Interfaces.Shop;
+using RichbetsResurrected.Interfaces.Utils;
 using RichbetsResurrected.Services.Client;
 using RichbetsResurrected.Services.Games.Crash;
 using RichbetsResurrected.Services.Games.Roulette;
 using RichbetsResurrected.Services.Games.Slots;
 using RichbetsResurrected.Services.Shop;
+using RichbetsResurrected.Services.Utils;
 
 namespace RichbetsResurrected.Services;
 
@@ -19,6 +21,7 @@ public class DefaultServiceModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
+        builder.RegisterType<BackgroundTasks>().As<IBackgroundTasks>().SingleInstance();
         RegisterShop(builder);
         RegisterGames(builder);
     }
