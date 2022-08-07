@@ -33,4 +33,6 @@ public class SlotsHub : Hub<ISlotsHub>
         var result = await _slotsService.SpinAsync(request, Context.ConnectionId);
         return result;
     }
+    
+    
 }
