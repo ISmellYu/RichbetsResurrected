@@ -15,9 +15,9 @@ public class BackgroundTasks : IBackgroundTasks
         _lifetimeScope = lifetimeScope;
     }
     
-    public async Task DelayWithdrawalAsync(SlotsWithdrawResult result, int delay, int userId, string connectionId)
+    public async Task DelaySlotsWithdrawalAsync(SlotsWithdrawResult result, int millisecondsDelay, int userId, string connectionId)
     {
-        await Task.Delay(delay);
+        await Task.Delay(millisecondsDelay);
 
         await using var scope = _lifetimeScope.BeginLifetimeScope();
         var mediator = scope.Resolve<IMediator>();
@@ -26,5 +26,13 @@ public class BackgroundTasks : IBackgroundTasks
             return;
         var richbetRepository = scope.Resolve<IRichbetRepository>();
         await richbetRepository.AddPointsToUserAsync(userId, result.WinAmount.Value);
+    }
+    public async Task DelayAddingPointsAsync(int userId, int points, int millisecondsDelay)
+    {
+        await Task.Delay(millisecondsDelay);
+        
+        await using var scope = _lifetimeScope.BeginLifetimeScope();
+        var richbetRepository = scope.Resolve<IRichbetRepository>();
+        await richbetRepository.AddPointsToUserAsync(userId, points);
     }
 }
