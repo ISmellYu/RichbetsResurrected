@@ -71,7 +71,7 @@ public class SlotsService : ISlotsService
 
         var withdrawResult = GetWithdrawResult(generatedSymbols, request.Amount);
 
-        _backgroundTasks.DelayWithdrawalAsync(withdrawResult, Convert.ToInt32(1000 * request.DelayAmountToWithdraw), request.UserId,
+        _backgroundTasks.DelaySlotsWithdrawalAsync(withdrawResult, Convert.ToInt32(1000 * request.DelayAmountToWithdraw), request.UserId,
             connectionId);
         // _asyncRunner.Run<>(DelayWithdrawalAsync(withdrawResult, Convert.ToInt32(1000 * request.DelayAmountToWithdraw), request.UserId, connectionId));
         // Run another thread with delay to simulate spinning
@@ -100,15 +100,7 @@ public class SlotsService : ISlotsService
     private SlotsWithdrawResult GetWithdrawResult(IReadOnlyList<SymbolEnum> symbolArray, int amount)
     {
         // check if all symbols are the same
-        var isAllSame = true;
-        for (var i = 0; i < symbolArray.Count - 1; i++)
-        {
-            if (symbolArray[i] != symbolArray[i + 1]) continue;
-            isAllSame = false;
-            break;
-        }
-        
-        if (isAllSame)
+        if (symbolArray.All(p => p == symbolArray[0]))
         {
             var multiplier = GetMultiplierFromSymbol(symbolArray[0]);
             multiplier *= 3;    // 3x multiplier for 3 symbols in a row
@@ -119,17 +111,19 @@ public class SlotsService : ISlotsService
         }
         
         // check if 2 symbols are the same
+        SymbolEnum? symbolPicked = null;
         var isTwoSame = false;
         for (var i = 0; i < symbolArray.Count - 1; i++)
         {
-            if (symbolArray[i] != symbolArray[i + 1]) continue;
+            if (symbolArray.Count(p => p == symbolArray[i]) != 2) continue;
+            symbolPicked = symbolArray[i];
             isTwoSame = true;
             break;
         }
-        
-        if (isTwoSame)
+
+        if (isTwoSame && symbolPicked != null)
         {
-            var multiplier = GetMultiplierFromSymbol(symbolArray[0]);
+            var multiplier = GetMultiplierFromSymbol(symbolPicked.Value);
             multiplier *= 2;    // 2x multiplier for 2 symbols in a row
             return new SlotsWithdrawResult()
             {
