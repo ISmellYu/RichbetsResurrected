@@ -4,5 +4,7 @@ namespace RichbetsResurrected.Interfaces.Utils;
 
 public interface IBackgroundTasks
 {
-    Task DelayWithdrawalAsync(SlotsWithdrawResult result, int delay, int userId, string connectionId);
+    Task DelaySlotsWithdrawalAsync(SlotsWithdrawResult result, int millisecondsDelay, int userId, string connectionId);
+    Task DelayAddingPointsAsync(int userId, int points, int millisecondsDelay);
+
 }

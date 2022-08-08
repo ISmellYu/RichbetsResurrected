@@ -25,16 +25,16 @@ public static class SlotsConfig
     public const int MaxSymbolValue = 9;
     
     
-    public static Dictionary<SymbolEnum, float> SymbolMultipliers = new()
+    public static readonly Dictionary<SymbolEnum, float> SymbolMultipliers = new()
     {
-        {SymbolEnum.Seven, 0.5f},
-        {SymbolEnum.Watermelon, 0.5f},
-        {SymbolEnum.Grape, 0.5f},
-        {SymbolEnum.Lemon, 0.5f},
-        {SymbolEnum.Cherry, 0.5f},
-        {SymbolEnum.Plum, 0.5f},
-        {SymbolEnum.Orange, 0.5f},
-        {SymbolEnum.Diamond, 0.5f},
-        {SymbolEnum.Shooter, 0.5f},
+        {SymbolEnum.Seven, 5f},
+        {SymbolEnum.Watermelon, 1f},
+        {SymbolEnum.Grape, 1f},
+        {SymbolEnum.Lemon, 1f},
+        {SymbolEnum.Cherry, 1f},
+        {SymbolEnum.Plum, 1f},
+        {SymbolEnum.Orange, 1f},
+        {SymbolEnum.Diamond, 1f},
+        {SymbolEnum.Shooter, 3f},
     }; 
 }
