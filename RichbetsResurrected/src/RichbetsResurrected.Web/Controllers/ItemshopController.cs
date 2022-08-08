@@ -47,17 +47,20 @@ public class ItemshopController : Controller
 
     public IActionResult LureModules()
     {
-        return View();
+        //return View();
+        return RedirectToAction("Index", "Error");
     }
 
     public IActionResult MuteBypass()
     {
-        return View();
+        //return View();
+        return RedirectToAction("Index", "Error");
     }
 
     public IActionResult BuildingItems()
     {
-        return View();
+        //return View();
+        return RedirectToAction("Index", "Error");
     }
     
     
