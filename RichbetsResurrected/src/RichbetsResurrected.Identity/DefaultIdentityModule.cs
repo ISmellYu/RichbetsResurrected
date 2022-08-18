@@ -8,6 +8,7 @@ using RichbetsResurrected.Identity.OAuth2Discord;
 using RichbetsResurrected.Identity.Repositories;
 using RichbetsResurrected.Interfaces.DAL;
 using RichbetsResurrected.Interfaces.DAL.Shop;
+using RichbetsResurrected.Interfaces.DAL.Statistics;
 using RichbetsResurrected.Interfaces.Identity;
 
 namespace RichbetsResurrected.Identity;
@@ -44,5 +45,6 @@ public class DefaultIdentityModule : Module
         builder.RegisterType<AccountRepository>().As<IAccountRepository>().InstancePerLifetimeScope();
         builder.RegisterType<RichbetRepository>().As<IRichbetRepository>().InstancePerLifetimeScope();
         builder.RegisterType<ShopRepository>().As<IShopRepository>().InstancePerLifetimeScope();
+        builder.RegisterType<StatisticsRepository>().As<IStatisticsRepository>().InstancePerLifetimeScope();
     }
 }

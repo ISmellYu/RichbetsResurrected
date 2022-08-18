@@ -29,8 +29,9 @@ public class InventoryService : IInventoryService
     {
         var userItem = _shopRepository.GetUserItemByIds(identityUserId, itemId);
         if (userItem == null) return;
-        var equippable = _shopRepository.GetItemTypeByItemId(userItem.ItemId).IsEquippable;
-        if (equippable)
+        var itemType = _shopRepository.GetItemTypeByItemId(userItem.ItemId);
+        if (itemType == null) return;
+        if (itemType.IsEquippable)
         {
             userItem.State = ItemState.Equipped;
             _shopRepository.UpdateUserItem(userItem);

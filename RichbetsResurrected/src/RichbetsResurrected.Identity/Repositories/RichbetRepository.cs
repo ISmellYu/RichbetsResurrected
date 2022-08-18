@@ -2,16 +2,19 @@
 using RichbetsResurrected.Entities.DatabaseEntities.BaseRichbet;
 using RichbetsResurrected.Identity.Contexts;
 using RichbetsResurrected.Interfaces.DAL;
+using RichbetsResurrected.Interfaces.DAL.Statistics;
 
 namespace RichbetsResurrected.Identity.Repositories;
 
 public class RichbetRepository : IRichbetRepository
 {
     private readonly AppDbContext _context;
+    private readonly IStatisticsRepository _statisticsRepository;
 
-    public RichbetRepository(AppDbContext context)
+    public RichbetRepository(AppDbContext context, IStatisticsRepository statisticsRepository)
     {
         _context = context;
+        _statisticsRepository = statisticsRepository;
     }
     public IQueryable<RichbetAppUser> RichbetAppUsers => _context.RichbetAppUsers.AsNoTracking();
     // Readonly
@@ -35,6 +38,8 @@ public class RichbetRepository : IRichbetRepository
             AppUserId = identityUserId, DiscordUserId = discordId
         });
         await _context.SaveChangesAsync();
+        
+        await _statisticsRepository.AddStatisticAsync(identityUserId);
     }
 
     public async Task DeleteRichbetUserByIdentityIdAsync(int identityUserId)
@@ -55,6 +60,7 @@ public class RichbetRepository : IRichbetRepository
             return;
         richbetUser.Points += points;
         await _context.SaveChangesAsync();
+        await _statisticsRepository.AddToWonPointsAsync(identityUserId, points);
     }
 
     public async Task RemovePointsFromUserAsync(int identityUserId, int points)
@@ -64,6 +70,7 @@ public class RichbetRepository : IRichbetRepository
             return;
         richbetUser.Points -= points;
         await _context.SaveChangesAsync();
+        await _statisticsRepository.AddToLostPointsAsync(identityUserId, points);
     }
 
     public async Task SetDailyToUserAsync(int identityUserId, bool isRedeemed)
