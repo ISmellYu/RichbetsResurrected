@@ -67,4 +67,14 @@ public class StatisticsRepository : IStatisticsRepository
         stat.LoseAmount += points;
         await _context.SaveChangesAsync();
     }
+    public Task<int> GetGlobalWinAmountAsync()
+    {
+        var stats = Statistics.AsNoTracking();
+        return stats.SumAsync(p => p.WinAmount);
+    }
+    public Task<int> GetGlobalLostAmountAsync()
+    {
+        var stats = Statistics.AsNoTracking();
+        return stats.SumAsync(p => p.LoseAmount);
+    }
 }

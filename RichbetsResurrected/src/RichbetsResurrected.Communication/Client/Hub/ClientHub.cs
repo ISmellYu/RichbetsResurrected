@@ -32,7 +32,8 @@ public class ClientHub : Microsoft.AspNetCore.SignalR.Hub
         var discordId = Context.User.Claims.FirstOrDefault(c => c.Type == OAuthConstants.DiscordId).Value;
         var avatarUrl = _accountRepository.GetDiscordAvatarUrl(Context.User);
         var richbetUser = await _richbetRepository.GetRichbetUserAsync(appUserId);
-        var stat = await _statisticsRepository.GetStatisticAsync(appUserId);
+        var globalLost = await _statisticsRepository.GetGlobalLostAmountAsync();
+        var globalWon = await _statisticsRepository.GetGlobalWinAmountAsync();
         var clientInfo = new ClientInfo
         {
             UserName = Context.User?.Identity.Name,
@@ -40,7 +41,8 @@ public class ClientHub : Microsoft.AspNetCore.SignalR.Hub
             IdentityUserId = appUserId,
             AvatarUrl = avatarUrl,
             RichbetUser = richbetUser,
-            Statistic = stat
+            GlobalLoss = globalLost,
+            GlobalWin = globalWon
         };
         return clientInfo;
     }

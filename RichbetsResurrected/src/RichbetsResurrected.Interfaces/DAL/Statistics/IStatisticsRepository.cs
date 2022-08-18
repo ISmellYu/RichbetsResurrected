@@ -9,4 +9,6 @@ public interface IStatisticsRepository
     Task<bool> DoesStatisticsExistAsync(int userId);
     Task AddToWonPointsAsync(int userId, int points);
     Task AddToLostPointsAsync(int userId, int points);
+    Task<int> GetGlobalWinAmountAsync();
+    Task<int> GetGlobalLostAmountAsync();
 }
