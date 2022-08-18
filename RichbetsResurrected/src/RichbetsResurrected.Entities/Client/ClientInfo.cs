@@ -13,5 +13,6 @@ public class ClientInfo
     public string AvatarUrl { get; set; }
     public RichbetUser RichbetUser { get; set; }
     public List<Item> EquippedItems { get; set; }
-    public Statistic Statistic { get; set; }
+    public int GlobalWin { get; set; }
+    public int GlobalLoss { get; set; }
 }
