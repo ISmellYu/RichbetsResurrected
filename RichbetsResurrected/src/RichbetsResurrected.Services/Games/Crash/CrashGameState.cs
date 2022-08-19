@@ -162,10 +162,14 @@ public class CrashGameState : ICrashGameState
     public CrashCashoutResult Cashout(int identityUserId, decimal? desiredMultiplier = null)
     {
         if (!IsInGame(identityUserId))
-            return new CrashCashoutResult(){IsSuccess = false, Error = new CrashError(){Message = "You are not in game"}};
+            return new CrashCashoutResult
+                {IsSuccess = false, Error = new CrashError
+                    {Message = "You are not in game"}};
 
         if (AlreadyCashouted(identityUserId))
-            return new CrashCashoutResult(){IsSuccess = false, Error = new CrashError(){Message = "You already cashouted"}};
+            return new CrashCashoutResult
+                {IsSuccess = false, Error = new CrashError
+                    {Message = "You already cashouted"}};
 
         CrashPlayer player = null;
         foreach (var crashPlayer in Players)
@@ -185,7 +189,7 @@ public class CrashGameState : ICrashGameState
             break;
         }
         
-        return new CrashCashoutResult()
+        return new CrashCashoutResult
         {
             IsSuccess = true,
             Error = null,

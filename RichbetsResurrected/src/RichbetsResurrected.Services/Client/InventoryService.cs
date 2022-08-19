@@ -18,7 +18,7 @@ public class InventoryService : IInventoryService
 
     public Inventory GetInventory(int identityUserId)
     {
-        var inv = new Inventory()
+        var inv = new Inventory
         {
             ActiveItems = GetActiveItems(identityUserId), EquippedItems = GetEquippedItems(identityUserId), Items = GetUserItemsWithAll(identityUserId)
         };
