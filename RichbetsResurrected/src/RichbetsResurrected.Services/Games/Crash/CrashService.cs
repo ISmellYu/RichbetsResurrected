@@ -69,7 +69,7 @@ public class CrashService : ICrashService
         if (GameState.IsCrashed() || !GameState.IsGameStarted() || !GameState.IsRunning() || !GameState.IsRemovingBetsAllowed() || 
             desiredMultiplier >= GameState.GetMaxMultiplier())
         {
-            return new CrashCashoutResult()
+            return new CrashCashoutResult
             {
                 IsSuccess = false,
                 Error = new CrashError

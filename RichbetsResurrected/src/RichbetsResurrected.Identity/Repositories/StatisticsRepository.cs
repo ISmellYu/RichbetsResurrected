@@ -27,7 +27,7 @@ public class StatisticsRepository : IStatisticsRepository
     {
         if (await DoesStatisticsExistAsync(userId))
             return;
-        var stat = new Statistic()
+        var stat = new Statistic
         {
             LoseAmount = 0, WinAmount = 0, RichetUserId = userId
         };

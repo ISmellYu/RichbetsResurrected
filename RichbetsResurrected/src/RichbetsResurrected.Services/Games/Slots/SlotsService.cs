@@ -7,6 +7,7 @@ using RichbetsResurrected.Interfaces.Games.Slots;
 using RichbetsResurrected.Interfaces.Utils;
 using RichbetsResurrected.Services.Utils;
 using RichbetsResurrected.Utilities.Constants;
+using RichbetsResurrected.Utilities.Helpers;
 
 namespace RichbetsResurrected.Services.Games.Slots;
 
@@ -29,7 +30,7 @@ public class SlotsService : ISlotsService
 
         if (request.Amount < 0)
         {
-            return new SlotsSpinResult()
+            return new SlotsSpinResult
             {
                 IsSuccess = false, ErrorMessage = "Bet amount must be greater than 0"
             };
@@ -37,7 +38,7 @@ public class SlotsService : ISlotsService
         
         if (richbetUser.Points < request.Amount)
         {
-            return new SlotsSpinResult()
+            return new SlotsSpinResult
             {
                 IsSuccess = false, ErrorMessage = "You don't have enough points to bet this amount"
             };
@@ -45,7 +46,7 @@ public class SlotsService : ISlotsService
         
         if (request.DelayAmountToWithdraw is > 5 or < 1)
         {
-            return new SlotsSpinResult()
+            return new SlotsSpinResult
             {
                 IsSuccess = false, ErrorMessage = "Delay amount to withdraw must be between 1 and 5"
             };
@@ -53,7 +54,7 @@ public class SlotsService : ISlotsService
 
         if (request.Amount < SlotsConfig.MinBet)
         {
-            return new SlotsSpinResult()
+            return new SlotsSpinResult
             {
                 IsSuccess = false, ErrorMessage = "You must bet at least " + SlotsConfig.MinBet + " points"
             };
@@ -63,24 +64,17 @@ public class SlotsService : ISlotsService
         
         var generatedSymbols = GetRandomRoll(SlotsConfig.Columns);
         
-        var slotSpinResult = new SlotsSpinResult()
+        var slotSpinResult = new SlotsSpinResult
         {
             IsSuccess = true,
             Symbols = generatedSymbols
         };
 
-        var withdrawResult = GetWithdrawResult(generatedSymbols, request.Amount);
+        var withdrawResult = WinHandler.Handle(generatedSymbols, request.Amount);
 
         _backgroundTasks.DelaySlotsWithdrawalAsync(withdrawResult, Convert.ToInt32(1000 * request.DelayAmountToWithdraw), request.UserId,
             connectionId);
-        // _asyncRunner.Run<>(DelayWithdrawalAsync(withdrawResult, Convert.ToInt32(1000 * request.DelayAmountToWithdraw), request.UserId, connectionId));
-        // Run another thread with delay to simulate spinning
-        // Task.Run(async () =>
-        // {
-        //     await DelayWithdrawalAsync(withdrawResult, Convert.ToInt32(1000 * request.DelayAmountToWithdraw), request.UserId, connectionId);
-        // });
         
-
         return slotSpinResult;
     }
     
@@ -104,7 +98,7 @@ public class SlotsService : ISlotsService
         {
             var multiplier = GetMultiplierFromSymbol(symbolArray[0]);
             multiplier *= 3;    // 3x multiplier for 3 symbols in a row
-            return new SlotsWithdrawResult()
+            return new SlotsWithdrawResult
             {
                 IsWin = true, Multiplier = multiplier, WinAmount = Convert.ToInt32(multiplier * amount) 
             };
@@ -125,13 +119,13 @@ public class SlotsService : ISlotsService
         {
             var multiplier = GetMultiplierFromSymbol(symbolPicked.Value);
             multiplier *= 2;    // 2x multiplier for 2 symbols in a row
-            return new SlotsWithdrawResult()
+            return new SlotsWithdrawResult
             {
                 IsWin = true, Multiplier = multiplier, WinAmount = Convert.ToInt32(multiplier * amount) 
             };
         }
         
-        return new SlotsWithdrawResult()
+        return new SlotsWithdrawResult
         {
             IsWin = false, Multiplier = null, WinAmount = null
         };
@@ -142,4 +136,28 @@ public class SlotsService : ISlotsService
         return SlotsConfig.SymbolMultipliers[symbol];
     }
 
+}
+
+public static class WinHandler
+{
+    public static SlotsWithdrawResult Handle(IReadOnlyList<SymbolEnum> symbols, int amount)
+    {
+        // Check if all symbols are different
+        if (symbols.Count(p => p == symbols[0]) == 1 && symbols.Count(p => p == symbols[1]) == 1)
+        {
+            return new SlotsWithdrawResult
+            {
+                IsWin = false, Multiplier = null, WinAmount = null
+            };
+        }
+        
+        var mostCommonSymbol = symbols.GroupBy(p => p).OrderByDescending(p => p.Count()).First().Key;
+        var iOccurences = symbols.Count(p => p == mostCommonSymbol);
+        var multiplier = SlotsHelper.Multipliers[mostCommonSymbol][iOccurences];
+        
+        return new SlotsWithdrawResult
+        {
+            IsWin = true, Multiplier = multiplier, WinAmount = Convert.ToInt32(multiplier * amount)
+        };
+    }
 }
