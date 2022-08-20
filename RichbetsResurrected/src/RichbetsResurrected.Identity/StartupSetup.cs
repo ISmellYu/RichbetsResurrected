@@ -34,6 +34,7 @@ public static class StartupSetup
             options.ClientSecret = discordClientSecret;
             options.Scope.Add("guilds");
             options.Scope.Add("guilds.members.read");
+            options.Scope.Add("email");
             options.CallbackPath = new PathString("/Account/signin-discord");
 
 
