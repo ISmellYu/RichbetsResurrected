@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using MediatR;
 using RichbetsResurrected.Communication.Roulette.Events;
-using RichbetsResurrected.Entities.Roulette;
+using RichbetsResurrected.Entities.Games.Roulette;
 using RichbetsResurrected.Interfaces.DAL;
 using RichbetsResurrected.Interfaces.Games.Roulette;
 using RichbetsResurrected.Utilities.Constants;
@@ -12,13 +12,13 @@ namespace RichbetsResurrected.Services.Games.Roulette;
 public class RouletteWorker : IRouletteWorker
 {
     private readonly IRouletteGameState _gameState;
-    private readonly ILifetimeScope _hubLifetimeScope;
+    private readonly ILifetimeScope _lifetimeScope;
     private readonly IMediator _mediator;
 
-    public RouletteWorker(IRouletteGameState gameState, ILifetimeScope hubLifetimeScope, IMediator mediator)
+    public RouletteWorker(IRouletteGameState gameState, ILifetimeScope lifetimeScope, IMediator mediator)
     {
         _gameState = gameState;
-        _hubLifetimeScope = hubLifetimeScope;
+        _lifetimeScope = lifetimeScope;
         _mediator = mediator;
     }
 
@@ -110,7 +110,7 @@ public class RouletteWorker : IRouletteWorker
         var losers = players.Where(p => p.Color != winColor).ToList();
 
         var result = new RouletteResult(number, winColor, winners.ToList(), losers.ToList());
-        await using (var scope = _hubLifetimeScope.BeginLifetimeScope())
+        await using (var scope = _lifetimeScope.BeginLifetimeScope())
         {
             var repository = scope.Resolve<IRichbetRepository>();
             switch (winColor)

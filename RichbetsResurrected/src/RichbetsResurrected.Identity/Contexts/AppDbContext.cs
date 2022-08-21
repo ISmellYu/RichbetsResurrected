@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using RichbetsResurrected.Entities.DatabaseEntities;
 using RichbetsResurrected.Entities.DatabaseEntities.BaseRichbet;
+using RichbetsResurrected.Entities.DatabaseEntities.Identity.Models;
 using RichbetsResurrected.Entities.DatabaseEntities.Shop;
-using RichbetsResurrected.Entities.Identity.Models;
+using RichbetsResurrected.Entities.DatabaseEntities.Statistics;
 
 namespace RichbetsResurrected.Identity.Contexts;
 
@@ -30,6 +31,7 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, int, AppUserClai
     public DbSet<ConsumableItem> ConsumableItems { get; set; }
     public DbSet<Discount> Discounts { get; set; }
     public DbSet<UserItem> UserItems { get; set; }
+    public DbSet<Statistic> Statistics { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -70,8 +72,9 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, int, AppUserClai
         
         modelBuilder.Entity<SubCategory>().HasOne<Category>(u => u.Category)
             .WithMany(u => u.SubCategories).HasForeignKey(e => e.CategoryId).IsRequired();
-        
-        
+
+        modelBuilder.Entity<Statistic>().HasOne<RichbetUser>(u => u.RichetUser)
+            .WithOne(e => e.Statistics).IsRequired();
 
         // alternately this is built-in to EF Core 2.2
         //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

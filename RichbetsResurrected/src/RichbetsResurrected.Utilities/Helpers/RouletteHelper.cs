@@ -1,4 +1,4 @@
-﻿using RichbetsResurrected.Entities.Roulette;
+﻿using RichbetsResurrected.Entities.Games.Roulette;
 
 namespace RichbetsResurrected.Utilities.Helpers;
 

@@ -7,6 +7,7 @@ crashConn.start().then(function () {
     var oldAllowPlacingBets;
     var _total;
     var playersOld;
+    var onlinePlayersOld;
 
     var playerData = {
         isBetting: false,
@@ -18,6 +19,8 @@ crashConn.start().then(function () {
         autoBetting: false,
         autoBetsTotal: 0
     };
+
+    var playersStyling = new Map();
 
     var manualButton = document.getElementById("manual-place-bet");
     var autoButton = document.getElementById("auto-place-bet");
@@ -64,6 +67,13 @@ crashConn.start().then(function () {
                     renderPlayersLostList(data.players);
                 }
                 oldCrashed = data.crashed;
+            }
+
+            if (JSON.stringify(data.onlinePlayers) !== JSON.stringify(onlinePlayersOld)) {
+
+                onlinePlayersOld = data.onlinePlayers;
+
+                renderOnlinePlayers(data.onlinePlayers);
             }
 
             if (oldAllowPlacingBets != data.allowPlacingBets) {
@@ -242,6 +252,7 @@ crashConn.start().then(function () {
         data.forEach(element => {
             let cashout;
             let cashoutAmount;
+            let tr = document.createElement("tr");
             
             if (element.whenCashouted == 0) {
                 cashout = `<td>Pending..</td>`;
@@ -251,8 +262,14 @@ crashConn.start().then(function () {
                 cashoutAmount = `<td style="color: #00C74D">+${Math.trunc(element.amount * element.whenCashouted)}</td>`; 
             }
 
-            let tr = document.createElement("tr");
-            tr.innerHTML = `<td style="background-image: url(${element.avatarUrl});">${element.userName}</td>${cashout}${cashoutAmount}`;
+            console.log(playersStyling.has(element.discordUserId));
+
+            if (playersStyling.has(element.discordUserId)) {
+                tr.innerHTML = `<td style="background-image: url(${element.avatarUrl});"><p class="${playersStyling.get(element.discordUserId)}">${element.userName}</p></td>${cashout}${cashoutAmount}`;
+            }else{
+                tr.innerHTML = `<td style="background-image: url(${element.avatarUrl});">${element.userName}</td>${cashout}${cashoutAmount}`;
+            }
+
             $(".players-table").append(tr);
             _total += element.amount;
         });
@@ -290,5 +307,39 @@ crashConn.start().then(function () {
 
     function clearPlayersList() {
         $(".players-table").empty();
+    }
+
+    function renderOnlinePlayers(data) {
+        let list = document.querySelector('.onlinePlayersList');
+
+        while (list.firstChild) {
+            list.removeChild(list.firstChild);
+        }
+
+        data.forEach(player => {
+            console.log(playersStyling);
+            console.log(player);
+
+            let memberElement = document.createElement("li");
+            let paragraph = document.createElement("p");
+
+            (player.equippedItems).forEach(element => {
+                if (element.itemType.isNicknameAnimation || element.itemType.isNicknameBanner || element.itemType.isNicknameEffect || element.itemType.isNicknamePattern) {
+                    paragraph.classList.add(element.description);
+                    if (!playersStyling.has(player.discordUserId)) {
+                        playersStyling.set(player.discordUserId, element.description);
+                    }
+                }
+            });
+
+            paragraph.textContent = player.userName;
+            paragraph.style.fontSize = "15px";
+
+            memberElement.appendChild(paragraph);
+            memberElement.style.backgroundImage = `url(${player.avatarUrl})`;
+            memberElement.classList.add('onlinePlayersElement');
+
+            list.appendChild(memberElement);
+        });
     }
 });

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using RichbetsResurrected.Entities.Client;
-using RichbetsResurrected.Entities.Crash;
+using RichbetsResurrected.Entities.Games.Crash;
 using RichbetsResurrected.Interfaces.Games.Crash;
 
 namespace RichbetsResurrected.Services.Games.Crash;
@@ -11,8 +11,9 @@ public class CrashGameState : ICrashGameState
     private BlockingCollection<CrashPlayer> Players { get; } = new();
     private List<CrashResult> History { get; } = new();
     private BlockingCollection<decimal> Multipliers { get; } = new();
-
+    
     private decimal Multiplier { get; set; }
+    private decimal MaxMultiplier { get; set; }
     private decimal TimeLeft { get; set; }
 
     private bool AllowPlacingBets { get; set; }
@@ -100,7 +101,11 @@ public class CrashGameState : ICrashGameState
     {
         Multiplier = multiplier;
     }
-
+    public void SetMaxMultiplier(decimal maxMultiplier)
+    {
+        MaxMultiplier = maxMultiplier;
+    }
+    
     public void SetTimeLeft(decimal timeLeft)
     {
         TimeLeft = timeLeft;
@@ -114,6 +119,11 @@ public class CrashGameState : ICrashGameState
     public decimal GetMultiplier()
     {
         return Multiplier;
+    }
+    
+    public decimal GetMaxMultiplier()
+    {
+        return MaxMultiplier;
     }
 
     public List<CrashPlayer> GetPlayers()
@@ -152,10 +162,14 @@ public class CrashGameState : ICrashGameState
     public CrashCashoutResult Cashout(int identityUserId, decimal? desiredMultiplier = null)
     {
         if (!IsInGame(identityUserId))
-            return new CrashCashoutResult(){IsSuccess = false, Error = new CrashError(){Message = "You are not in game"}};
+            return new CrashCashoutResult
+                {IsSuccess = false, Error = new CrashError
+                    {Message = "You are not in game"}};
 
         if (AlreadyCashouted(identityUserId))
-            return new CrashCashoutResult(){IsSuccess = false, Error = new CrashError(){Message = "You already cashouted"}};
+            return new CrashCashoutResult
+                {IsSuccess = false, Error = new CrashError
+                    {Message = "You already cashouted"}};
 
         CrashPlayer player = null;
         foreach (var crashPlayer in Players)
@@ -175,7 +189,7 @@ public class CrashGameState : ICrashGameState
             break;
         }
         
-        return new CrashCashoutResult()
+        return new CrashCashoutResult
         {
             IsSuccess = true,
             Error = null,
@@ -230,6 +244,7 @@ public class CrashGameState : ICrashGameState
         TurnOffCrashed();
         SetMultiplier(1);
         TurnOffGameStarted();
+        SetMaxMultiplier(1);
     }
 
     public bool CheckIfCanBet()

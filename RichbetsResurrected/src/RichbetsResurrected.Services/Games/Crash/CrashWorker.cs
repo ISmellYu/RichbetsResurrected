@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using RichbetsResurrected.Entities.Crash;
+using RichbetsResurrected.Entities.Games.Crash;
 using RichbetsResurrected.Interfaces.Games.Crash;
 using RichbetsResurrected.Utilities.Constants;
 using RichbetsResurrected.Utilities.Helpers;
@@ -30,7 +30,6 @@ public class CrashWorker : ICrashWorker
                 _gameState.ResetGame();
                 await WaitForPlayersAsync();
                 var maxMultiplier = CrashHelper.RandomMultiplier();
-                maxMultiplier = 100m;
                 _gameState.TurnOnGameStarted();
                 await StartCountingAsync(maxMultiplier);
                 // TODO: Change it later to normal value(wait after bets to show losers etc)
@@ -62,6 +61,7 @@ public class CrashWorker : ICrashWorker
 
     private async Task StartCountingAsync(decimal maxMultiplier)
     {
+        _gameState.SetMaxMultiplier(maxMultiplier);
         var multiplier = 1m;
         const decimal step = 0.01m;
 
@@ -79,14 +79,17 @@ public class CrashWorker : ICrashWorker
 
                 multiplier += (int) multiplier * step;
                 
+                if (multiplier > maxMultiplier)
+                    multiplier = maxMultiplier;
+                
                 await Task.Delay(100);
             }
         }
-        
-        _gameState.TurnOffRemovingBets();
-        _gameState.TurnOnCrashed();
         _gameState.AddToMultipliers(multiplier);
         _gameState.SetMultiplier(multiplier);
+        await Task.Delay(50);
+        _gameState.TurnOffRemovingBets();
+        _gameState.TurnOnCrashed();
     }
 
     private CrashResult GetResult()

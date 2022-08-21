@@ -15,9 +15,9 @@
 
 <nav class="navbar">
     <a href="../Itemshop" class="nav-item">Main shop</a>
-    <a asp-controller="Itemshop" asp-action="LureModules" class="nav-item">Lure modules</a>
-    <a asp-controller="Itemshop" asp-action="MuteBypass" class="nav-item">Mute bypass</a>
-    <a asp-controller="Itemshop" asp-action="BuildingItems" class="nav-item">Building items</a>
+    <a asp-controller="Itemshop" asp-action="LureModules" class="nav-item nav-disabled">Lure modules</a>
+    <a asp-controller="Itemshop" asp-action="MuteBypass" class="nav-item nav-disabled">Mute bypass</a>
+    <a asp-controller="Itemshop" asp-action="BuildingItems" class="nav-item nav-disabled">Building items</a>
 </nav>
 
 <h1 class="page-title">Custom styling</h1>
@@ -38,9 +38,9 @@
                     <p class="product-name product-text">@item.Name</p>
                     <p class="product-price product-text">Cost: <span style="color: #EE5353;">@item.Price</span></p>
                 </div>
-                <a asp-controller="Itemshop" asp-action="BuyItem" asp-route-itemId="@item.Id">
-                    <button class="buy-button">Buy</button>
-                </a>
+                @* <a asp-controller="Itemshop" asp-action="BuyItem" asp-route-itemId="@item.Id"> *@
+                    <button class="buy-button" data-item-id="@item.Id">Buy</button>
+                @* </a> *@
             </div>
 
             <div class="product-presentation">

@@ -2,7 +2,7 @@
 using AspNet.Security.OAuth.Discord;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using RichbetsResurrected.Entities.Identity.Models;
+using RichbetsResurrected.Entities.DatabaseEntities.Identity.Models;
 using RichbetsResurrected.Interfaces.Identity;
 using RichbetsResurrected.Utilities.Constants;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;

@@ -1,5 +1,5 @@
 ﻿using RichbetsResurrected.Entities.Client;
-using RichbetsResurrected.Entities.Crash;
+using RichbetsResurrected.Entities.Games.Crash;
 
 namespace RichbetsResurrected.Interfaces.Games.Crash;
 
@@ -21,9 +21,11 @@ public interface ICrashGameState
     bool IsRemovingBetsAllowed();
     bool IsPlacingBetsAllowed();
     void SetMultiplier(decimal multiplier);
+    void SetMaxMultiplier(decimal maxMultiplier);
     void SetTimeLeft(decimal timeLeft);
     decimal GetTimeLeft();
     decimal GetMultiplier();
+    decimal GetMaxMultiplier();
     List<CrashPlayer> GetPlayers();
     List<ClientInfo> GetOnlinePlayers();
     List<CrashResult> GetResults(int amount);

@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
@@ -10,20 +11,36 @@ public static class DiscordEvents
 {
     public static readonly string GuildId = "***REMOVED***";
     public static readonly string RoleId = "***REMOVED***";
+    
+    public static readonly string[] WhitelistedIds = {
+        "***REMOVED***", // ***REMOVED***
+        "***REMOVED***", // ***REMOVED***
+        "***REMOVED***", // ***REMOVED***
+        "***REMOVED***" // ***REMOVED***
+    };
+
     public static async Task OnCreatingTicketAsync(OAuthCreatingTicketContext context)
     {
         var guilds = await GetGuildsAsync(context).ConfigureAwait(false);
+        var userId = context.Principal.FindFirst(ClaimTypes.NameIdentifier).Value;
         if (!IsGuildMember(guilds, GuildId))
         {
             context.Fail($"User is not a member of the guild with id {GuildId}.");
-            return;
+            throw new DiscordAuthFailException($"Not in guild user id: {userId}");
+        }
+
+        
+        if (!IsWhitelisted(userId))
+        {
+            context.Fail($"User is not whitelisted with id {userId}.");
+            throw new DiscordAuthFailException($"Not whitelisted user id: {userId}");
         }
 
         var userRoles = await GetDiscordRolesAsync(context).ConfigureAwait(false);
         if (!IsInRole(userRoles, RoleId))
         {
             context.Fail($"User is not in the role with id {RoleId}.");
-            return;
+            throw new DiscordAuthFailException($"Not in role user id: {userId}");
         }
 
         var tokens = context.Properties.GetTokens().ToList();
@@ -73,6 +90,11 @@ public static class DiscordEvents
     private static bool IsInRole(IEnumerable<DiscordRole> discordRoles, string roleId)
     {
         return discordRoles.Any(x => x.Id == roleId);
+    }
+    
+    private static bool IsWhitelisted(string userId)
+    {
+        return WhitelistedIds.Contains(userId);
     }
 
     private static async Task<IEnumerable<DiscordRole>> GetDiscordRolesAsync(OAuthCreatingTicketContext context)

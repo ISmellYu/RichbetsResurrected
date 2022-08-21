@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using RichbetsResurrected.Entities.Identity.Models;
+using RichbetsResurrected.Entities.DatabaseEntities.Identity.Models;
 using RichbetsResurrected.Entities.Shop;
 using RichbetsResurrected.Interfaces.Shop;
 

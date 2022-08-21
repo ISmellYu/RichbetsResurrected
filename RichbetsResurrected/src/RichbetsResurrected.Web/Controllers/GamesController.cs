@@ -25,4 +25,9 @@ public class GamesController : Controller
     {
         return View();
     }
+
+    public IActionResult SlotsClassic()
+    {
+        return View();
+    }
 }

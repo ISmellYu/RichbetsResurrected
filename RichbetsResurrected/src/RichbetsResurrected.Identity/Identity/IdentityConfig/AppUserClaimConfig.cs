@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RichbetsResurrected.Entities.DatabaseEntities;
 using RichbetsResurrected.Entities.DatabaseEntities.BaseRichbet;
-using RichbetsResurrected.Entities.Identity.Models;
+using RichbetsResurrected.Entities.DatabaseEntities.Identity.Models;
 
 namespace RichbetsResurrected.Identity.Identity.IdentityConfig;
 

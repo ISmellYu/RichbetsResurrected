@@ -5,6 +5,8 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 500;
+    margin: 0;
+    width: fit-content;
 }
 
 .giraffe {
@@ -14,6 +16,8 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 500;
+    margin: 0;
+    width: fit-content;
 }
 
 .tiger {
@@ -23,6 +27,8 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 500;
+    margin: 0;
+    width: fit-content;
 }
 
 .fade {
@@ -32,6 +38,8 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 500;
+    margin: 0;
+    width: fit-content;
 }
 
 .marble-fade {
@@ -41,6 +49,8 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 500;
+    margin: 0;
+    width: fit-content;
 }
 
 .poland2 {
@@ -51,6 +61,8 @@
     background-position-y: center;
     -webkit-text-fill-color: transparent;
     font-weight: 500;
+    margin: 0;
+    width: fit-content;
 }
 
 

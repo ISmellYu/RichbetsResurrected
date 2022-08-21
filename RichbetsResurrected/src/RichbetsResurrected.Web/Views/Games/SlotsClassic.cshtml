@@ -1,0 +1,92 @@
+@{
+    ViewData["Title"] = "Slots Classic";
+    Layout = "_MainLayout";
+}
+
+@section Head{
+    <link rel="stylesheet" href="~/css/Games/slots-classic.css">
+    <script src="~/js/Games/SlotsClassic/slots-controller.rb.js" defer></script>
+}
+
+<div class="slot-container">
+    <h1 class="title">Slots Classic</h1>
+    <div class="roll-wrapper">
+        <img src="/img/Slots_Classic/1.png" alt="Slots 1 slot" data-slot="0" class="spin-slot">
+        <img src="/img/Slots_Classic/2.png" alt="Slots 2 slot" data-slot="1" class="spin-slot">
+        <img src="/img/Slots_Classic/3.png" alt="Slots 3 slot" data-slot="2" class="spin-slot">
+    </div>
+    <div class="controls-wrapper">
+
+        <div style="width: 110px; display: flex; justify-content: center;" class="button-dummy">
+            <button class="rules-button">
+                RULES
+                <div class="rules-info">
+
+                </div>
+            </button>
+        </div>
+
+        <div class="output-wrapper">
+            <div class="balance-wrapper">
+                <div class="balance-amount odometer walletmeter" id="odometer"></div>
+                <span class="output-text">BALANCE</span>
+            </div>
+            <div class="win-wrapper">
+                <div class="win-amount">RICHBETS</div>
+                <span class="output-text">WIN</span>
+            </div>
+            <div class="bet-wrapper">
+                <div class="bet-control-container">
+                    <input class="bet-input" type="number" value="10" id="bet-amount">
+                    <div class="bet-controls">
+                        <button class="amount-button" data-action="add">+</button>
+                        <button class="amount-button" data-action="sub">-</button>
+                    </div>
+                </div>
+                <span class="output-text">BET AMOUNT</span>
+            </div>
+        </div>
+
+        <button class="spin-button">SPIN</button>
+
+    </div>
+
+    <div class="controls-wrapper-min">
+
+        <div class="buttons-wrapper-min">
+            <div style="width: 110px; display: flex; justify-content: center;" class="button-dummy">
+                <button class="rules-button">
+                    RULES
+                    <div class="rules-info">
+
+                    </div>
+                </button>
+            </div>
+            <button class="spin-button">SPIN</button>
+        </div>
+
+        <div class="output-wrapper">
+            <div class="balance-wrapper">
+                <div class="balance-amount odometer" id="odometer"></div>
+                <span class="output-text">BALANCE</span>
+            </div>
+            <div class="win-wrapper">
+                <div class="win-amount">RICHBETS</div>
+                <span class="output-text">WIN</span>
+            </div>
+            <div class="bet-wrapper">
+                <div class="bet-control-container">
+                    <input class="bet-input" type="number" value="10" id="bet-amount">
+                    <div class="bet-controls">
+                        <button class="amount-button" data-action="add">+</button>
+                        <button class="amount-button" data-action="sub">-</button>
+                    </div>
+                </div>
+                <span class="output-text">BET AMOUNT</span>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

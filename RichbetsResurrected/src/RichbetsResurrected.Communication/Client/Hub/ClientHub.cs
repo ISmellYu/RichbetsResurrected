@@ -1,7 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Authorization;
 using RichbetsResurrected.Entities.Client;
+using RichbetsResurrected.Entities.DatabaseEntities.Statistics;
 using RichbetsResurrected.Interfaces.DAL;
+using RichbetsResurrected.Interfaces.DAL.Statistics;
 using RichbetsResurrected.Interfaces.Identity;
 using RichbetsResurrected.Utilities.Constants;
 using SignalRSwaggerGen.Attributes;
@@ -15,11 +17,12 @@ public class ClientHub : Microsoft.AspNetCore.SignalR.Hub
 {
     private readonly IAccountRepository _accountRepository;
     private readonly IRichbetRepository _richbetRepository;
-    public ClientHub(IAccountRepository accountRepository, IRichbetRepository richbetRepository)
+    private readonly IStatisticsRepository _statisticsRepository;
+    public ClientHub(IAccountRepository accountRepository, IRichbetRepository richbetRepository, IStatisticsRepository statisticsRepository)
     {
         _accountRepository = accountRepository;
         _richbetRepository = richbetRepository;
-
+        _statisticsRepository = statisticsRepository;
     }
 
     [SignalRMethod(summary: "Invokable by client to get currently logged in user info")]
@@ -29,13 +32,17 @@ public class ClientHub : Microsoft.AspNetCore.SignalR.Hub
         var discordId = Context.User.Claims.FirstOrDefault(c => c.Type == OAuthConstants.DiscordId).Value;
         var avatarUrl = _accountRepository.GetDiscordAvatarUrl(Context.User);
         var richbetUser = await _richbetRepository.GetRichbetUserAsync(appUserId);
+        var globalLost = await _statisticsRepository.GetGlobalLostAmountAsync();
+        var globalWon = await _statisticsRepository.GetGlobalWinAmountAsync();
         var clientInfo = new ClientInfo
         {
             UserName = Context.User?.Identity.Name,
             DiscordUserId = discordId,
             IdentityUserId = appUserId,
             AvatarUrl = avatarUrl,
-            RichbetUser = richbetUser
+            RichbetUser = richbetUser,
+            GlobalLoss = globalLost,
+            GlobalWin = globalWon
         };
         return clientInfo;
     }
