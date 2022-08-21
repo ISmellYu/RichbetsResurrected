@@ -71,4 +71,9 @@ public class DefaultServiceModule : Module
     {
         _ = Task.Run(() => gameArgs.Instance.StartAsync());
     }
+    
+    private static void RegisterScheduledTasks(ContainerBuilder builder)
+    {
+        builder.RegisterType<ScheduledTasks>().As<IScheduledTasks>().SingleInstance().AutoActivate();
+    }
 }
