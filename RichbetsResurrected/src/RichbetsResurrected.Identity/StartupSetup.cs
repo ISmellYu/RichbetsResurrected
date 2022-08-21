@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RichbetsResurrected.Entities.Identity.Models;
+using RichbetsResurrected.Entities.DatabaseEntities.Identity.Models;
 using RichbetsResurrected.Identity.Contexts;
 using RichbetsResurrected.Identity.OAuth2Discord;
 
@@ -34,6 +34,7 @@ public static class StartupSetup
             options.ClientSecret = discordClientSecret;
             options.Scope.Add("guilds");
             options.Scope.Add("guilds.members.read");
+            options.Scope.Add("email");
             options.CallbackPath = new PathString("/Account/signin-discord");
 
 
@@ -42,8 +43,14 @@ public static class StartupSetup
             options.Events.OnCreatingTicket = DiscordEvents.OnCreatingTicketAsync;
 
             options.Events.OnTicketReceived = DiscordEvents.OnTicketReceivedAsync;
+
+            options.Events.OnRemoteFailure = (context) =>
+            {
+                context.Response.Redirect("/errors/403");
+                context.HandleResponse();
+                return Task.CompletedTask;
+            };
         });
-        ;
     }
 
     public static void ConfigureCookies(this IServiceCollection services)

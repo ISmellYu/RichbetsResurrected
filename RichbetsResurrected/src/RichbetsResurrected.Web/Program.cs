@@ -12,9 +12,12 @@ using RichbetsResurrected.Services;
 using RichbetsResurrected.Web;
 using Westwind.AspNetCore.LiveReload;
 using Microsoft.Extensions.FileProviders;
+using RichbetsResurrected.Communication.Slots.Hub;
+using RichbetsResurrected.Entities;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
+// HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
 builder.WebHost.UseSetting("https_port", "57680");
 builder.WebHost.UseSetting("http_port", "57681");
 
@@ -29,7 +32,6 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.CheckConsentNeeded = context => true;
     options.MinimumSameSitePolicy = SameSiteMode.None;
 });
-// builder.Services.AddDirectoryBrowser();
 
 builder.Services.AddAuthStuff(builder.Configuration);
 
@@ -54,6 +56,7 @@ builder.Services.AddSwaggerGen(c =>
     c.AddSignalRSwaggerGen(o => o.ScanAssembly(typeof(RouletteHub).Assembly));
 });
 
+
 // add list services for diagnostic purposes - see https://github.com/ardalis/AspNetCoreStartupServices
 builder.Services.Configure<ServiceConfig>(config =>
 {
@@ -68,15 +71,15 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     containerBuilder.RegisterModule(new DefaultIdentityModule(builder.Configuration));
     containerBuilder.RegisterModule(new DefaultCommunicationModule());
     containerBuilder.RegisterModule(new DefaultServiceModule());
+    containerBuilder.RegisterModule(new DefaultEntityModule());
 });
 
+builder.Logging.AddSerilog();
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
-//builder.Logging.AddAzureWebAppDiagnostics(); add this if deploying to Azure
 
 var app = builder.Build();
 
-// GlobalHost.DependencyResolver = new AutofacDependencyResolver(app.Services.GetAutofacRoot());
 
 if (app.Environment.IsDevelopment())
 {
@@ -93,7 +96,7 @@ else
 
 app.UseRouting();
 app.UseStaticFiles();
-app.UseStaticFiles(new StaticFileOptions()
+app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "UnityFiles")),
     RequestPath = "/unity",
@@ -102,16 +105,6 @@ app.UseStaticFiles(new StaticFileOptions()
 
 app.UseCookiePolicy();
 
-// app.UseStaticFiles(new StaticFileOptions()
-// {
-//     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory())),
-//     ServeUnknownFileTypes = true
-//
-// });
-// app.UseDirectoryBrowser(new DirectoryBrowserOptions()
-// {
-//     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory())),
-// });
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -133,6 +126,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapHub<RouletteHub>("/rouletteHub");
     endpoints.MapHub<ClientHub>("/clientHub");
     endpoints.MapHub<CrashHub>("crashHub");
+    endpoints.MapHub<SlotsHub>("slotsHub");
 });
 
 app.UseStatusCodePagesWithRedirects("/errors/{0}");

@@ -60,20 +60,18 @@ conn.start().then(function () {
   }
 
   function setMultiplier(data) {
-    let firstPart = (data+"").split(".")[0];
-    let secondArray = Array.from(String(data), Number);
+  	if (data == 1) {
+  		data = "1.00";
+  	}
 
-    if (isNaN(secondArray[2])) {
-      secondArray[2] = 0;
-    }
+  	let multiplierArray = (data + "").split("."); // convert ex. 1.2 -> 1.20
 
-    if (isNaN(secondArray[3])) {
-      secondArray[3] = 0;
-    }
-
-    document.getElementById("n0").textContent = firstPart;
-    document.getElementById("n1").textContent = secondArray[2];
-    document.getElementById("n2").textContent = secondArray[3];
+  	if (multiplierArray[1].length == 1) {
+  		multiplierArray[1] = multiplierArray[1] + 0;
+  	}
+  	document.getElementById("n0").textContent = multiplierArray[0];
+  	document.getElementById("n1").textContent = multiplierArray[1][0];
+  	document.getElementById("n2").textContent = multiplierArray[1][1];
   }
 
   function constructObj(data) {

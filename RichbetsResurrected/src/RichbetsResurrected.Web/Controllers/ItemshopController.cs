@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using RichbetsResurrected.Entities.DatabaseEntities.Identity.Models;
 using RichbetsResurrected.Entities.DatabaseEntities.Shop;
-using RichbetsResurrected.Entities.Identity.Models;
 using RichbetsResurrected.Entities.Shop;
 using RichbetsResurrected.Interfaces.Shop;
 using RichbetsResurrected.Web.ViewModels;
@@ -47,17 +47,20 @@ public class ItemshopController : Controller
 
     public IActionResult LureModules()
     {
-        return View();
+        //return View();
+        return RedirectToAction("Index", "Error");
     }
 
     public IActionResult MuteBypass()
     {
-        return View();
+        //return View();
+        return RedirectToAction("Index", "Error");
     }
 
     public IActionResult BuildingItems()
     {
-        return View();
+        //return View();
+        return RedirectToAction("Index", "Error");
     }
     
     

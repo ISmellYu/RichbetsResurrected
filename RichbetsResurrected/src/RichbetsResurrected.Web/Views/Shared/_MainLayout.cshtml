@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using RichbetsResurrected.Entities.Identity.Models
+@using RichbetsResurrected.Entities.DatabaseEntities.Identity.Models
 @using RichbetsResurrected.Interfaces.DAL
 @inject SignInManager<AppUser> _signInManager
 @inject UserManager<AppUser> _userManager
@@ -16,6 +16,8 @@
     <script src="~/lib/odometer/odometer.min.js"></script>
     <script src="~/lib/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/Shared/layout.rb.js" defer></script>
+    <link rel="stylesheet" href="~/css/username.styles.css">
+    <script src="~/lib/DSnackbar/Dsnackbar.js" defer></script>
     <script
         src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
@@ -30,7 +32,7 @@
     <div class="navbar-wrapper">
         <div class="point-box">
             <img class="rbc-logo" src="~/img/rbcoin30x30.png" alt="rbcoin">
-            <p id="odometer" class="odometer">@await _richbetRepository.GetPointsFromUserAsync(Convert.ToInt32(_userManager.GetUserId(User)))</p>
+            <p id="odometer" class="odometer walletmeter">@await _richbetRepository.GetPointsFromUserAsync(Convert.ToInt32(_userManager.GetUserId(User)))</p>
             <p class="points-currency">RBC</p>
         </div>
 
@@ -54,17 +56,17 @@
     </div>
     <div id="menu">
         <ul class="menu-nav">
-            <li><a class="" asp-action="Privacy" asp-controller="Dashboard" id="dashboard-link">Regulamin</a></li>
+            <li><a class="" asp-action="Privacy" asp-controller="Dashboard" id="dashboard-link">TOS</a></li>
             <li><a class="" asp-action="Index" asp-controller="Itemshop" id="itemshop-link">Itemshop</a></li>
-            <li><a class="" asp-action="Index" asp-controller="Home" id="home-link">Gry</a></li>
+            <li><a class="" asp-action="Index" asp-controller="Home" id="home-link">Games</a></li>
             <li>
                 @if (_signInManager.IsSignedIn(User))
                 {
-                    <a class="logout-link btn" asp-action="Logout" asp-controller="Account">Wyloguj</a>
+                    <a class="logout-link btn" asp-action="Logout" asp-controller="Account">Sign Out</a>
                 }
                 else
                 {
-                    <a class="logout-link" asp-action="Login" asp-controller="Account">Zaloguj</a>
+                    <a class="logout-link" asp-action="Login" asp-controller="Account">Sign In</a>
                 }
             </li>
         </ul>

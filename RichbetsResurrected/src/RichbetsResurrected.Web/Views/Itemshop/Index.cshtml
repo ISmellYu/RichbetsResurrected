@@ -11,9 +11,9 @@
 
 <nav class="navbar">
     <a asp-controller="Itemshop" asp-action="CustomStyling" class="nav-item">Custom styling</a>
-    <a asp-controller="Itemshop" asp-action="LureModules" class="nav-item">Lure modules</a>
-    <a asp-controller="Itemshop" asp-action="MuteBypass" class="nav-item">Mute bypass</a>
-    <a asp-controller="Itemshop" asp-action="BuildingItems" class="nav-item">Building items</a>
+    <a asp-controller="Itemshop" asp-action="LureModules" class="nav-item nav-disabled">Lure modules</a>
+    <a asp-controller="Itemshop" asp-action="MuteBypass" class="nav-item nav-disabled">Mute bypass</a>
+    <a asp-controller="Itemshop" asp-action="BuildingItems" class="nav-item nav-disabled">Building items</a>
 </nav>
 
 <div class="showcase-container">
@@ -37,12 +37,12 @@
             <h2 class="sc-text-title">Lure module</h2>
 
             <div class="sc-desc">
-                <p class="sc-text-aval">AVAILABLE NOW</p>
+                <p class="sc-text-aval">UNAVAILABLE</p>
                 <p class="sc-text-desc">
                     A Lure Module is an item that members can use on any voice channel to increase the multiplier for users on it. 
                     You can hold it and use it anytime you need.
                 </p>
-                <a asp-controller="Itemshop" asp-action="LureModules" class="sc-button redir-lure">SHOP NOW</a>
+                <a asp-controller="Itemshop" asp-action="LureModules" class="sc-button redir-lure redit-disabled">SHOP NOW</a>
                 <a asp-controller="Itemshop" asp-action="CustomStyling" class="sc-button redir-styling" style="display: none;">SHOP NOW</a>
             </div>   
              

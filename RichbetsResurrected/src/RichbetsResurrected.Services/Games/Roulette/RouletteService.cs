@@ -1,4 +1,4 @@
-﻿using RichbetsResurrected.Entities.Roulette;
+﻿using RichbetsResurrected.Entities.Games.Roulette;
 using RichbetsResurrected.Interfaces.DAL;
 using RichbetsResurrected.Interfaces.Games.Roulette;
 

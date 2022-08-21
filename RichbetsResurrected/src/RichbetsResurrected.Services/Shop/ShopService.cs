@@ -112,10 +112,10 @@ public class ShopService : IShopService
 
         if (item == null)
         {
-            return new BuyResult()
+            return new BuyResult
             {
                 IsSuccess = false,
-                Error = new ShopError()
+                Error = new ShopError
                 {
                     Message = "Item with id " + itemId + " does not exist"
                 },
@@ -125,10 +125,10 @@ public class ShopService : IShopService
 
         if (!IsAvailableForPurchase(item))
         {
-            return new BuyResult()
+            return new BuyResult
             {
                 IsSuccess = false,
-                Error = new ShopError()
+                Error = new ShopError
                 {
                     Message = "This item is not available for purchase"
                 },
@@ -138,10 +138,10 @@ public class ShopService : IShopService
 
         if (!IsEligibleForPurchase(item, identityUserId))
         {
-            return new BuyResult()
+            return new BuyResult
             {
                 IsSuccess = false,
-                Error = new ShopError()
+                Error = new ShopError
                 {
                     Message = "You are not eligible for purchase this item"
                 },
@@ -153,10 +153,10 @@ public class ShopService : IShopService
         
         if (richbetUser.Points - totalPrice < 0)
         {
-            return new BuyResult()
+            return new BuyResult
             {
                 IsSuccess = false,
-                Error = new ShopError()
+                Error = new ShopError
                 {
                     Message = "You do not have enough points to buy this item"
                 },
@@ -169,7 +169,7 @@ public class ShopService : IShopService
         
         var boughtItem = BuyItem(item, totalPrice, identityUserId);
 
-        return new BuyResult()
+        return new BuyResult
         {
             IsSuccess = true, Error = null, Item = boughtItem
         };
@@ -236,7 +236,7 @@ public class ShopService : IShopService
         _richbetRepository.RemovePointsFromUserAsync(identityUserId, pointsToRemove);
         if (HasItem(identityUserId, item.Id))
         {
-            _shopRepository.UpdateUserItem(new UserItem()
+            _shopRepository.UpdateUserItem(new UserItem
             {
                 RichbetUserId = identityUserId,
                 ItemId = item.Id,
@@ -245,7 +245,7 @@ public class ShopService : IShopService
         }
         else
         {
-            _shopRepository.AddUserItem(new UserItem()
+            _shopRepository.AddUserItem(new UserItem
             {
                 RichbetUserId = identityUserId,
                 ItemId = item.Id,

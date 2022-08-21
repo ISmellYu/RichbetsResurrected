@@ -76,6 +76,7 @@ let timer = setInterval(function() {
 function showLure(){
     $(".sc-text-title").text("Lure module");
     $(".sc-text-desc").text("A Lure Module is an item that members can use on any voice channel to increase the multiplier for users on it. You can hold it and use it anytime you need.");
+    $('.sc-text-aval').text('UNAVAILABLE')
 
     let [
         img1,
@@ -110,6 +111,7 @@ function showStyling() {
 
     $(".sc-text-title").text("Custom styling");
     $(".sc-text-desc").text("Stand out with new custom username styling. Your new style will be seen on every page.");
+    $('.sc-text-aval').text('AVAILABLE NOW')
 
     let [
         div1,

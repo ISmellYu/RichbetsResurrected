@@ -1,5 +1,6 @@
-﻿using RichbetsResurrected.Entities.DatabaseEntities.Shop;
-using RichbetsResurrected.Entities.Identity.Models;
+﻿using RichbetsResurrected.Entities.DatabaseEntities.Identity.Models;
+using RichbetsResurrected.Entities.DatabaseEntities.Shop;
+using RichbetsResurrected.Entities.DatabaseEntities.Statistics;
 
 namespace RichbetsResurrected.Entities.DatabaseEntities.BaseRichbet;
 
@@ -13,4 +14,5 @@ public class RichbetUser
     
     public ICollection<ActiveItem> ActiveItems { get; set; }
     public ICollection<UserItem> UserItems { get; set; }
+    public Statistic Statistics { get; set; }
 }

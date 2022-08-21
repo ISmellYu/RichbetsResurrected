@@ -1,4 +1,4 @@
-﻿using RichbetsResurrected.Entities.Crash;
+﻿using RichbetsResurrected.Entities.Games.Crash;
 using RichbetsResurrected.Interfaces.DAL;
 using RichbetsResurrected.Interfaces.Games.Crash;
 
@@ -65,9 +65,11 @@ public class CrashService : ICrashService
     
     public async Task<CrashCashoutResult> CashoutAsync(int identityUserId, decimal? desiredMultiplier = null)
     {
-        if (GameState.IsCrashed() || !GameState.IsGameStarted() || !GameState.IsRunning() || !GameState.IsRemovingBetsAllowed())
+        Console.WriteLine("Max multiplier: " + GameState.GetMaxMultiplier());
+        if (GameState.IsCrashed() || !GameState.IsGameStarted() || !GameState.IsRunning() || !GameState.IsRemovingBetsAllowed() || 
+            desiredMultiplier >= GameState.GetMaxMultiplier())
         {
-            return new CrashCashoutResult()
+            return new CrashCashoutResult
             {
                 IsSuccess = false,
                 Error = new CrashError

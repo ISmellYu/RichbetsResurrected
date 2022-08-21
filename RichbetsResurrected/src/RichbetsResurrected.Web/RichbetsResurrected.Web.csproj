@@ -14,18 +14,24 @@
     <ItemGroup>
         <PackageReference Include="Ardalis.ApiEndpoints" Version="4.0.1" />
         <PackageReference Include="Ardalis.ListStartupServices" Version="1.1.4" />
+        <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="6.0.2" />
+        <PackageReference Include="AspNetCore.HealthChecks.SignalR" Version="6.0.2" />
+        <PackageReference Include="AspNetCore.HealthChecks.UI" Version="6.0.5" />
+        <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5" />
+        <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="6.0.5" />
+        <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="6.0.3" />
         <PackageReference Include="Autofac" Version="6.4.0" />
         <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
         <PackageReference Include="EntityFrameworkProfiler.Appender" Version="6.0.6033" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.6" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.7" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.7" />
         <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" PrivateAssets="all" Version="6.0.6" />
-        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" PrivateAssets="All" Version="6.0.6" />
-        <PackageReference Include="SignalRSwaggerGen" Version="3.2.1" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
-        <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
-        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.3.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" PrivateAssets="all" Version="6.0.7" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" PrivateAssets="All" Version="6.0.7" />
+        <PackageReference Include="SignalRSwaggerGen" Version="3.3.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+        <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.4.0" />
         <PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.3.6" />
     </ItemGroup>
 
