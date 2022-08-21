@@ -28,7 +28,6 @@ public class DailyResetScheduled : IScheduledTask
                 }
                 await Task.Delay(TimeSpan.FromHours(1));
             }
-            // sleep for 1 hour
             await Task.Delay(TimeSpan.FromMinutes(2));
         }
     }
