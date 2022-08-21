@@ -3,13 +3,16 @@ using RichbetsResurrected.Interfaces.Utils;
 
 namespace RichbetsResurrected.Services.Utils;
 
-public class ScheduledTasks : IScheduledTasks
+public class ScheduledTasksControl : IScheduledTasksControl
 {
     private readonly ILifetimeScope _lifetimeScope;
-    public ScheduledTasks(ILifetimeScope lifetimeScope)
+    public ScheduledTasksControl(ILifetimeScope lifetimeScope)
     {
         _lifetimeScope = lifetimeScope;
     }
     
-    
+    public Task RunScheduledTasksAsync()
+    {
+        return Task.CompletedTask;
+    }
 }
