@@ -17,6 +17,7 @@ public class BackgroundTasks : IBackgroundTasks
     
     public async Task DelaySlotsWithdrawalAsync(SlotsWithdrawResult result, int millisecondsDelay, int userId, string connectionId)
     {
+        // delay
         await Task.Delay(millisecondsDelay);
 
         await using var scope = _lifetimeScope.BeginLifetimeScope();
@@ -27,6 +28,7 @@ public class BackgroundTasks : IBackgroundTasks
         var richbetRepository = scope.Resolve<IRichbetRepository>();
         await richbetRepository.AddPointsToUserAsync(userId, result.WinAmount.Value);
     }
+    
     public async Task DelayAddingPointsAsync(int userId, int points, int millisecondsDelay)
     {
         await Task.Delay(millisecondsDelay);
