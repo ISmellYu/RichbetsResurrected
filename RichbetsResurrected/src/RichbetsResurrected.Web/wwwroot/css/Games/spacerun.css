@@ -412,6 +412,7 @@ background-color: #191919;
 
 .iframe-overlay{
     z-index: 8;
+    pointer-events: none;
 }
 
 .bet-button-disabled{
