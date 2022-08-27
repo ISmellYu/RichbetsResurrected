@@ -1,6 +1,6 @@
-let rollEndSound = new Audio('/sounds/rollEnd.mp3');
-let rollWinSound = new Audio('/sounds/rollWin.mp3');
-let rollStartSound = new Audio('/sounds/rollStart.mp3');
+let rollEndSound = new Audio("/sounds/rollEnd.mp3");
+let rollWinSound = new Audio("/sounds/rollWin.mp3");
+let rollStartSound = new Audio("/sounds/rollStart.mp3");
 
 let FxSlider = document.getElementById("fx");
 let MusicSlider = document.getElementById("music");
@@ -8,15 +8,14 @@ let MusicSlider = document.getElementById("music");
 let FxCookieVolume = getCookie("fxVolume");
 let MusicCookieVolume = getCookie("musicVolume");
 
-
 if (FxCookieVolume == undefined) {
-    document.cookie = `fxVolume=0.3`;
-    FxCookieVolume = 0.3;
+  document.cookie = `fxVolume=0.3`;
+  FxCookieVolume = 0.3;
 }
 
 if (MusicCookieVolume == undefined) {
-    document.cookie = `musicVolume=10`;
-    MusicCookieVolume = 10;
+  document.cookie = `musicVolume=10`;
+  MusicCookieVolume = 10;
 }
 
 FxSlider.value = (FxCookieVolume * 100).toFixed(0); // Convert the volume to a percentage.
@@ -25,122 +24,110 @@ MusicSlider.value = parseInt(MusicCookieVolume);
 setGlobalVolume(FxCookieVolume);
 
 function getCookie(name) {
-    let cookieArray = document.cookie.split(";");
+  let cookieArray = document.cookie.split(";");
 
-    for (let cookie of cookieArray) {
-
-        cookie = cookie.replace(/\s/g, ""); // Remove whitespace.
-        if (cookie.split("=")[0] == name) {
-
-            let cookieValue = cookie.split("=")[1];
-            return cookieValue;
-        }
+  for (let cookie of cookieArray) {
+    cookie = cookie.replace(/\s/g, ""); // Remove whitespace.
+    if (cookie.split("=")[0] == name) {
+      let cookieValue = cookie.split("=")[1];
+      return cookieValue;
     }
+  }
 }
 
-
 function playSound(sound) {
-    switch (sound) {
-        case "rollEnd":
-            rollEndSound.play();
-            break;
-        case "rollWin":
-            rollWinSound.play();
-            break;
-        case "rollStart":
-            rollStartSound.play();
-            break;
-    }
+  switch (sound) {
+    case "rollEnd":
+      rollEndSound.play();
+      break;
+    case "rollWin":
+      rollWinSound.play();
+      break;
+    case "rollStart":
+      rollStartSound.play();
+      break;
+  }
 }
 
 function setGlobalVolume(volume) {
-
-    rollEndSound.volume = volume;
-    rollWinSound.volume = volume;
-    rollStartSound.volume = volume;
+  rollEndSound.volume = volume;
+  rollWinSound.volume = volume;
+  rollStartSound.volume = volume;
 }
 
-
 FxSlider.addEventListener("change", function () {
-    let volume = FxSlider.value / 100;
-    setGlobalVolume(volume);
-    document.cookie = `fxVolume=${volume}`;
+  let volume = FxSlider.value / 100;
+  setGlobalVolume(volume);
+  document.cookie = `fxVolume=${volume}`;
 });
-
 
 MusicSlider.addEventListener("change", function () {
-    let volume = MusicSlider.value;
-    document.cookie = `musicVolume=${volume}`;
-    player.setVolume(volume);
+  let volume = MusicSlider.value;
+  document.cookie = `musicVolume=${volume}`;
+  player.setVolume(volume);
 });
 
-
-var tag = document.createElement('script');
+var tag = document.createElement("script");
 
 tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
+var firstScriptTag = document.getElementsByTagName("script")[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 var player;
 
 function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-        height: '0',
-        width: '0',
-        videoId: '0C3nAhSKBoU',
-        playerVars: {
-            'autoplay': 1,
-            'controls': 0
-        },
-        events: {
-            'onReady': onPlayerReady
-        }
-    });
+  player = new YT.Player("player", {
+    height: "0",
+    width: "0",
+    videoId: "0C3nAhSKBoU",
+    playerVars: {
+      autoplay: 1,
+      controls: 0,
+    },
+    events: {
+      onReady: onPlayerReady,
+    },
+  });
 }
 
 function onPlayerReady(event) {
-    event.target.setVolume(parseInt(MusicCookieVolume));
-    event.target.playVideo();
+  event.target.setVolume(parseInt(MusicCookieVolume));
+  event.target.playVideo();
 }
 
 document.addEventListener("mousemove", function () {
-    // LIKE A BOSS
-    if (player.playerInfo.playerState == -1) {
-        player.setVolume(parseInt(MusicCookieVolume));
-        player.playVideo();
-    }
-
+  if (player.playerInfo.playerState == -1) {
+    player.setVolume(parseInt(MusicCookieVolume));
+    player.playVideo();
+  }
 });
 
-// Styling section
-
-$('.control-button').click(function () {
-    let action = $(this).attr("action");
-    switch (action) {
-        case "column":
-            setStylingColumn();
-            break;
-        case "row":
-            setStylingRow();
-            break;
-    }
+$(".control-button").click(function () {
+  let action = $(this).attr("action");
+  switch (action) {
+    case "column":
+      setStylingColumn();
+      break;
+    case "row":
+      setStylingRow();
+      break;
+  }
 });
-
 
 function setStylingColumn() {
-    document.querySelector('.mbody').style.flexDirection = 'column';
-    document.querySelector('.mbody').style.alignItems = 'center';
+  document.querySelector(".mbody").style.flexDirection = "column";
+  document.querySelector(".mbody").style.alignItems = "center";
 
-    document.querySelector('.roulette-body').style.width = '100%';
+  document.querySelector(".roulette-body").style.width = "100%";
 
-    document.querySelector('.control-body').style.width = '100%';
+  document.querySelector(".control-body").style.width = "100%";
 }
 
 function setStylingRow() {
-    document.querySelector('.mbody').style.flexDirection = 'row';
-    document.querySelector('.mbody').style.alignItems = 'auto';
+  document.querySelector(".mbody").style.flexDirection = "row";
+  document.querySelector(".mbody").style.alignItems = "auto";
 
-    document.querySelector('.roulette-body').style.width = '45%';
+  document.querySelector(".roulette-body").style.width = "45%";
 
-    document.querySelector('.control-body').style.width = '55%';
+  document.querySelector(".control-body").style.width = "55%";
 }

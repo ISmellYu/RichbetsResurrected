@@ -354,6 +354,11 @@
     color: rgba(255, 255, 255, 0.9);
 }
 
+.onlinePlayersElement p {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
 .onlinePlayersElement::after {
     margin-left: 5px;
     content: " ";

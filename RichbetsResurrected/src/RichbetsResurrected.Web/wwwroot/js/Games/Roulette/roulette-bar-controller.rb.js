@@ -1,56 +1,55 @@
-$('.control-bar-button').click(function () {
+$(".control-bar-button").click(function () {
+  let inputField = document.querySelector("#coins");
+  let action = $(this).attr("action");
 
-    let inputField = document.querySelector('#coins');
-    let action = $(this).attr("action");
+  if (inputField.value == "") {
+    inputField.value = 0;
+  }
 
+  switch (action) {
+    case "clear":
+      inputField.value = "";
+      break;
 
-    if (inputField.value == "") {
-        inputField.value = 0;
-    }
+    case "1":
+      inputField.value = parseInt(inputField.value) + 1;
+      break;
 
+    case "10":
+      inputField.value = parseInt(inputField.value) + 10;
+      break;
 
-    switch (action) {
-        case "clear":
-            inputField.value = "";
-            break;
+    case "100":
+      inputField.value = parseInt(inputField.value) + 100;
+      break;
 
-        case "1":
-            inputField.value = parseInt(inputField.value) + 1;
-            break;
+    case "1000":
+      inputField.value = parseInt(inputField.value) + 1000;
+      break;
 
-        case "10":
-            inputField.value = parseInt(inputField.value) + 10;
-            break;
+    case "half":
+      inputField.value = (inputField.value / 2).toFixed(0);
+      break;
 
-        case "100":
-            inputField.value = parseInt(inputField.value) + 100;
-            break;
+    case "double":
+      inputField.value = parseInt(inputField.value * 2);
+      break;
 
-        case "1000":
-            inputField.value = parseInt(inputField.value) + 1000;
-            break;
-
-        case "half":
-            inputField.value = (inputField.value / 2).toFixed(0);
-            break;
-
-        case "double":
-            inputField.value = parseInt(inputField.value * 2);
-            break;
-
-        case "max":
-            getAll();
-            break;
-    }
+    case "max":
+      getAll();
+      break;
+  }
 });
 
 async function getAll() {
-
-    let inputField = document.querySelector('#coins');
-    let result = await connection.invoke("GetPoints").catch(function (err) {
-
-        return console.error(err.toString());
-
+  let inputField = document.querySelector("#coins");
+  let result = await connection.invoke("GetPoints").catch(function (err) {
+    new Snack({
+      message: err.toString(),
+      duration: 5000,
+      type: "error",
     });
-    inputField.value = result;
+    return;
+  });
+  inputField.value = result;
 }
