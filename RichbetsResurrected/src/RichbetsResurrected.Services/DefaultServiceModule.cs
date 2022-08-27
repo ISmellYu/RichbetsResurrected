@@ -12,6 +12,7 @@ using RichbetsResurrected.Services.Client;
 using RichbetsResurrected.Services.Games.Crash;
 using RichbetsResurrected.Services.Games.Roulette;
 using RichbetsResurrected.Services.Games.Slots;
+using RichbetsResurrected.Services.ScheduledTasks;
 using RichbetsResurrected.Services.Shop;
 using RichbetsResurrected.Services.Utils;
 
@@ -21,6 +22,7 @@ public class DefaultServiceModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
+        RegisterScheduledTasks(builder);
         builder.RegisterType<BackgroundTasks>().As<IBackgroundTasks>().SingleInstance();
         RegisterShop(builder);
         RegisterGames(builder);
@@ -70,5 +72,15 @@ public class DefaultServiceModule : Module
     private static void StartGame<T>(IActivatedEventArgs<T> gameArgs) where T : IStartableGame
     {
         _ = Task.Run(() => gameArgs.Instance.StartAsync());
+    }
+    
+    private static void RegisterScheduledTasks(ContainerBuilder builder)
+    {
+        builder.RegisterType<ScheduledTasksControl>().As<IScheduledTasksControl>().SingleInstance().AutoActivate();
+
+        builder.RegisterType<DailyResetScheduled>().AsSelf().SingleInstance().AutoActivate().OnActivated((args =>
+        {
+            _ = Task.Run(() => args.Instance.ExecuteAsync());
+        }));
     }
 }

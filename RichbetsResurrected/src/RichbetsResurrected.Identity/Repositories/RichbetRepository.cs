@@ -105,4 +105,9 @@ public class RichbetRepository : IRichbetRepository
         var richbetUser = await RichbetUsers.FirstOrDefaultAsync(r => r.AppUserId == identityUserId);
         return richbetUser;
     }
+    public async Task<List<RichbetUser>> GetRichbetUsersAsync()
+    {
+        var richbetUsers = await RichbetUsers.ToListAsync();
+        return richbetUsers;
+    }
 }

@@ -32,7 +32,7 @@ public class DefaultIdentityModule : Module
         RegisterStores(builder);
         RegisterRepositories(builder);
 
-        builder.RegisterType<DiscordAuthenticationHandlerNew>().As<DiscordAuthenticationHandler>(); // Replace original with your own handler to handle
+        builder.RegisterType<DiscordAuthenticationHandlerNew>().As<DiscordAuthenticationHandler>(); // Replace original with your own handler to handle authentication
                                                                                                     // Discord authentication prevent wrong users to enter site
     }
 
