@@ -370,19 +370,18 @@ background-color: #191919;
 .online-players-header{
     margin: 0;
     font-weight: 300;
-    text-align: left;
+    text-align: center;
     width: 95%;
 }
 
 .onlinePlayersList {
-    width: 97%;
+    width: 100%;
     height: 100%;
     padding: 0;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     margin: 0;
-    flex-wrap: wrap;
-    flex: 0 0 33.333333%;
 }
 
 .onlinePlayersElement {
@@ -396,7 +395,11 @@ background-color: #191919;
     align-items: center;
     font-size: 15px;
     color: rgba(255, 255, 255, 0.9);
-    min-width: 100px;
+}
+
+.onlinePlayersElement p {
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 .onlinePlayersElement::after {
@@ -419,6 +422,10 @@ background-color: #191919;
     background-color: #232323;
     color: rgba(255, 255, 255, 0.6);
     cursor: not-allowed;
+}
+
+.players-table > tr > td > p{
+    margin: 0 !important;
 }
 
 @media screen and (max-width: 478px) {
