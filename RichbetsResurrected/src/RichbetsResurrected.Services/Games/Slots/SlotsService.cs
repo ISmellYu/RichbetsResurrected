@@ -28,7 +28,7 @@ public class SlotsService : ISlotsService
     {
         var richbetUser = await _richbetRepository.GetRichbetUserAsync(request.UserId);
 
-        if (request.Amount < 0)
+        if (request.Amount <= 0)
         {
             return new SlotsSpinResult
             {

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RichbetsResurrected.Entities.DatabaseEntities.Identity.Models;
 using RichbetsResurrected.Entities.Shop;
+using RichbetsResurrected.Interfaces.Inventory;
 using RichbetsResurrected.Interfaces.Shop;
 
 namespace RichbetsResurrected.Web.ApiController;
@@ -13,10 +14,12 @@ public class ItemshopController : ControllerBase
 {
     private readonly UserManager<AppUser> _userManager;
     private readonly IShopService _shopService;
-    public ItemshopController(UserManager<AppUser> userManager, IShopService shopService)
+    private readonly IInventoryService _inventoryService;
+    public ItemshopController(UserManager<AppUser> userManager, IShopService shopService, IInventoryService inventoryService)
     {
         _userManager = userManager;
         _shopService = shopService;
+        _inventoryService = inventoryService;
 
     }
     
@@ -25,6 +28,10 @@ public class ItemshopController : ControllerBase
     {
         var user = await _userManager.GetUserAsync(User);
         var result = await _shopService.BuyItemAsync(user.Id, Convert.ToInt32(itemId));
+        if (result.Item != null)
+        { 
+            _inventoryService.EquipItem(user.Id, result.Item.Id);
+        }
         return result;
     }
 }
