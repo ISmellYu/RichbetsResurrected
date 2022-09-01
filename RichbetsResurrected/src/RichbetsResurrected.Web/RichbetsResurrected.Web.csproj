@@ -57,19 +57,21 @@
       <Content Include="UnityFiles\spacerun\Build\WebGL.data.unityweb">
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      </Content>
-      <Content Include="UnityFiles\spacerun\Build\WebGL.wasm.code.unityweb">
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      </Content>
-      <Content Include="UnityFiles\spacerun\Build\WebGL.wasm.framework.unityweb">
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Filters" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="UnityFiles\spacerun\Build\WebGL.wasm.code.unityweb">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="UnityFiles\spacerun\Build\WebGL.wasm.framework.unityweb">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == '' Or '$(Configuration)' == 'Debug'">
