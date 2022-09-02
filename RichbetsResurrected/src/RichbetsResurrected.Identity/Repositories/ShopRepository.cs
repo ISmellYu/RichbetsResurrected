@@ -67,128 +67,152 @@ public class ShopRepository : IShopRepository
     {
         _context.ActiveItems.Add(activeItem);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
     public void RemoveActiveItem(ActiveItem activeItem)
     {
         _context.ActiveItems.Remove(activeItem);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
     public void UpdateActiveItem(ActiveItem activeItem)
     {
         _context.ActiveItems.Update(activeItem);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
 
     public void AddCategory(Category category)
     {
         _context.Categories.Add(category);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
     public void RemoveCategory(Category category)
     {
         _context.Categories.Remove(category);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
     public void UpdateCategory(Category category)
     {
         _context.Categories.Update(category);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
 
     public void AddConsumableItem(ConsumableItem consumableItem)
     {
         _context.ConsumableItems.Add(consumableItem);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
     public void RemoveConsumableItem(ConsumableItem consumableItem)
     {
         _context.ConsumableItems.Remove(consumableItem);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
     public void UpdateConsumableItem(ConsumableItem consumableItem)
     {
         _context.ConsumableItems.Update(consumableItem);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
 
     public void AddDiscount(Discount discount)
     {
         _context.Discounts.Add(discount);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
     public void RemoveDiscount(Discount discount)
     {
         _context.Discounts.Remove(discount);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
     public void UpdateDiscount(Discount discount)
     {
         _context.Discounts.Update(discount);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
 
     public void AddItem(Item item)
     {
         _context.Items.Add(item);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
     public void RemoveItem(Item item)
     {
         _context.Items.Remove(item);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
     public void UpdateItem(Item item)
     {
         _context.Items.Update(item);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
 
     public void AddUserItem(UserItem userItem)
     {
         _context.UserItems.Add(userItem);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
     public void RemoveUserItem(UserItem userItem)
     {
         _context.UserItems.Remove(userItem);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
     public void UpdateUserItem(UserItem userItem)
     {
         _context.UserItems.Update(userItem);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
 
     public void AddSubCategory(SubCategory subCategory)
     {
         _context.SubCategories.Add(subCategory);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
     public void RemoveSubCategory(SubCategory subCategory)
     {
         _context.SubCategories.Remove(subCategory);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
     public void UpdateSubCategory(SubCategory subCategory)
     {
         _context.SubCategories.Update(subCategory);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
 
     public void AddItemType(ItemType itemType)
     {
         _context.ItemTypes.Add(itemType);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
     public void RemoveItemType(ItemType itemType)
     {
         _context.ItemTypes.Remove(itemType);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
     public void UpdateItemType(ItemType itemType)
     {
         _context.ItemTypes.Update(itemType);
         _context.SaveChanges();
+        _context.ChangeTracker.Clear(); 
     }
 
     public List<SubCategory> GetSubCategoriesByCategory(Category category)
