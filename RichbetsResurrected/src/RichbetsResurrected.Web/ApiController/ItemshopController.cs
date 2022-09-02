@@ -31,9 +31,26 @@ public class ItemshopController : ControllerBase
         var result = await _shopService.BuyItemAsync(user.Id, Convert.ToInt32(itemId));
         if (result.Item != null)
         {
+            var isDesignItem = (ItemType type) =>
+            {
+                if (type.IsNicknameAnimation || type.IsNicknameBanner || type.IsNicknameEffect || type.IsNicknamePattern)
+                {
+                    return true;
+                }
+                return false;
+            };
             var items = _inventoryService.GetEquippedItems(user.Id);
             var resultItemType = _shopService.GetItemTypeByItemId(result.Item.Id);
-            var equipped = items.SingleOrDefault(item => item.ItemType == resultItemType);
+            var resultItemIsDesign = isDesignItem(resultItemType);
+            var equipped = items.SingleOrDefault(item =>
+            {
+                var itemType = _shopService.GetItemTypeByItemId(item.Id);
+                if (isDesignItem(itemType) && resultItemIsDesign)
+                {
+                    return true;
+                }
+                return false;
+            });
             if (equipped != null)
             {
                 _inventoryService.UnequipItem(user.Id, equipped.Id);
