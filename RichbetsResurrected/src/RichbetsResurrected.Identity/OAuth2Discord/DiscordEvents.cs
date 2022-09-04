@@ -30,11 +30,11 @@ public static class DiscordEvents
         }
 
         
-        if (!IsWhitelisted(userId))
-        {
-            context.Fail($"User is not whitelisted with id {userId}.");
-            throw new DiscordAuthFailException($"Not whitelisted user id: {userId}");
-        }
+        // if (!IsWhitelisted(userId))
+        // {
+        //     context.Fail($"User is not whitelisted with id {userId}.");
+        //     throw new DiscordAuthFailException($"Not whitelisted user id: {userId}");
+        // }
 
         var userRoles = await GetDiscordRolesAsync(context).ConfigureAwait(false);
         if (!IsInRole(userRoles, RoleId))
