@@ -49,6 +49,13 @@ public class InventoryService : IInventoryService
             _shopRepository.UpdateUserItem(userItem);
         }
     }
+    
+    public void RemoveItem(int identityUserId, int itemId)
+    {
+        var userItem = _shopRepository.GetUserItemByIds(identityUserId, itemId);
+        if (userItem == null) return;
+        _shopRepository.RemoveUserItem(userItem);
+    }
 
     public bool HasItem(int identityUserId, int itemId)
     {

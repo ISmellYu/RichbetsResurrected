@@ -55,6 +55,7 @@ public class ItemshopController : ControllerBase
             if (equipped != null)
             {
                 _inventoryService.UnequipItem(user.Id, equipped.Id);
+                _inventoryService.RemoveItem(user.Id, equipped.Id);
             }
             _inventoryService.EquipItem(user.Id, result.Item.Id);
         }
