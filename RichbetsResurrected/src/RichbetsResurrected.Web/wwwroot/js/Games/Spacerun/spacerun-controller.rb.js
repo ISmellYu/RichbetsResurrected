@@ -39,7 +39,7 @@ crashConn.start().then(function () {
     } else {
       playerData.autoBetting = true;
       autoButton.textContent = "Autobet active";
-      placeBet(100);
+      placeBet(parseInt($("#auto_coins").val()));
     }
   });
 
@@ -81,7 +81,7 @@ crashConn.start().then(function () {
       if (oldAllowPlacingBets != data.allowPlacingBets) {
         if (data.allowPlacingBets == true) {
           if (playerData.autoBetting && playerData.autoBetsTotal > 0) {
-            placeBet(100);
+            placeBet(parseInt($("#auto_coins").val()));
             document.getElementById("auto_total-bets").value -= 1;
           }
           if (playerData.autoBetsTotal == 0) {
