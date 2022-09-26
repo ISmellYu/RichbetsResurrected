@@ -50,7 +50,7 @@ public class RouletteHub : Hub<IRouletteHub>
             EquippedItems = inv.EquippedItems
         };
         _rouletteService.GameState.AddOnlinePlayer(Context.ConnectionId, clientInfo);
-        Console.WriteLine("Connected to roulette hub");
+        // Console.WriteLine("Connected to roulette hub");
         await base.OnConnectedAsync();
     }
 
@@ -58,7 +58,7 @@ public class RouletteHub : Hub<IRouletteHub>
     public override Task OnDisconnectedAsync(Exception? exception)
     {
         _rouletteService.GameState.RemoveOnlinePlayer(Context.ConnectionId);
-        Console.WriteLine("Disconnected from roulette hub");
+        // Console.WriteLine("Disconnected from roulette hub");
         return base.OnDisconnectedAsync(exception);
     }
 

@@ -11,6 +11,7 @@ public class RichbetUser
     public int Points { get; set; }
     public float Multiplier { get; set; }
     public bool DailyRedeemed { get; set; }
+    public uint HourlyTime { get; set; }
     
     public ICollection<ActiveItem> ActiveItems { get; set; }
     public ICollection<UserItem> UserItems { get; set; }

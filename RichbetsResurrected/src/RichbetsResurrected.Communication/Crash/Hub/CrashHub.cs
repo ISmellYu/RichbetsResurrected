@@ -50,7 +50,7 @@ public class CrashHub : Hub<ICrashHub>
             EquippedItems = inv.EquippedItems
         };
         _crashService.GameState.AddOnlinePlayer(Context.ConnectionId, clientInfo);
-        Console.WriteLine("Connected to crash hub");
+        // Console.WriteLine("Connected to crash hub");
         await base.OnConnectedAsync();
     }
 
@@ -58,7 +58,7 @@ public class CrashHub : Hub<ICrashHub>
     public override Task OnDisconnectedAsync(Exception? exception)
     {
         _crashService.GameState.RemoveOnlinePlayer(Context.ConnectionId);
-        Console.WriteLine("Disconnected from crash hub");
+        // Console.WriteLine("Disconnected from crash hub");
         return base.OnDisconnectedAsync(exception);
     }
 

@@ -182,7 +182,7 @@ public class CrashGameState : ICrashGameState
             if (desiredMultiplier != null && CheckMultiplierCorrectness(desiredMultiplier.Value))
             {
                 crashPlayer.WhenCashouted = desiredMultiplier.Value;
-                Console.WriteLine($"Desired multiplier is correct {desiredMultiplier.Value}");
+                // Console.WriteLine($"Desired multiplier is correct {desiredMultiplier.Value}");
             }
             
             player = crashPlayer;
