@@ -1,0 +1,164 @@
+@{
+    ViewData["Title"] = "Crash";
+    Layout = "_MainLayout";
+}
+
+@section Head{
+<link rel="stylesheet" href="~/css/Games/spacerun.css">
+<link rel="stylesheet" href="~/css/Games/crash.css">
+<script src="~/js/Games/Crash/crash.controller.rb.js" defer></script>
+<script src="~/js/Games/Spacerun/spacerun-betController.rb.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+}
+
+<div id="dev-info" style="display: none; position: absolute; background: black; z-index: 9999; font-size: 13px;">
+    <h1>Dev info</h1>
+
+</div>
+
+<div class="crash-wrapper">
+    <div class="chart-container">
+        <p class="multiplier" id="multiplierid"></p>
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <div class="align-container">
+        <div class="side-container">
+            <div class="betting-container">
+                <div class="betting-option-container">
+                    <div class="option-container option-container-active" action="manual" unselectable="on"
+                        onselectstart="return false;" onmousedown="return false;">
+                        Manual
+                    </div>
+                    <div class="option-container" action="auto" unselectable="on" onselectstart="return false;"
+                        onmousedown="return false;">
+                        Auto
+                    </div>
+                </div>
+                <div class="betting-controller" id="manual">
+                    <div class="input-container">
+                        <div class="input-subcontainer">
+                            <p class="input-subtext">Bet Amount</p>
+                            <div class="input-hold">
+                                <img src="~/img/rbcoin30x30.png" alt="rbcoin">
+                                <input type="number" class="amount-input" placeholder="0" step="1" min="0"
+                                    id="manual_coins">
+                            </div>
+                        </div>
+                        <div class="amount-controller">
+                            <button class="input-button" action="half">1/2</button>
+                            <button class="input-button" action="double">2x</button>
+                            <button class="input-button" action="max">Max</button>
+                        </div>
+                    </div>
+                    <div class="input-container input-container-cashout">
+                        <div class="input-subcontainer">
+                            <p class="input-subtext">Auto Cashout</p>
+                            <div class="input-hold">
+                                <input type="number" class="amount-input" placeholder="0.00" step="0.01" min="0"
+                                    id="manual_cashout">
+                            </div>
+                        </div>
+                        <button class="autocashout-button del-aco">✕</button>
+                    </div>
+                    <button class="place-bet-button" id="manual-place-bet">Place Bet</button>
+                </div>
+                <div class="betting-controller" id="auto" style="display: none;">
+                    <div class="input-container">
+                        <div class="input-subcontainer">
+                            <p class="input-subtext">Bet Amount</p>
+                            <div class="input-hold">
+                                <img src="~/img/rbcoin30x30.png" alt="rbcoin">
+                                <input type="number" class="amount-input" placeholder="0" step="1" min="0"
+                                    id="auto_coins">
+                            </div>
+                        </div>
+                        <div class="amount-controller">
+                            <button class="input-button" action="half">1/2</button>
+                            <button class="input-button" action="double">2x</button>
+                            <button class="input-button" action="max">Max</button>
+                        </div>
+                    </div>
+                    <div class="bet-settings">
+                        <div class="input-body" style="width: 48%;">
+                            <div class="auto-left">
+                                <p class="input-subtext">Auto Cashout</p>
+                                <input type="number" class="amount-input auto-input" placeholder="0.00" step="0.01"
+                                    min="0" id="auto_cashout">
+                            </div>
+                            <button class="aco-button del-aco">✕</button>
+                        </div>
+                        <div class="input-body" style="width: 48%;">
+                            <div class="auto-left">
+                                <p class="input-subtext">Total Bets</p>
+                                <input type="number" class="amount-input auto-input" placeholder="0" step="1" min="0"
+                                    id="auto_total-bets">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="place-bet-button" id="auto-place-bet">Start Autobet</button>
+                </div>
+            </div>
+            <div class="players-container">
+                <table class="static-table">
+                    <tr>
+                        <td id="player-count">0 Players</td>
+                        <td id="bets-total">0 RBC</td>
+                    </tr>
+                </table>
+                <table class="players-table">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="online-players">
+    <p class="online-players-header">Online players 👀</p>
+    <ul class="onlinePlayersList">
+    </ul>
+</footer>
+
+<div class="dev-data">
+    <div class="controller">
+        <div class="dev-node start">
+            Start chart
+            <span class="dev-node-ping"></span>
+        </div>
+        <div class="dev-node updatechart">
+            Update chart
+            <span class="dev-node-ping"></span>
+        </div>
+        <div class="dev-node crash">
+            Crash chart
+            <span class="dev-node-ping"></span>
+        </div>
+        <div class="dev-node restore">
+            Restore chart
+            <span class="dev-node-ping"></span>
+        </div>
+        <div class="dev-node players">
+            Render players list
+            <span class="dev-node-ping"></span>
+        </div>
+        <div class="dev-node onlinePlayers">
+            Render onlinePlayers list
+            <span class="dev-node-ping"></span>
+        </div>
+        <div class="dev-node userResult">
+            Refresh session data
+            <span class="dev-node-ping"></span>
+        </div>
+    </div>
+    <div class="user">
+        <div class="dev-node">
+            Betting:
+            <span class="user-result betting">true</span>
+        </div>
+        <div class="dev-node">
+            Amount:
+            <span class="user-result amount">0</span>
+        </div>
+    </div>
+</div>
