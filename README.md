@@ -1,1 +1,1 @@
-Czas ***REMOVED***: [![wakatime](https://wakatime.com/badge/user/a33e8a44-297b-4dd5-9e38-ef46db31eba1/project/7acc6ec5-d3d3-40b5-b268-447f9a177fcd.svg)](https://wakatime.com/badge/user/a33e8a44-297b-4dd5-9e38-ef46db31eba1/project/7acc6ec5-d3d3-40b5-b268-447f9a177fcd)
+
