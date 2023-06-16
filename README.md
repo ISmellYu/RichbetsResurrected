@@ -1,5 +1,5 @@
 # RichbetsResurrected
-Probably my most complex and fun project ever done together with [Drairan9](https://github.com/Drairan9). The project includes roulette, a custom made unity game called "spacerun", slots and on site nick customization.\
+Probably my most complex and fun project ever done together with [Drairan9](https://github.com/Drairan9). The project includes roulette, a custom made unity game called "spacerun" created by [Drairan9](https://github.com/Drairan9), slots and on site nick customization.\
 All this combined with a database running on mysql and discord.\
 Fell free to learn from it or something else\
 **Project done only for learning purposes**
@@ -30,5 +30,5 @@ In this project we used `ASP.NET Core` as main backed server, `SignalR` as realt
 ![alt text](https://i.ibb.co/J7tbLxG/styling.png)
 
 # Authors
-Frontend - [Drairan9](https://github.com/Drairan9)\
-Backend - [ISmellYu](https://github.com/ISmellYu)
+* Frontend - [Drairan9](https://github.com/Drairan9)
+* Backend - [ISmellYu](https://github.com/ISmellYu)
