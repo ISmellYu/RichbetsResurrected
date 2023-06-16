@@ -4,6 +4,9 @@ All this combined with a database running on mysql and discord.\
 Fell free to learn from it or something else\
 **Project done only for learning purposes**
 
+# Technologies
+In this project we used `ASP.NET Core` as main backed server, `SignalR` as realtime communication, `Swagger` as documentation for endpoints and plain `css` and `html`
+
 # Images
 **Sign in page**\
 ![alt text](https://i.ibb.co/tBp4yRZ/signin.png)
