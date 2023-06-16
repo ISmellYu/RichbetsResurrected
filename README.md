@@ -5,7 +5,7 @@ Fell free to learn from it or something else\
 **Project done only for learning purposes**
 
 # Technologies
-In this project we used `ASP.NET Core` as main backed server, `SignalR` as realtime communication, `Swagger` as documentation for endpoints and plain `css` ,`html` and `js`
+In this project we used `ASP.NET Core` as main backed server, `Entity Framework` and `mysql` as database provider, `SignalR` as realtime communication, `Swagger` as documentation for endpoints and plain `css` ,`html` and `js`
 
 # Images
 **Sign in page**\
