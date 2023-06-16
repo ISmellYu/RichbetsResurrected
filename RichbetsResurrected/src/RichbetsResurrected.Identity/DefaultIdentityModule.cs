@@ -42,6 +42,7 @@ public class DefaultIdentityModule : Module
 
     private void RegisterRepositories(ContainerBuilder builder)
     {
+        
         builder.RegisterType<AccountRepository>().As<IAccountRepository>().InstancePerLifetimeScope();
         builder.RegisterType<RichbetRepository>().As<IRichbetRepository>().InstancePerLifetimeScope();
         builder.RegisterType<ShopRepository>().As<IShopRepository>().InstancePerLifetimeScope();
