@@ -1,6 +1,6 @@
 # RichbetsResurrected
 Probably my most complex and fun project ever done together with [Drairan9](https://github.com/Drairan9). The project includes roulette, a custom made unity game called "spacerun" created by [Drairan9](https://github.com/Drairan9), slots and on site nick customization.\
-All this combined with a database running on mysql and discord.\
+All this combined with a database running on mysql and discord integration.\
 Fell free to learn from it or something else\
 **Project done only for learning purposes**
 
