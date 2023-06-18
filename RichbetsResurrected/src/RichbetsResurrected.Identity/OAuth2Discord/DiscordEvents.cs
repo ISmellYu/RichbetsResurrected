@@ -9,15 +9,10 @@ namespace RichbetsResurrected.Identity.OAuth2Discord;
 
 public static class DiscordEvents
 {
-    public static readonly string GuildId = "***REMOVED***";
-    public static readonly string RoleId = "***REMOVED***";
+    public static readonly string GuildId = "placehereguildid";
+    public static readonly string RoleId = "placehereroleid";
     
-    public static readonly string[] WhitelistedIds = {
-        "***REMOVED***", // ***REMOVED***
-        "***REMOVED***", // ***REMOVED***
-        "***REMOVED***", // ***REMOVED***
-        "***REMOVED***" // ***REMOVED***
-    };
+    public static readonly string[] WhitelistedIds = {};
 
     public static async Task OnCreatingTicketAsync(OAuthCreatingTicketContext context)
     {
