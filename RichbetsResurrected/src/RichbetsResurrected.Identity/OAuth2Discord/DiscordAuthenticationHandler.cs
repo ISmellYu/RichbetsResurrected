@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 
 namespace RichbetsResurrected.Identity.OAuth2Discord;
 
-public class DiscordAuthenticationHandlerNew : DiscordAuthenticationHandler
+public class DiscordAuthenticationHandlerNew : DiscordAuthenticationHandler // works
 {
     // Class created to override the default HandleRemoteAuthenticateAsync because even when calling context.Fail() it doesnt do anything.
 
