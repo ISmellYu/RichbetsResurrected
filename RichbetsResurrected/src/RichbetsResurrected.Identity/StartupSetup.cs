@@ -15,7 +15,7 @@ public static class StartupSetup
     {
         services.ConfigureCookies();
         services.AddIdentity();
-        services.ConfigureAuthentication("***REMOVED***", "***REMOVED***");
+        services.ConfigureAuthentication("placediscordclientid", "placediscordclientsecret");
     }
 
     public static void AddIdentity(this IServiceCollection services)

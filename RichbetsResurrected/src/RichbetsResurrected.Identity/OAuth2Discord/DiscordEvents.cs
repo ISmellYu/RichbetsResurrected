@@ -9,8 +9,8 @@ namespace RichbetsResurrected.Identity.OAuth2Discord;
 
 public static class DiscordEvents
 {
-    public static readonly string GuildId = "placehereguildid";
-    public static readonly string RoleId = "placehereroleid";
+    public static readonly string GuildId = "placeguildid";
+    public static readonly string RoleId = "placeroleid";
     
     public static readonly string[] WhitelistedIds = {};
 
