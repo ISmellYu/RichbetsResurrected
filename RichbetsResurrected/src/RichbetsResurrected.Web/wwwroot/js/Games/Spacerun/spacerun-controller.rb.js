@@ -26,6 +26,10 @@ crashConn.start().then(function () {
     var autoButton = document.getElementById('auto-place-bet');
 
     $('#manual-place-bet').click(function () {
+        let x = parseInt($('.amount-input').val());
+        if (isNaN(x)){
+            return;
+        }
         placeBet(parseInt($('.amount-input').val()));
         if (playerData.isBetting) {
             cashout();

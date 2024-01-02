@@ -312,6 +312,8 @@ conn.start().then(function () {
     .getElementById("black-button")
     .addEventListener("click", async function () {
       let amount = document.getElementById("coins").value;
+      if (amount === "")
+          return;
       placeBet(1, parseInt(amount));
       PlayerBetHistory.push(1);
     });
@@ -320,6 +322,8 @@ conn.start().then(function () {
     .getElementById("red-button")
     .addEventListener("click", async function () {
       let amount = document.getElementById("coins").value;
+      if (amount === "")
+          return;
       placeBet(0, parseInt(amount));
       PlayerBetHistory.push(0);
     });
@@ -328,6 +332,8 @@ conn.start().then(function () {
     .getElementById("green-button")
     .addEventListener("click", async function () {
       let amount = document.getElementById("coins").value;
+      if (amount === "")
+            return;
       placeBet(2, parseInt(amount));
       PlayerBetHistory.push(2);
     });

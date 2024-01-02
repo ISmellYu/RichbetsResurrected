@@ -136,6 +136,10 @@ $(document).ready(async function () {
         }
 
         $('#manual-place-bet').click(function () {
+            let x = parseInt($('.amount-input').val());
+            if (isNaN(x)){
+                return;
+            }
             placeBet(parseInt($('.amount-input').val()));
             if (sessionData.betting && streamDataTemp.running) {
                 cashout();
