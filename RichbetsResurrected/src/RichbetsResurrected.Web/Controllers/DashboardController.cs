@@ -12,10 +12,4 @@ public class DashboardController : Controller
     {
         return View();
     }
-
-    [Authorize(AuthenticationSchemes = DiscordAuthenticationDefaults.AuthenticationScheme)]
-    public IActionResult Huj()
-    {
-        return RedirectToRoute("Index", "Home");
-    }
 }
