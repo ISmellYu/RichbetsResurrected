@@ -1,16 +1,14 @@
 ﻿using RichbetsResurrected.Entities.Client;
 using RichbetsResurrected.Entities.DatabaseEntities.Shop;
-using RichbetsResurrected.Interfaces.Client;
-using RichbetsResurrected.Interfaces.DAL;
 using RichbetsResurrected.Interfaces.DAL.Shop;
 using RichbetsResurrected.Interfaces.Inventory;
-using RichbetsResurrected.Interfaces.Shop;
 
 namespace RichbetsResurrected.Services.Client;
 
 public class InventoryService : IInventoryService
 {
     private readonly IShopRepository _shopRepository;
+
     public InventoryService(IShopRepository shopRepository)
     {
         _shopRepository = shopRepository;
@@ -20,7 +18,9 @@ public class InventoryService : IInventoryService
     {
         var inv = new Inventory
         {
-            ActiveItems = GetActiveItems(identityUserId), EquippedItems = GetEquippedItems(identityUserId), Items = GetUserItemsWithAll(identityUserId)
+            ActiveItems = GetActiveItems(identityUserId),
+            EquippedItems = GetEquippedItems(identityUserId),
+            Items = GetUserItemsWithAll(identityUserId)
         };
         return inv;
     }
@@ -28,20 +28,32 @@ public class InventoryService : IInventoryService
     public void EquipItem(int identityUserId, int itemId)
     {
         var userItem = _shopRepository.GetUserItemByIds(identityUserId, itemId);
-        if (userItem == null) return;
+        if (userItem == null)
+        {
+            return;
+        }
+
         var itemType = _shopRepository.GetItemTypeByItemId(userItem.ItemId);
-        if (itemType == null) return;
+        if (itemType == null)
+        {
+            return;
+        }
+
         if (itemType.IsEquippable)
         {
             userItem.State = ItemState.Equipped;
             _shopRepository.UpdateUserItem(userItem);
         }
     }
-    
+
     public void UnequipItem(int identityUserId, int itemId)
     {
         var userItem = _shopRepository.GetUserItemByIds(identityUserId, itemId);
-        if (userItem == null) return;
+        if (userItem == null)
+        {
+            return;
+        }
+
         var equippable = _shopRepository.GetItemTypeByItemId(userItem.ItemId).IsEquippable;
         if (equippable)
         {
@@ -49,11 +61,15 @@ public class InventoryService : IInventoryService
             _shopRepository.UpdateUserItem(userItem);
         }
     }
-    
+
     public void RemoveItem(int identityUserId, int itemId)
     {
         var userItem = _shopRepository.GetUserItemByIds(identityUserId, itemId);
-        if (userItem == null) return;
+        if (userItem == null)
+        {
+            return;
+        }
+
         _shopRepository.RemoveUserItem(userItem);
     }
 
@@ -62,7 +78,7 @@ public class InventoryService : IInventoryService
         var userItem = _shopRepository.GetUserItemByIds(identityUserId, itemId);
         return userItem != null;
     }
-    
+
     public List<Item> GetEquippedItems(int identityUserId)
     {
         var userItems = _shopRepository.GetUserItems();
@@ -74,9 +90,10 @@ public class InventoryService : IInventoryService
         {
             item.ItemType = _shopRepository.GetItemTypeByItemId(item.Id);
         }
+
         return equippedItems;
     }
-    
+
     public List<ActiveItem> GetActiveItems(int identityUserId)
     {
         var activeItems = _shopRepository.GetActiveItems()
@@ -85,11 +102,15 @@ public class InventoryService : IInventoryService
         foreach (var item in activeItems)
         {
             item.Item = _shopRepository.GetItemById(item.ItemId);
-            if (item.Item != null) item.Item.ItemType = _shopRepository.GetItemTypeByItemId(item.ItemId);
+            if (item.Item != null)
+            {
+                item.Item.ItemType = _shopRepository.GetItemTypeByItemId(item.ItemId);
+            }
         }
+
         return activeItems;
     }
-    
+
     public List<UserItem> GetUserItemsWithAll(int identityUserId)
     {
         var userItems = _shopRepository.GetUserItems()
@@ -98,8 +119,12 @@ public class InventoryService : IInventoryService
         foreach (var item in userItems)
         {
             item.Item = _shopRepository.GetItemById(item.ItemId);
-            if (item.Item != null) item.Item.ItemType = _shopRepository.GetItemTypeByItemId(item.ItemId);
+            if (item.Item != null)
+            {
+                item.Item.ItemType = _shopRepository.GetItemTypeByItemId(item.ItemId);
+            }
         }
+
         return userItems;
     }
 }

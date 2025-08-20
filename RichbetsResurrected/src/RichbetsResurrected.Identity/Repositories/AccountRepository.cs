@@ -36,7 +36,8 @@ public class AccountRepository : IAccountRepository
     {
         var user = new AppUser
         {
-            UserName = info.Principal.FindFirstValue(ClaimTypes.Name), Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+            UserName = info.Principal.FindFirstValue(ClaimTypes.Name),
+            Email = info.Principal.FindFirstValue(ClaimTypes.Email)
         };
         var result = await _userManager.CreateAsync(user);
         return (result, user);
@@ -66,7 +67,6 @@ public class AccountRepository : IAccountRepository
             {
                 await _userManager.AddClaimAsync(user, new Claim(OAuthConstants.DiscordId, externalClaim.Value));
                 refreshSignIn = true;
-
             }
             else if (userClaim.Value != externalClaim.Value)
             {
@@ -74,7 +74,6 @@ public class AccountRepository : IAccountRepository
                 await _userManager.AddClaimAsync(user, new Claim(OAuthConstants.DiscordId, externalClaim.Value));
                 refreshSignIn = true;
             }
-
         }
         else if (userClaim == null)
         {
@@ -85,13 +84,14 @@ public class AccountRepository : IAccountRepository
 
         if (info.Principal.HasClaim(c => c.Type == DiscordAuthenticationConstants.Claims.AvatarHash))
         {
-            var externalClaim = info.Principal.FindFirst(c => c.Type == DiscordAuthenticationConstants.Claims.AvatarHash);
+            var externalClaim =
+                info.Principal.FindFirst(c => c.Type == DiscordAuthenticationConstants.Claims.AvatarHash);
 
             if (avatarClaim == null)
             {
-                await _userManager.AddClaimAsync(user, new Claim(DiscordAuthenticationConstants.Claims.AvatarHash, externalClaim.Value));
+                await _userManager.AddClaimAsync(user,
+                    new Claim(DiscordAuthenticationConstants.Claims.AvatarHash, externalClaim.Value));
                 refreshSignIn = true;
-
             }
             else if (avatarClaim.Value != externalClaim.Value)
             {
@@ -114,12 +114,16 @@ public class AccountRepository : IAccountRepository
             refreshSignIn = true;
         }
 
-        if (refreshSignIn) await _signInManager.RefreshSignInAsync(user);
+        if (refreshSignIn)
+        {
+            await _signInManager.RefreshSignInAsync(user);
+        }
     }
 
     public async Task UpdateRichbetUserAsync(AppUser user, ExternalLoginInfo info)
     {
     }
+
     public string GetDiscordAvatarUrl(ClaimsPrincipal user)
     {
         var discordId = user.Claims.FirstOrDefault(c => c.Type == OAuthConstants.DiscordId).Value;

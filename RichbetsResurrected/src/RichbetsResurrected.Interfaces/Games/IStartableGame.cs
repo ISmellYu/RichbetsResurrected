@@ -2,5 +2,5 @@
 
 public interface IStartableGame
 {
-    public Task StartAsync();
+    Task StartAsync();
 }

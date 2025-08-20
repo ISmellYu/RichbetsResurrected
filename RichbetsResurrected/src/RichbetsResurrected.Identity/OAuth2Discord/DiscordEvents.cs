@@ -11,8 +11,8 @@ public static class DiscordEvents
 {
     public static readonly string GuildId = "placeguildid";
     public static readonly string RoleId = "placeroleid";
-    
-    public static readonly string[] WhitelistedIds = {};
+
+    public static readonly string[] WhitelistedIds = { };
 
     public static async Task OnCreatingTicketAsync(OAuthCreatingTicketContext context)
     {
@@ -24,7 +24,7 @@ public static class DiscordEvents
             throw new DiscordAuthFailException($"Not in guild user id: {userId}");
         }
 
-        
+
         // if (!IsWhitelisted(userId))
         // {
         //     context.Fail($"User is not whitelisted with id {userId}.");
@@ -62,17 +62,20 @@ public static class DiscordEvents
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", context.AccessToken);
 
         using var response =
-            await context.Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, context.HttpContext.RequestAborted)
+            await context.Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead,
+                    context.HttpContext.RequestAborted)
                 .ConfigureAwait(false);
 
         using var payload = await JsonDocument
-            .ParseAsync(await response.Content.ReadAsStreamAsync(context.HttpContext.RequestAborted).ConfigureAwait(false)).ConfigureAwait(false);
+            .ParseAsync(await response.Content.ReadAsStreamAsync(context.HttpContext.RequestAborted)
+                .ConfigureAwait(false)).ConfigureAwait(false);
 
         var root = payload.RootElement.Clone();
 
         var guilds = root.EnumerateArray().Select(x => new Guild
         {
-            Id = x.GetProperty("id").GetString() ?? string.Empty, Name = x.GetProperty("name").GetString() ?? string.Empty
+            Id = x.GetProperty("id").GetString() ?? string.Empty,
+            Name = x.GetProperty("name").GetString() ?? string.Empty
         });
         return guilds;
     }
@@ -86,7 +89,7 @@ public static class DiscordEvents
     {
         return discordRoles.Any(x => x.Id == roleId);
     }
-    
+
     private static bool IsWhitelisted(string userId)
     {
         return WhitelistedIds.Contains(userId);
@@ -94,16 +97,19 @@ public static class DiscordEvents
 
     private static async Task<IEnumerable<DiscordRole>> GetDiscordRolesAsync(OAuthCreatingTicketContext context)
     {
-        using var request = new HttpRequestMessage(HttpMethod.Get, $"https://discord.com/api/users/@me/guilds/{GuildId}/member");
+        using var request =
+            new HttpRequestMessage(HttpMethod.Get, $"https://discord.com/api/users/@me/guilds/{GuildId}/member");
         request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", context.AccessToken);
 
         using var response =
-            await context.Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, context.HttpContext.RequestAborted)
+            await context.Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead,
+                    context.HttpContext.RequestAborted)
                 .ConfigureAwait(false);
 
         using var payload = await JsonDocument
-            .ParseAsync(await response.Content.ReadAsStreamAsync(context.HttpContext.RequestAborted).ConfigureAwait(false)).ConfigureAwait(false);
+            .ParseAsync(await response.Content.ReadAsStreamAsync(context.HttpContext.RequestAborted)
+                .ConfigureAwait(false)).ConfigureAwait(false);
 
         var root = payload.RootElement.Clone();
 

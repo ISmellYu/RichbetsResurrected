@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Autofac.Core;
-using RichbetsResurrected.Interfaces.Client;
 using RichbetsResurrected.Interfaces.Games;
 using RichbetsResurrected.Interfaces.Games.Crash;
 using RichbetsResurrected.Interfaces.Games.Roulette;
@@ -52,17 +51,17 @@ public class DefaultServiceModule : Module
         builder.RegisterType<CrashService>().As<ICrashService>().InstancePerLifetimeScope();
 
         builder.RegisterType<CrashWorker>().As<ICrashWorker>()
-            .SingleInstance()   // Same instance for everything
+            .SingleInstance() // Same instance for everything
             .AutoActivate() // Resolve the service before anything else once to create the instance
             .OnActivated(StartGame); // Run a function at service creation
     }
-    
+
     private void RegisterShop(ContainerBuilder builder)
     {
         builder.RegisterType<ShopService>().As<IShopService>().InstancePerLifetimeScope();
         builder.RegisterType<InventoryService>().As<IInventoryService>().InstancePerLifetimeScope();
     }
-    
+
     private void RegisterSlots(ContainerBuilder builder)
     {
         builder.RegisterType<SlotsService>().As<ISlotsService>().InstancePerLifetimeScope();
@@ -73,14 +72,14 @@ public class DefaultServiceModule : Module
     {
         _ = Task.Run(() => gameArgs.Instance.StartAsync());
     }
-    
+
     private static void RegisterScheduledTasks(ContainerBuilder builder)
     {
         builder.RegisterType<ScheduledTasksControl>().As<IScheduledTasksControl>().SingleInstance().AutoActivate();
 
-        builder.RegisterType<DailyResetScheduled>().AsSelf().SingleInstance().AutoActivate().OnActivated((args =>
+        builder.RegisterType<DailyResetScheduled>().AsSelf().SingleInstance().AutoActivate().OnActivated(args =>
         {
             _ = Task.Run(() => args.Instance.ExecuteAsync());
-        }));
+        });
     }
 }

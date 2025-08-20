@@ -10,7 +10,6 @@ namespace RichbetsResurrected.Identity;
 
 public static class StartupSetup
 {
-
     public static void AddAuthStuff(this IServiceCollection services, IConfiguration configuration)
     {
         services.ConfigureCookies();
@@ -24,7 +23,8 @@ public static class StartupSetup
             .AddEntityFrameworkStores<AppDbContext>();
     }
 
-    public static void ConfigureAuthentication(this IServiceCollection services, string discordClientId, string discordClientSecret)
+    public static void ConfigureAuthentication(this IServiceCollection services, string discordClientId,
+        string discordClientSecret)
     {
         services.AddAuthentication().AddDiscord(options =>
         {

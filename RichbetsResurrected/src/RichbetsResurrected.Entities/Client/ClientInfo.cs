@@ -1,7 +1,5 @@
-﻿using RichbetsResurrected.Entities.DatabaseEntities;
-using RichbetsResurrected.Entities.DatabaseEntities.BaseRichbet;
+﻿using RichbetsResurrected.Entities.DatabaseEntities.BaseRichbet;
 using RichbetsResurrected.Entities.DatabaseEntities.Shop;
-using RichbetsResurrected.Entities.DatabaseEntities.Statistics;
 
 namespace RichbetsResurrected.Entities.Client;
 

@@ -10,5 +10,5 @@ public enum SymbolEnum
     Plum = 6,
     Orange = 7,
     Diamond = 8,
-    Shooter = 9,
+    Shooter = 9
 }

@@ -9,7 +9,7 @@ public interface IInventoryService
     void UnequipItem(int identityUserId, int itemId);
     void RemoveItem(int identityUserId, int itemId);
     bool HasItem(int identityUserId, int itemId);
-    public List<Item> GetEquippedItems(int identityUserId);
-    public List<ActiveItem> GetActiveItems(int identityUserId);
-    public List<UserItem> GetUserItemsWithAll(int identityUserId);
+    List<Item> GetEquippedItems(int identityUserId);
+    List<ActiveItem> GetActiveItems(int identityUserId);
+    List<UserItem> GetUserItemsWithAll(int identityUserId);
 }

@@ -9,6 +9,7 @@ public class RouletteResult
         Winners = winners;
         Losers = losers;
     }
+
     public int Number { get; set; }
     public RouletteColor Color { get; set; }
     public string ColorName => Color.ToString();

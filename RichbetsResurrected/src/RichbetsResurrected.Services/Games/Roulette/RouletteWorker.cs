@@ -25,7 +25,9 @@ public class RouletteWorker : IRouletteWorker
     public async Task StartAsync()
     {
         if (_gameState.CheckIfRunning())
+        {
             return;
+        }
 
         try
         {
@@ -59,6 +61,7 @@ public class RouletteWorker : IRouletteWorker
             // await SendUpdateTimerToClientsAsync(i);
             await Task.Delay(10);
         }
+
         _gameState.TurnOffBetting();
         await Task.Delay(100); // Just to make sure every bet is done adding
     }
@@ -116,10 +119,18 @@ public class RouletteWorker : IRouletteWorker
             switch (winColor)
             {
                 case RouletteColor.Black or RouletteColor.Red:
-                    foreach (var winner in winners) await repository.AddPointsToUserAsync(winner.IdentityUserId, winner.Amount * 2);
+                    foreach (var winner in winners)
+                    {
+                        await repository.AddPointsToUserAsync(winner.IdentityUserId, winner.Amount * 2);
+                    }
+
                     break;
                 case RouletteColor.Green:
-                    foreach (var winner in winners) await repository.AddPointsToUserAsync(winner.IdentityUserId, winner.Amount * 14);
+                    foreach (var winner in winners)
+                    {
+                        await repository.AddPointsToUserAsync(winner.IdentityUserId, winner.Amount * 14);
+                    }
+
                     break;
             }
         }

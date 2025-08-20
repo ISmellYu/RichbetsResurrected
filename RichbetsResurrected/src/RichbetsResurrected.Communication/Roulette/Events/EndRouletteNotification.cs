@@ -10,6 +10,7 @@ public class EndRouletteNotification : INotification
         History = history;
         Current = current;
     }
+
     public List<RouletteResult> History { get; set; }
     public RouletteResult Current { get; set; }
 }

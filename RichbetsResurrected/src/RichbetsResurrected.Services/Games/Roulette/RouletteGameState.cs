@@ -94,8 +94,12 @@ public class RouletteGameState : IRouletteGameState
         if (IsInGameColor(player))
         {
             foreach (var roulettePlayer in Players)
+            {
                 if (roulettePlayer.IdentityUserId == player.IdentityUserId && roulettePlayer.Color == player.Color)
+                {
                     roulettePlayer.Amount += player.Amount;
+                }
+            }
         }
         else
         {

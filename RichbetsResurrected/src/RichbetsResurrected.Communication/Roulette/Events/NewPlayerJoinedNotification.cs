@@ -9,5 +9,6 @@ public class NewPlayerJoinedNotification : INotification
     {
         Player = player;
     }
+
     public RoulettePlayer Player { get; set; }
 }

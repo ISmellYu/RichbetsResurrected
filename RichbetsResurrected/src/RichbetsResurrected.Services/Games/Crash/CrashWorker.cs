@@ -20,7 +20,9 @@ public class CrashWorker : ICrashWorker
     public async Task StartAsync()
     {
         if (_gameState.IsRunning())
+        {
             return;
+        }
 
         try
         {
@@ -42,6 +44,7 @@ public class CrashWorker : ICrashWorker
         {
             Console.WriteLine(e);
         }
+
         _gameState.TurnOffRunning();
     }
 
@@ -55,6 +58,7 @@ public class CrashWorker : ICrashWorker
             // await SendUpdateTimerToClientsAsync(i);
             await Task.Delay(10);
         }
+
         _gameState.TurnOffPlacingBets();
         await Task.Delay(100); // Just to make sure every bet is done adding
     }
@@ -71,20 +75,25 @@ public class CrashWorker : ICrashWorker
             while (multiplier <= maxMultiplier)
             {
                 if (multiplier == maxMultiplier)
+                {
                     break;
-                
+                }
+
                 _gameState.AddToMultipliers(multiplier);
                 _gameState.SetMultiplier(multiplier);
-                
 
-                multiplier += (int) multiplier * step;
-                
+
+                multiplier += (int)multiplier * step;
+
                 if (multiplier > maxMultiplier)
+                {
                     multiplier = maxMultiplier;
-                
+                }
+
                 await Task.Delay(100);
             }
         }
+
         _gameState.AddToMultipliers(multiplier);
         _gameState.SetMultiplier(multiplier);
         await Task.Delay(50);

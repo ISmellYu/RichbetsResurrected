@@ -14,7 +14,7 @@ public static class CrashHelper
     {
         var newHash = GenerateHash(Encoding.ASCII.GetBytes(_crashHash));
 
-        return (decimal) Math.Round(CrashPointFromHash(newHash), 2);
+        return (decimal)Math.Round(CrashPointFromHash(newHash), 2);
     }
 
 
@@ -27,12 +27,14 @@ public static class CrashHelper
 
         if (CheckIfShouldCrashInstantly(sHash, hs))
             //Debug.WriteLine("Rolled 1");
+        {
             return 1;
+        }
 
         var h = Convert.ToInt64(sHash.Substring(0, 52 / 4), 16);
         var e = Math.Pow(2, 52);
 
-        return Math.Floor((100 * e - h) / (e - h)) / 100.0;
+        return Math.Floor(((100 * e) - h) / (e - h)) / 100.0;
     }
 
     private static bool CheckIfShouldCrashInstantly(string hash, int mod)
@@ -41,7 +43,9 @@ public static class CrashHelper
 
         var o = hash.Length % 4;
         for (var i = o > 0 ? o - 4 : 0; i < hash.Length; i += 4)
+        {
             val = ((val << 16) + Convert.ToInt32(hash.Substring(i, 4), 16)) % mod;
+        }
 
         return val == 0;
     }
@@ -58,7 +62,9 @@ public static class CrashHelper
         var sb = new StringBuilder();
 
         foreach (var b in bytes)
+        {
             sb.Append(b.ToString("x2"));
+        }
 
         return sb.ToString();
     }

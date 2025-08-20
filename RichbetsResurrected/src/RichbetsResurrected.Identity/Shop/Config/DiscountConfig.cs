@@ -6,7 +6,6 @@ namespace RichbetsResurrected.Identity.Shop.Config;
 
 public class DiscountConfig : IEntityTypeConfiguration<Discount>
 {
-
     public void Configure(EntityTypeBuilder<Discount> builder)
     {
         builder.HasKey(u => u.ItemId);

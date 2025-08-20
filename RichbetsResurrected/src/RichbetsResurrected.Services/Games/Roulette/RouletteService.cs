@@ -19,47 +19,41 @@ public class RouletteService : IRouletteService
     public async Task<RouletteJoinResult> AddPlayerAsync(RoulettePlayer player)
     {
         if (!GameState.CheckIfCanBet())
+        {
             return new RouletteJoinResult
             {
                 IsSuccess = false,
-                Error = new RouletteError
-                {
-                    Message = "You cannot bet at this time"
-                },
+                Error = new RouletteError {Message = "You cannot bet at this time"},
                 Player = player
             };
+        }
 
         if (player.Amount <= 0)
+        {
             return new RouletteJoinResult
             {
                 IsSuccess = false,
-                Error = new RouletteError
-                {
-                    Message = "You cannot bet with a negative amount"
-                },
+                Error = new RouletteError {Message = "You cannot bet with a negative amount"},
                 Player = player
             };
+        }
 
         var points = await _repository.GetPointsFromUserAsync(player.IdentityUserId);
 
         if (points - player.Amount < 0)
+        {
             return new RouletteJoinResult
             {
                 IsSuccess = false,
-                Error = new RouletteError
-                {
-                    Message = "You don't have enough points"
-                },
+                Error = new RouletteError {Message = "You don't have enough points"},
                 Player = player
             };
+        }
 
 
         await _repository.RemovePointsFromUserAsync(player.IdentityUserId, player.Amount);
         GameState.AddPlayer(player);
         // await SendJoinPlayerToClientsAsync(player);
-        return new RouletteJoinResult
-        {
-            IsSuccess = true, Error = null, Player = player
-        };
+        return new RouletteJoinResult {IsSuccess = true, Error = null, Player = player};
     }
 }

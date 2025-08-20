@@ -23,8 +23,8 @@ public static class SlotsConfig
     public const int Columns = 3;
     public const int MinSymbolValue = 1;
     public const int MaxSymbolValue = 9;
-    
-    
+
+
     public static readonly Dictionary<SymbolEnum, float> SymbolMultipliers = new()
     {
         {SymbolEnum.Seven, 5f},
@@ -35,6 +35,6 @@ public static class SlotsConfig
         {SymbolEnum.Plum, 1f},
         {SymbolEnum.Orange, 1f},
         {SymbolEnum.Diamond, 1f},
-        {SymbolEnum.Shooter, 3f},
-    }; 
+        {SymbolEnum.Shooter, 3f}
+    };
 }

@@ -6,7 +6,6 @@ namespace RichbetsResurrected.Identity.Shop.Config;
 
 public class ItemConfig : IEntityTypeConfiguration<Item>
 {
-
     public void Configure(EntityTypeBuilder<Item> builder)
     {
         //builder.HasOne<Category>().WithMany(d => d.Items).HasForeignKey(p => p.CategoryId).IsRequired();

@@ -12,7 +12,7 @@ public class RichbetUser
     public float Multiplier { get; set; }
     public bool DailyRedeemed { get; set; }
     public uint HourlyTime { get; set; }
-    
+
     public ICollection<ActiveItem> ActiveItems { get; set; }
     public ICollection<UserItem> UserItems { get; set; }
     public Statistic Statistics { get; set; }

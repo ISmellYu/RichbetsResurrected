@@ -8,6 +8,7 @@ using RichbetsResurrected.Interfaces.Inventory;
 using RichbetsResurrected.Interfaces.Shop;
 
 namespace RichbetsResurrected.Web.ApiController;
+
 [Authorize]
 [Route("[controller]/[action]")]
 [ApiController]
@@ -16,14 +17,15 @@ public class ItemshopController : ControllerBase
     private readonly UserManager<AppUser> _userManager;
     private readonly IShopService _shopService;
     private readonly IInventoryService _inventoryService;
-    public ItemshopController(UserManager<AppUser> userManager, IShopService shopService, IInventoryService inventoryService)
+
+    public ItemshopController(UserManager<AppUser> userManager, IShopService shopService,
+        IInventoryService inventoryService)
     {
         _userManager = userManager;
         _shopService = shopService;
         _inventoryService = inventoryService;
-
     }
-    
+
     [HttpPost]
     public async Task<BuyResult> BuyItem(string itemId)
     {
@@ -33,10 +35,12 @@ public class ItemshopController : ControllerBase
         {
             bool IsDesignItem(ItemType type)
             {
-                if (type.IsNicknameAnimation || type.IsNicknameBanner || type.IsNicknameEffect || type.IsNicknamePattern)
+                if (type.IsNicknameAnimation || type.IsNicknameBanner || type.IsNicknameEffect ||
+                    type.IsNicknamePattern)
                 {
                     return true;
                 }
+
                 return false;
             }
 
@@ -50,6 +54,7 @@ public class ItemshopController : ControllerBase
                 {
                     return true;
                 }
+
                 return false;
             });
             if (equipped != null)
@@ -57,8 +62,10 @@ public class ItemshopController : ControllerBase
                 _inventoryService.UnequipItem(user.Id, equipped.Id);
                 _inventoryService.RemoveItem(user.Id, equipped.Id);
             }
+
             _inventoryService.EquipItem(user.Id, result.Item.Id);
         }
+
         return result;
     }
 }

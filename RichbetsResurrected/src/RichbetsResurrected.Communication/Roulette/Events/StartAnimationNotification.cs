@@ -8,5 +8,6 @@ public class StartAnimationNotification : INotification
     {
         StopAt = stopAt;
     }
+
     public double StopAt { get; set; }
 }

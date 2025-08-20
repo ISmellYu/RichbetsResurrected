@@ -9,9 +9,8 @@ public class SlotsWithdrawNotification : INotification
     {
         Result = result;
         ConnectionId = connectionId;
-
     }
-    
+
     public SlotsWithdrawResult Result { get; set; }
     public string ConnectionId { get; set; }
 }

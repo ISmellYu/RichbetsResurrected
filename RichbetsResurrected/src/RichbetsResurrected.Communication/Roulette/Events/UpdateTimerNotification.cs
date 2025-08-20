@@ -8,5 +8,6 @@ public class UpdateTimerNotification : INotification
     {
         TimeLeft = timeLeft;
     }
+
     public int TimeLeft { get; set; }
 }

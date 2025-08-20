@@ -6,7 +6,6 @@ namespace RichbetsResurrected.Identity.Shop.Config;
 
 public class SubCategoriesConfig : IEntityTypeConfiguration<SubCategory>
 {
-
     public void Configure(EntityTypeBuilder<SubCategory> builder)
     {
         builder.ToTable("subCategories");

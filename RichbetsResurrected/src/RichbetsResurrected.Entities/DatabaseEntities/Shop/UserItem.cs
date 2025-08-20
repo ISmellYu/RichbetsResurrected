@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using RichbetsResurrected.Entities.DatabaseEntities.BaseRichbet;
+﻿using RichbetsResurrected.Entities.DatabaseEntities.BaseRichbet;
 
 namespace RichbetsResurrected.Entities.DatabaseEntities.Shop;
 

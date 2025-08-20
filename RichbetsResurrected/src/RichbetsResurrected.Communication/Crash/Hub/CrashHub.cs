@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using RichbetsResurrected.Entities.Client;
 using RichbetsResurrected.Entities.Games.Crash;
-using RichbetsResurrected.Interfaces.Client;
 using RichbetsResurrected.Interfaces.DAL;
 using RichbetsResurrected.Interfaces.Games.Crash;
 using RichbetsResurrected.Interfaces.Identity;
@@ -23,13 +22,14 @@ public class CrashHub : Hub<ICrashHub>
     private readonly ICrashService _crashService;
     private readonly IRichbetRepository _richbetRepository;
     private readonly IInventoryService _inventoryService;
-    public CrashHub(IAccountRepository accountRepository, IRichbetRepository richbetRepository, ICrashService crashService, IInventoryService inventoryService)
+
+    public CrashHub(IAccountRepository accountRepository, IRichbetRepository richbetRepository,
+        ICrashService crashService, IInventoryService inventoryService)
     {
         _accountRepository = accountRepository;
         _richbetRepository = richbetRepository;
         _crashService = crashService;
         _inventoryService = inventoryService;
-
     }
 
     [SignalRHidden]
@@ -80,7 +80,7 @@ public class CrashHub : Hub<ICrashHub>
         var result = await _crashService.JoinCrashAsync(crashPlayer);
         return result;
     }
-    
+
     [SignalRMethod(summary: "Invoked when client want to cashout")]
     public async Task<CrashCashoutResult> Cashout(decimal? desiredMultiplier)
     {
@@ -89,12 +89,14 @@ public class CrashHub : Hub<ICrashHub>
         {
             desiredMultiplier = Math.Round(desiredMultiplier.Value, 2);
         }
+
         var result = await _crashService.CashoutAsync(appUserId, desiredMultiplier);
         return result;
     }
 
     [SignalRMethod(summary: "Stream for clients to receive the actual crash info")]
-    public async IAsyncEnumerable<CrashInfo> StreamCrashInfo([EnumeratorCancellation][SignalRHidden] CancellationToken cancellationToken)
+    public async IAsyncEnumerable<CrashInfo> StreamCrashInfo(
+        [EnumeratorCancellation] [SignalRHidden] CancellationToken cancellationToken)
     {
         while (true)
         {

@@ -11,7 +11,7 @@ public class CrashGameState : ICrashGameState
     private BlockingCollection<CrashPlayer> Players { get; } = new();
     private List<CrashResult> History { get; } = new();
     private BlockingCollection<decimal> Multipliers { get; } = new();
-    
+
     private decimal Multiplier { get; set; }
     private decimal MaxMultiplier { get; set; }
     private decimal TimeLeft { get; set; }
@@ -101,11 +101,12 @@ public class CrashGameState : ICrashGameState
     {
         Multiplier = multiplier;
     }
+
     public void SetMaxMultiplier(decimal maxMultiplier)
     {
         MaxMultiplier = maxMultiplier;
     }
-    
+
     public void SetTimeLeft(decimal timeLeft)
     {
         TimeLeft = timeLeft;
@@ -120,7 +121,7 @@ public class CrashGameState : ICrashGameState
     {
         return Multiplier;
     }
-    
+
     public decimal GetMaxMultiplier()
     {
         return MaxMultiplier;
@@ -149,34 +150,45 @@ public class CrashGameState : ICrashGameState
     public void AddPlayer(CrashPlayer player)
     {
         if (IsInGame(player))
+        {
             foreach (var crashPlayer in Players)
             {
-                if (crashPlayer.IdentityUserId != player.IdentityUserId) continue;
+                if (crashPlayer.IdentityUserId != player.IdentityUserId)
+                {
+                    continue;
+                }
+
                 crashPlayer.Amount += player.Amount;
                 return;
             }
+        }
 
         Players.TryAdd(player);
     }
-    
+
     public CrashCashoutResult Cashout(int identityUserId, decimal? desiredMultiplier = null)
     {
         if (!IsInGame(identityUserId))
-            return new CrashCashoutResult
-                {IsSuccess = false, Error = new CrashError
-                    {Message = "You are not in game"}};
+        {
+            return new CrashCashoutResult {IsSuccess = false, Error = new CrashError {Message = "You are not in game"}};
+        }
 
         if (AlreadyCashouted(identityUserId))
+        {
             return new CrashCashoutResult
-                {IsSuccess = false, Error = new CrashError
-                    {Message = "You already cashouted"}};
+            {
+                IsSuccess = false, Error = new CrashError {Message = "You already cashouted"}
+            };
+        }
 
         CrashPlayer player = null;
         foreach (var crashPlayer in Players)
         {
-            if (crashPlayer.IdentityUserId != identityUserId) 
+            if (crashPlayer.IdentityUserId != identityUserId)
+            {
                 continue;
-            
+            }
+
             crashPlayer.Cashouted = true;
             crashPlayer.WhenCashouted = Multiplier;
             if (desiredMultiplier != null && CheckMultiplierCorrectness(desiredMultiplier.Value))
@@ -184,26 +196,24 @@ public class CrashGameState : ICrashGameState
                 crashPlayer.WhenCashouted = desiredMultiplier.Value;
                 // Console.WriteLine($"Desired multiplier is correct {desiredMultiplier.Value}");
             }
-            
+
             player = crashPlayer;
             break;
         }
-        
-        return new CrashCashoutResult
-        {
-            IsSuccess = true,
-            Error = null,
-            Player = player
-        };;
+
+        return new CrashCashoutResult {IsSuccess = true, Error = null, Player = player};
+        ;
     }
-    
+
     private bool CheckMultiplierCorrectness(decimal multiplier)
     {
         var lastMultiplier = Multipliers.LastOrDefault();
         var secondLastMultiplier = Multipliers.ElementAtOrDefault(Multipliers.Count - 2);
         if (secondLastMultiplier == 0)
+        {
             secondLastMultiplier = lastMultiplier;
-        
+        }
+
         return secondLastMultiplier <= multiplier && lastMultiplier >= multiplier;
     }
 
@@ -221,10 +231,12 @@ public class CrashGameState : ICrashGameState
     {
         return Players.Any(p => p.IdentityUserId == crashPlayer.IdentityUserId);
     }
+
     public bool IsInGame(int identityUserId)
     {
         return Players.Any(p => p.IdentityUserId == identityUserId);
     }
+
     public bool AlreadyCashouted(int identityUserId)
     {
         return Players.Any(p => p.IdentityUserId == identityUserId && p.Cashouted);
@@ -250,7 +262,10 @@ public class CrashGameState : ICrashGameState
     public bool CheckIfCanBet()
     {
         if (!IsRunning())
+        {
             return false;
+        }
+
         return IsPlacingBetsAllowed() && !IsRemovingBetsAllowed();
     }
 
@@ -265,6 +280,7 @@ public class CrashGameState : ICrashGameState
         {
         }
     }
+
     public CrashInfo GetCrashInfo()
     {
         var crashInfo = new CrashInfo

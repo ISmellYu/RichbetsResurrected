@@ -6,7 +6,6 @@ namespace RichbetsResurrected.Identity.Shop.Config;
 
 public class ItemTypeConfig : IEntityTypeConfiguration<ItemType>
 {
-
     public void Configure(EntityTypeBuilder<ItemType> builder)
     {
         builder.HasKey(p => p.ItemId);

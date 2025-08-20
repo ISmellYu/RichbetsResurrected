@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Authorization;
 using RichbetsResurrected.Entities.Client;
-using RichbetsResurrected.Entities.DatabaseEntities.Statistics;
 using RichbetsResurrected.Interfaces.DAL;
 using RichbetsResurrected.Interfaces.DAL.Statistics;
 using RichbetsResurrected.Interfaces.Identity;
@@ -18,7 +17,9 @@ public class ClientHub : Microsoft.AspNetCore.SignalR.Hub
     private readonly IAccountRepository _accountRepository;
     private readonly IRichbetRepository _richbetRepository;
     private readonly IStatisticsRepository _statisticsRepository;
-    public ClientHub(IAccountRepository accountRepository, IRichbetRepository richbetRepository, IStatisticsRepository statisticsRepository)
+
+    public ClientHub(IAccountRepository accountRepository, IRichbetRepository richbetRepository,
+        IStatisticsRepository statisticsRepository)
     {
         _accountRepository = accountRepository;
         _richbetRepository = richbetRepository;

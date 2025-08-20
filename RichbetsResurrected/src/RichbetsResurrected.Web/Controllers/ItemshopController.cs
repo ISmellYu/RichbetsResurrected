@@ -2,8 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RichbetsResurrected.Entities.DatabaseEntities.Identity.Models;
-using RichbetsResurrected.Entities.DatabaseEntities.Shop;
-using RichbetsResurrected.Entities.Shop;
 using RichbetsResurrected.Interfaces.Shop;
 using RichbetsResurrected.Web.ViewModels;
 
@@ -21,7 +19,7 @@ public class ItemshopController : Controller
         _shopService = shopService;
         _userManager = userManager;
     }
-    
+
     public IActionResult Index()
     {
         return View();
@@ -38,11 +36,8 @@ public class ItemshopController : Controller
             subCategory.Items = _shopService.GetItems()
                 .Where(p => p.SubCategoryId == subCategory.Id);
         }
-        
-        return View(new CustomStylingViewModel
-        {
-            SubCategories = subCategories.ToList()
-        });
+
+        return View(new CustomStylingViewModel {SubCategories = subCategories.ToList()});
     }
 
     public IActionResult LureModules()
@@ -62,6 +57,4 @@ public class ItemshopController : Controller
         //return View();
         return RedirectToAction("Index", "Error");
     }
-    
-    
 }

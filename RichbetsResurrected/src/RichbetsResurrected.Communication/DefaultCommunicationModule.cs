@@ -27,15 +27,17 @@ public class DefaultCommunicationModule : Module
 
         var mediatrOpenTypes = new[]
         {
-            typeof(IRequestHandler<,>), typeof(IRequestExceptionHandler<,,>), typeof(IRequestExceptionAction<,>), typeof(INotificationHandler<>),
-            typeof(IStreamRequestHandler<,>)
+            typeof(IRequestHandler<,>), typeof(IRequestExceptionHandler<,,>), typeof(IRequestExceptionAction<,>),
+            typeof(INotificationHandler<>), typeof(IStreamRequestHandler<,>)
         };
 
         foreach (var mediatrOpenType in mediatrOpenTypes)
+        {
             builder
                 .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .AsClosedTypesOf(mediatrOpenType)
                 .AsImplementedInterfaces();
+        }
 
         //builder.RegisterHubs(Assembly.GetExecutingAssembly());
         builder.RegisterType<RouletteHub>().ExternallyOwned();

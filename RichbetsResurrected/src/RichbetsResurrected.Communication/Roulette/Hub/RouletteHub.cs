@@ -4,12 +4,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using RichbetsResurrected.Entities.Client;
 using RichbetsResurrected.Entities.Games.Roulette;
-using RichbetsResurrected.Interfaces.Client;
 using RichbetsResurrected.Interfaces.DAL;
 using RichbetsResurrected.Interfaces.Games.Roulette;
 using RichbetsResurrected.Interfaces.Identity;
 using RichbetsResurrected.Interfaces.Inventory;
-using RichbetsResurrected.Interfaces.Shop;
 using RichbetsResurrected.Utilities.Constants;
 using SignalRSwaggerGen.Attributes;
 
@@ -24,7 +22,9 @@ public class RouletteHub : Hub<IRouletteHub>
     private readonly IRichbetRepository _richbetRepository;
     private readonly IRouletteService _rouletteService;
     private readonly IInventoryService _inventoryService;
-    public RouletteHub(IRouletteService rouletteService, IAccountRepository accountRepository, IRichbetRepository richbetRepository, IInventoryService inventoryService)
+
+    public RouletteHub(IRouletteService rouletteService, IAccountRepository accountRepository,
+        IRichbetRepository richbetRepository, IInventoryService inventoryService)
     {
         _rouletteService = rouletteService;
         _accountRepository = accountRepository;
@@ -90,7 +90,8 @@ public class RouletteHub : Hub<IRouletteHub>
     }
 
     [SignalRMethod(summary: "Stream for clients to receive the actual roulette info")]
-    public async IAsyncEnumerable<RouletteInfo> StreamRouletteInfo([EnumeratorCancellation][SignalRHidden] CancellationToken cancellationToken)
+    public async IAsyncEnumerable<RouletteInfo> StreamRouletteInfo(
+        [EnumeratorCancellation] [SignalRHidden] CancellationToken cancellationToken)
     {
         while (true)
         {

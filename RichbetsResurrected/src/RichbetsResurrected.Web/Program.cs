@@ -1,20 +1,21 @@
 ﻿using Ardalis.ListStartupServices;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using RichbetsResurrected.Communication;
 using RichbetsResurrected.Communication.Client.Hub;
 using RichbetsResurrected.Communication.Crash.Hub;
 using RichbetsResurrected.Communication.Roulette.Hub;
+using RichbetsResurrected.Communication.Slots.Hub;
+using RichbetsResurrected.Entities;
 using RichbetsResurrected.Identity;
 using RichbetsResurrected.Identity.Contexts;
 using RichbetsResurrected.Services;
 using RichbetsResurrected.Web;
-using Westwind.AspNetCore.LiveReload;
-using Microsoft.Extensions.FileProviders;
-using RichbetsResurrected.Communication.Slots.Hub;
-using RichbetsResurrected.Entities;
 using Serilog;
+using Westwind.AspNetCore.LiveReload;
 
 var builder = WebApplication.CreateBuilder(args);
 // HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
@@ -36,22 +37,18 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 builder.Services.AddAuthStuff(builder.Configuration);
 
 builder.Services.AddLiveReload();
-builder.Services.AddSignalR(
-    options => 
-        options.EnableDetailedErrors = true);
+builder.Services.AddSignalR(options =>
+    options.EnableDetailedErrors = true);
 
 builder.Services.AddControllersWithViews().AddNewtonsoftJson(x =>
 {
-    x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+    x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 }).AddRazorRuntimeCompilation();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "My API", Version = "v1"
-    });
+    c.SwaggerDoc("v1", new OpenApiInfo {Title = "My API", Version = "v1"});
     c.EnableAnnotations();
     c.AddSignalRSwaggerGen(o => o.ScanAssembly(typeof(RouletteHub).Assembly));
 });
@@ -110,7 +107,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 
-
 // Enable middleware to serve generated Swagger as a JSON endpoint.
 app.UseSwagger();
 
@@ -120,8 +116,8 @@ app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1")
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
+        "default",
+        "{controller=Home}/{action=Index}/{id?}");
     endpoints.MapRazorPages();
     endpoints.MapHub<RouletteHub>("/rouletteHub");
     endpoints.MapHub<ClientHub>("/clientHub");

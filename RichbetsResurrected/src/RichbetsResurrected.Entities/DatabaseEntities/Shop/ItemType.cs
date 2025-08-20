@@ -13,10 +13,8 @@ public class ItemType
     public bool IsNicknamePattern { get; set; }
     public bool IsNicknameAnimation { get; set; }
     public bool IsUnique { get; set; }
-    
-    
-    [JsonIgnore]
-    public int ItemId { get; set; }
-    [JsonIgnore]
-    public Item Item { get; set; }
+
+
+    [JsonIgnore] public int ItemId { get; set; }
+    [JsonIgnore] public Item Item { get; set; }
 }

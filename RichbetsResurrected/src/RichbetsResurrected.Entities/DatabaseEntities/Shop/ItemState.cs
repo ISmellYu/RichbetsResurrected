@@ -6,5 +6,5 @@ public enum ItemState
     Active,
     Inactive,
     Equipped,
-    UnEquipped,
+    UnEquipped
 }

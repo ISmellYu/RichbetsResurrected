@@ -5,8 +5,8 @@ namespace RichbetsResurrected.Interfaces.Games.Roulette;
 
 public interface IRouletteGameState
 {
-    public void SetTimeLeft(decimal timeLeft);
-    public bool CheckIfRunning();
+    void SetTimeLeft(decimal timeLeft);
+    bool CheckIfRunning();
     void TurnOnBetting();
     void TurnOffBetting();
     void TurnOnSpinning();

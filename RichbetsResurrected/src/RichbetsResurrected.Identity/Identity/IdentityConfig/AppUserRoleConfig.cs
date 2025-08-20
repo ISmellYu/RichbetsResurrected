@@ -6,7 +6,6 @@ namespace RichbetsResurrected.Identity.Identity.IdentityConfig;
 
 public class AppUserRoleConfig : IEntityTypeConfiguration<AppUserRole>
 {
-
     public void Configure(EntityTypeBuilder<AppUserRole> builder)
     {
         builder.ToTable("userRoles");
